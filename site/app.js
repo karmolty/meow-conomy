@@ -532,7 +532,8 @@ function render() {
 
   const p = Math.max(0, Math.min(1, coins / goalCoins));
   if (els.progressFill) els.progressFill.style.width = `${Math.round(p * 100)}%`;
-  if (els.progressLabel) els.progressLabel.textContent = `${fmt(coins)} / ${goalCoins}`;
+  // The big coin stat already shows the numerator; keep the bar label minimal.
+  if (els.progressLabel) els.progressLabel.textContent = `/${goalCoins}`;
 
   if (els.btnLevelUp) {
     const canLevel = coins >= goalCoins;
