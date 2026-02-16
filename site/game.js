@@ -28,6 +28,10 @@ export const DEFAULT_STATE = {
   coins: 50,
   inventory: Object.fromEntries(GOODS.map(g => [g.key, 0])),
   market: {},
+
+  // Recent price history per good (for UI sparklines).
+  history: {},
+
   unlocked: {
     kibble: true,
     catnip: false,
@@ -66,6 +70,17 @@ export function tick(state, dt) {
   const safeDt = Math.max(0, Math.min(5, Number(dt) || 0));
   state.time = (Number(state.time) || 0) + safeDt;
   recomputeMarket(state);
+
+  // Record price history for UI sparklines.
+  state.history ||= {};
+  const maxPoints = 30;
+  for (const g of GOODS) {
+    state.history[g.key] ||= [];
+    const arr = state.history[g.key];
+    arr.push(state.market?.[g.key]?.price ?? 0);
+    if (arr.length > maxPoints) arr.splice(0, arr.length - maxPoints);
+  }
+
   return state;
 }
 
