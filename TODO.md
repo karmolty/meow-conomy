@@ -62,11 +62,11 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v0.2.2 — Goal Ladder + Unlock Gating
 - [x] Define goal ladder table in code (levels, targets, rewards)
 - [x] Persist `state.level` + ensure it can’t exceed defined goals
-- [ ] Gate UI panels by unlocks:
-  - [ ] Contracts panel gated until unlocked (already mostly done)
-  - [ ] Heat row hidden until unlocked (already)
-  - [ ] Traders panel hidden until unlocked (already)
-  - [ ] Cats panel hidden until unlocked (already)
+- [x] Gate UI panels by unlocks:
+  - [x] Contracts panel gated until unlocked
+  - [x] Heat row hidden until unlocked
+  - [x] Traders panel hidden until unlocked
+  - [x] Cats panel hidden until unlocked
 - [ ] Add new unlock steps:
   - [ ] Level 2 @ 500: unlock Heat + Schemes + make Heat affect something (e.g. contract availability or trader constraint)
   - [ ] Level 3 @ 800: unlock Traders + tie at least one constraint to Heat
