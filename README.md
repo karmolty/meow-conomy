@@ -13,8 +13,23 @@ A minimalist cat-themed incremental browser game (inspired by the genre, not a c
 Open `site/index.html` in a browser.
 
 ## Smoke test
-Run:
+Automated:
 
 ```bash
-node src/game.test.mjs
+node --test
 ```
+
+Manual “viable strategy” smoke tests (v0.2 AC1 support):
+
+1) Trade-first (low stress)
+- Start a contract (e.g. “Quick Flip”)
+- Trade **Kibble** only:
+  - buy when price is low-ish (trend sparkline bottoming)
+  - sell after it rises
+- You should be able to finish without touching Catnip/Shiny.
+
+2) Risky / opportunistic (faster swings)
+- Reach 100 coins to unlock **Catnip** (250 unlocks **Shiny Things**)
+- Trade the swingy good:
+  - buy dips, sell spikes
+- If you get stuck, pivot back to Kibble to stabilize.
