@@ -52,6 +52,30 @@ function renderMarket() {
     const div = document.createElement("div");
     div.className = "item";
 
+    const top = document.createElement("div");
+    top.className = "row";
+
+    const left = document.createElement("div");
+    left.innerHTML = `<strong>${g.label}</strong>`;
+
+    const right = document.createElement("div");
+    right.innerHTML = `<strong>${fmt(price)}</strong> <span class="muted">coins</span>`;
+
+    top.append(left, right);
+
+    const bottom = document.createElement("div");
+    bottom.className = "row";
+    bottom.style.marginTop = "10px";
+
+    const desc = document.createElement("div");
+    desc.className = "muted";
+    desc.style.maxWidth = "360px";
+    desc.textContent = g.desc;
+
+    const btnRow = document.createElement("div");
+    btnRow.className = "row";
+    btnRow.style.justifyContent = "flex-end";
+
     const buyBtn = document.createElement("button");
     buyBtn.className = "primary";
     buyBtn.textContent = "Buy 1";
@@ -71,22 +95,10 @@ function renderMarket() {
       render();
     });
 
-    div.innerHTML = `
-      <div class="row">
-        <div><strong>${g.label}</strong></div>
-        <div><strong>${fmt(price)}</strong> <span class="muted">coins</span></div>
-      </div>
-      <div class="row" style="margin-top: 10px;">
-        <div class="muted" style="max-width: 360px;">${g.desc}</div>
-        <div class="row" style="justify-content: flex-end;">
-          <span></span>
-        </div>
-      </div>
-    `;
+    btnRow.append(buyBtn, sellBtn);
+    bottom.append(desc, btnRow);
 
-    const btnRow = div.querySelector(".row" + ":nth-of-type(2) .row");
-    btnRow.replaceChildren(buyBtn, sellBtn);
-
+    div.append(top, bottom);
     els.market.appendChild(div);
   }
 }
