@@ -523,21 +523,31 @@ function render() {
     { coins: 100, reward: { unlock: { catnip: true } }, label: "reach 100 coins (unlocks Catnip)" },
     { coins: 250, reward: { unlock: { contract: true } }, label: "reach 250 coins (unlocks Contracts)" }
   ];
-  const cur = goals[Math.min(level, goals.length - 1)];
-  const goalCoins = cur?.coins ?? 100;
+  const maxLevel = goals.length; // levels are 0..(maxLevel-1)
 
-  if (els.goalText) {
-    els.goalText.innerHTML = `<strong>Goal:</strong> ${cur?.label ?? `reach ${goalCoins} coins`}.`;
-  }
+  if (level >= maxLevel) {
+    // No further goals defined yet.
+    if (els.goalText) els.goalText.innerHTML = `<strong>Goal:</strong> (more goals soon)`;
+    if (els.progressFill) els.progressFill.style.width = `0%`;
+    if (els.progressLabel) els.progressLabel.textContent = ``;
+    if (els.btnLevelUp) els.btnLevelUp.style.display = "none";
+  } else {
+    const cur = goals[level];
+    const goalCoins = cur?.coins ?? 100;
 
-  const p = Math.max(0, Math.min(1, coins / goalCoins));
-  if (els.progressFill) els.progressFill.style.width = `${Math.round(p * 100)}%`;
-  // The big coin stat already shows the numerator; keep the bar label minimal.
-  if (els.progressLabel) els.progressLabel.textContent = `/${goalCoins}`;
+    if (els.goalText) {
+      els.goalText.innerHTML = `<strong>Goal:</strong> ${cur?.label ?? `reach ${goalCoins} coins`}.`;
+    }
 
-  if (els.btnLevelUp) {
-    const canLevel = coins >= goalCoins;
-    els.btnLevelUp.style.display = canLevel ? "" : "none";
+    const p = Math.max(0, Math.min(1, coins / goalCoins));
+    if (els.progressFill) els.progressFill.style.width = `${Math.round(p * 100)}%`;
+    // The big coin stat already shows the numerator; keep the bar label minimal.
+    if (els.progressLabel) els.progressLabel.textContent = `/${goalCoins}`;
+
+    if (els.btnLevelUp) {
+      const canLevel = coins >= goalCoins;
+      els.btnLevelUp.style.display = canLevel ? "" : "none";
+    }
   }
 
   // Hide panels that aren’t unlocked yet to reduce initial clutter.
@@ -576,7 +586,10 @@ els.btnLevelUp?.addEventListener("click", () => {
     { coins: 100, reward: { unlock: { catnip: true } } },
     { coins: 250, reward: { unlock: { contract: true } } }
   ];
-  const cur = goals[Math.min(level, goals.length - 1)];
+  const maxLevel = goals.length;
+  if (level >= maxLevel) return;
+
+  const cur = goals[level];
   const goalCoins = cur?.coins ?? 100;
   if (coins < goalCoins) return;
 
