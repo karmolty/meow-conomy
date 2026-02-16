@@ -13,14 +13,21 @@ const STORAGE_KEY = "meowconomy.save.v0.1";
 
 function nowMs() { return Date.now(); }
 
+// iOS Safari compatibility: structuredClone shipped relatively late.
+// If it doesn't exist, fall back to a JSON deep-clone (safe for our plain data state).
+function clone(obj) {
+  if (typeof globalThis.structuredClone === "function") return globalThis.structuredClone(obj);
+  return JSON.parse(JSON.stringify(obj));
+}
+
 function load() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return structuredClone(DEFAULT_STATE);
+    if (!raw) return clone(DEFAULT_STATE);
     const parsed = JSON.parse(raw);
-    return { ...structuredClone(DEFAULT_STATE), ...parsed };
+    return { ...clone(DEFAULT_STATE), ...parsed };
   } catch {
-    return structuredClone(DEFAULT_STATE);
+    return clone(DEFAULT_STATE);
   }
 }
 
