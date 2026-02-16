@@ -10,6 +10,7 @@ import {
 } from "./contracts.js";
 
 import { JOB_DEFS, JOB_CAPS, assignCatJob, jobCounts } from "./cats.js";
+import { SCHEMES, activateScheme } from "./schemes.js";
 
 const STORAGE_KEY = "meowconomy.save.v0.2.1";
 
@@ -57,6 +58,7 @@ const els = {
   contract: document.getElementById("contract"),
   cats: document.getElementById("cats"),
   traders: document.getElementById("traders"),
+  schemes: document.getElementById("schemes"),
   saveStatus: document.getElementById("saveStatus"),
   btnHardReset: document.getElementById("btnHardReset"),
   repoLink: document.getElementById("repoLink"),
@@ -280,6 +282,49 @@ function renderCats() {
 
     div.append(top, desc);
     els.cats.appendChild(div);
+  }
+}
+
+function renderSchemes() {
+  if (!els.schemes) return;
+  els.schemes.innerHTML = "";
+
+  for (const s of SCHEMES) {
+    const rt = state.schemes?.[s.id] || { cooldownLeft: 0, activeLeft: 0, charges: 0 };
+    const cd = Math.ceil(rt.cooldownLeft ?? 0);
+    const active = Math.ceil(rt.activeLeft ?? 0);
+
+    const div = document.createElement("div");
+    div.className = "item";
+
+    const top = document.createElement("div");
+    top.className = "row";
+
+    const left = document.createElement("div");
+    left.innerHTML = `<strong>${s.name}</strong> <span class="muted">${cd > 0 ? `CD ${cd}s` : "ready"}${active > 0 ? ` · active ${active}s` : ""}</span>`;
+
+    const btn = document.createElement("button");
+    btn.className = cd > 0 ? "" : "primary";
+    btn.disabled = cd > 0;
+    btn.textContent = cd > 0 ? "Cooling" : "Use";
+    btn.addEventListener("click", () => {
+      if (!activateScheme(state, s.id)) {
+        pulse(btn, "red");
+        return;
+      }
+      save(state);
+      render();
+    });
+
+    top.append(left, btn);
+
+    const desc = document.createElement("div");
+    desc.className = "muted";
+    desc.style.marginTop = "8px";
+    desc.textContent = s.desc;
+
+    div.append(top, desc);
+    els.schemes.appendChild(div);
   }
 }
 
@@ -563,12 +608,14 @@ function render() {
   setPanelVisible(els.contract, state.unlocked?.contract ?? true);
   setPanelVisible(els.cats, state.unlocked?.cats ?? false);
   setPanelVisible(els.traders, state.unlocked?.traders ?? false);
+  setPanelVisible(els.schemes, state.unlocked?.schemes ?? true);
 
   renderMarket();
   renderInventory();
   if (state.unlocked?.contract ?? true) renderContract();
   if (state.unlocked?.cats) renderCats();
   if (state.unlocked?.traders) renderTraders();
+  if (state.unlocked?.schemes ?? true) renderSchemes();
 
   setSaveStatus("saved");
 }

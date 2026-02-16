@@ -76,11 +76,11 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v0.3 — Schemes + Heat
 ### Schemes
 - [x] Implement Scheme system (cooldowns, duration, effect application)
-- [ ] Add 3 starter schemes (placeholder names OK):
+- [x] Add 3 starter schemes (placeholder names OK):
   - Hustle (burst output)
   - Price Pounce (temporary favorable price)
   - Nine Lives (mitigate one bad outcome)
-- [ ] UI: scheme buttons + cooldown indicators
+- [x] UI: scheme buttons + cooldown indicators
 
 ### Heat + events
 - [x] Add Heat meter to state
