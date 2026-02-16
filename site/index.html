@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meow-conomy</title>
+  <meta name="description" content="A minimalist cat-themed incremental game." />
+  <style>
+    :root {
+      --bg: #faf8f4;
+      --ink: #121212;
+      --muted: #6a6a6a;
+      --line: #e8e1d8;
+      --accent: #2b7a78;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 26px 16px 60px; }
+    header { display:flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    h1 { margin: 0; font-size: 22px; letter-spacing: -0.02em; }
+    .sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+
+    .grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    @media (max-width: 920px) { .grid { grid-template-columns: 1fr; } }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .row { display:flex; align-items:center; justify-content: space-between; gap: 10px; }
+    .big {
+      font-size: 44px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    button.primary {
+      border-color: rgba(43,122,120,.35);
+      background: rgba(43,122,120,.10);
+    }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+
+    .muted { color: var(--muted); font-size: 13px; }
+    .list { display:flex; flex-direction: column; gap: 10px; }
+    .item { border-top: 1px solid var(--line); padding-top: 10px; }
+    .item:first-child { border-top: 0; padding-top: 0; }
+
+    .pill {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 2px 8px;
+    }
+
+    footer { margin-top: 18px; color: var(--muted); font-size: 12px; }
+    a { color: inherit; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1 id="gameTitle">Meow-conomy</h1>
+        <p class="sub">Incremental cats. Minimal UI. Maximum nonsense.</p>
+      </div>
+      <div class="row">
+        <span class="pill" id="saveStatus">saved</span>
+        <button id="btnHardReset" title="Erase save">Hard reset</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Core</h2>
+        <div class="row">
+          <div>
+            <div class="big" id="statPurr">0</div>
+            <div class="muted">purrs</div>
+          </div>
+          <div class="list" style="min-width: 220px;">
+            <button class="primary" id="btnPurr">Pet the cat (+1 purr)</button>
+            <button id="btnAuto">Hire a purr intern</button>
+            <div class="muted" id="autoHint"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Resources</h2>
+        <div class="list" id="resources"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Research</h2>
+        <div class="list" id="tech"></div>
+      </section>
+    </div>
+
+    <footer>
+      <div>Tip: this is scaffolding—expect missing content and future chaos.</div>
+      <div>Repo: <a id="repoLink" href="#" target="_blank" rel="noreferrer">source</a></div>
+    </footer>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
