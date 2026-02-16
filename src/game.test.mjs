@@ -4,6 +4,8 @@ import {
   CONTRACTS,
   isValidContract,
   acceptContract,
+  acceptContractById,
+  getAvailableContracts,
   getActiveContract,
   abandonActiveContract
 } from "./contracts.js";
@@ -58,8 +60,12 @@ function clone(x) {
   tick(s, 0);
 
   assert.equal(getActiveContract(s), null);
-  assert.ok(acceptContract(s, CONTRACTS[0]));
+  assert.deepEqual(getAvailableContracts(s).map(c => c.id), CONTRACTS.map(c => c.id));
+
+  assert.ok(acceptContractById(s, CONTRACTS[0].id));
   assert.equal(getActiveContract(s)?.id, CONTRACTS[0].id);
+  assert.equal(getAvailableContracts(s).length, 0, "no available contracts while one is active");
+
   assert.equal(acceptContract(s, CONTRACTS[1]), false, "cannot accept a second contract");
 
   // Abandon applies penalty and clears active.

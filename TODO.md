@@ -36,7 +36,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ### Contracts
 - [x] Define Contract schema (requirements, deadline, reward, penalty, tags)
-- [ ] Implement contract generation/selection
+- [x] Implement contract generation/selection
 - [x] Enforce **max 1 active contract**
 - [x] Implement abandon contract + defined penalty
 - [ ] UI: show active contract + progress + time remaining
