@@ -1,4 +1,4 @@
-import { DEFAULT_STATE, GOODS, tick, buy, sell, getPrice } from "../src/game.js";
+import { DEFAULT_STATE, GOODS, tick, buy, sell, getPrice } from "./game.js";
 
 const STORAGE_KEY = "meowconomy.save.v0.1";
 
