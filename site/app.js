@@ -26,6 +26,7 @@ function fmt(n) {
 }
 
 const els = {
+  app: document.getElementById("app"),
   coins: document.getElementById("statCoins"),
   market: document.getElementById("market"),
   inventory: document.getElementById("inventory"),
@@ -144,6 +145,22 @@ els.btnHardReset.addEventListener("click", () => {
 
 // set repo link if we're on pages
 els.repoLink.href = "https://github.com/karmolty/" + location.pathname.split("/")[1].replaceAll("/", "");
+
+// iOS Safari: prevent double-tap-to-zoom inside the game surface.
+// This is a common pattern for tap-heavy web games.
+let _lastTouchEnd = 0;
+els.app?.addEventListener(
+  "touchend",
+  (e) => {
+    const now = Date.now();
+    if (now - _lastTouchEnd <= 300) {
+      // Prevent the second tap from triggering the browser zoom gesture.
+      e.preventDefault();
+    }
+    _lastTouchEnd = now;
+  },
+  { passive: false }
+);
 
 // Init
 tick(state, 0);

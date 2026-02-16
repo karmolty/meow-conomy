@@ -92,6 +92,11 @@
       touch-action: manipulation; /* reduce double-tap zoom, improve tap responsiveness */
       -webkit-tap-highlight-color: transparent;
     }
+
+    /* iOS Safari: apply to the whole interactive surface too */
+    #app {
+      touch-action: manipulation;
+    }
     button.primary {
       border-color: rgba(43,122,120,.35);
       background: rgba(43,122,120,.10);
@@ -116,7 +121,7 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap" id="app">
     <header>
       <div>
         <h1 id="gameTitle">Meow-conomy</h1>
