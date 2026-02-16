@@ -42,10 +42,11 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] UI: show active contract + progress + time remaining
 
 ### Automation (assistive)
-- [ ] Design + implement **Hire Traders**: limited automation with player-configured rules (buy/sell thresholds, caps), plus constraints (fees, action rate, Heat).
+- [x] Design + implement **Hire Traders**: limited automation with player-configured rules (buy/sell thresholds, caps), plus constraints (fees, action rate, Heat).
   - [x] Define Trader schema + rule format
-  - [x] Implement trader execution per tick (respects caps + action rate)
+  - [x] Implement trader execution per tick (respects caps + action rate + fees)
   - [x] UI to configure trader rules
+  - [ ] (later) Heat integration / additional constraints
 
 ### Balance checks
 - [x] Add 2 “viable strategy” smoke tests (even if manual): trade-first vs produce-first can both clear a starter contract
