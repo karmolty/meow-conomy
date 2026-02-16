@@ -35,7 +35,9 @@ export const GOODS = [
     base: 10,
     amp: 2,
     freq: 0.35,
-    phase: 0.0
+    phase: 0.0,
+    noiseAmp: 0.8,
+    noiseFreq: 0.08
   },
   {
     key: "catnip",
@@ -44,7 +46,9 @@ export const GOODS = [
     base: 18,
     amp: 8,
     freq: 0.65,
-    phase: 1.3
+    phase: 1.3,
+    noiseAmp: 2.8,
+    noiseFreq: 0.12
   },
   {
     key: "shiny",
@@ -53,7 +57,9 @@ export const GOODS = [
     base: 40,
     amp: 18,
     freq: 0.22,
-    phase: 2.4
+    phase: 2.4,
+    noiseAmp: 6.0,
+    noiseFreq: 0.05
   }
 ];
 
@@ -88,10 +94,65 @@ export function getPrice(state, goodKey) {
   return state.market?.[goodKey]?.price ?? 0;
 }
 
+function hashU32(str) {
+  // FNV-1a 32-bit
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function u32ToUnitFloat(u) {
+  // [0,1)
+  return (u >>> 0) / 4294967296;
+}
+
+function rand01(seedU32) {
+  // xorshift32 -> [0,1)
+  let x = seedU32 >>> 0;
+  x ^= x << 13;
+  x >>>= 0;
+  x ^= x >>> 17;
+  x >>>= 0;
+  x ^= x << 5;
+  x >>>= 0;
+  return u32ToUnitFloat(x);
+}
+
+function smoothstep(t) {
+  return t * t * (3 - 2 * t);
+}
+
+function valueNoise1D(key, x) {
+  // Deterministic, continuous-ish noise in [-1, 1].
+  const x0 = Math.floor(x);
+  const x1 = x0 + 1;
+  const t = x - x0;
+
+  const h0 = hashU32(`${key}:${x0}`);
+  const h1 = hashU32(`${key}:${x1}`);
+  const v0 = rand01(h0) * 2 - 1;
+  const v1 = rand01(h1) * 2 - 1;
+
+  const s = smoothstep(Math.max(0, Math.min(1, t)));
+  return v0 * (1 - s) + v1 * s;
+}
+
 function basePriceAtTime(good, t) {
-  // Deterministic oscillation (no RNG): buy low, sell high.
+  // Deterministic oscillation + deterministic noise:
+  // keeps patterns learnable, but avoids an overly-obvious perfect sine.
   // Always keep price >= 1.
-  const raw = good.base + good.amp * Math.sin(good.freq * t + good.phase);
+
+  const cyc = good.base + good.amp * Math.sin(good.freq * t + good.phase);
+
+  // Add gentle, smoothed “market mood” noise.
+  const noiseAmp = good.noiseAmp ?? 0;
+  const noiseFreq = good.noiseFreq ?? 0;
+  const mood = noiseAmp ? noiseAmp * valueNoise1D(good.key, t * noiseFreq) : 0;
+
+  const raw = cyc + mood;
   return Math.max(1, round2(raw));
 }
 
