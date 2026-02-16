@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { DEFAULT_STATE, tick, buy, sell, canBuy, canSell, GOODS } from "./game.js";
+import { CONTRACTS, isValidContract } from "./contracts.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -40,6 +41,12 @@ function clone(x) {
   // Never go negative.
   assert.ok(a.coins >= 0);
   for (const g of GOODS) assert.ok(a.inventory[g.key] >= 0);
+}
+
+// Contract schema sanity.
+{
+  assert.ok(CONTRACTS.length >= 1);
+  for (const c of CONTRACTS) assert.ok(isValidContract(c), `valid contract: ${c?.id}`);
 }
 
 console.log("ok - game.test.mjs");

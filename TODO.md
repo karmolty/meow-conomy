@@ -35,7 +35,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [ ] UI to assign/unassign cats
 
 ### Contracts
-- [ ] Define Contract schema (requirements, deadline, reward, penalty, tags)
+- [x] Define Contract schema (requirements, deadline, reward, penalty, tags)
 - [ ] Implement contract generation/selection
 - [ ] Enforce **max 1 active contract**
 - [ ] Implement abandon contract + defined penalty
