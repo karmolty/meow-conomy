@@ -5,7 +5,7 @@ export const GOODS = [
   {
     key: "kibble",
     label: "Kibble",
-    desc: "Stable, low-margin. Good for learning the rhythm.",
+    desc: "Crunchy. Reliable. Cats approve.",
     base: 10,
     amp: 2,
     freq: 0.35,
