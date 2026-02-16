@@ -197,14 +197,42 @@ function renderContract() {
     const div = document.createElement("div");
     div.className = "item";
 
+    const startedAt = state.contracts?.startedAtSec ?? state.time ?? 0;
+    const elapsed = Math.max(0, (state.time ?? 0) - startedAt);
+    const remaining = Math.max(0, Math.ceil(active.deadlineSec - elapsed));
+
     const top = document.createElement("div");
     top.className = "row";
-    top.innerHTML = `<div><strong>${active.title}</strong></div><div class="muted">reward +${active.reward.coins}</div>`;
+    top.innerHTML = `<div><strong>${active.title}</strong></div><div class="muted">${remaining}s left</div>`;
 
     const desc = document.createElement("div");
     desc.className = "muted";
     desc.style.marginTop = "8px";
     desc.textContent = active.desc;
+
+    const req = document.createElement("div");
+    req.className = "muted";
+    req.style.marginTop = "10px";
+
+    const lines = [];
+    for (const r of active.requirements) {
+      if (r.kind === "earnCoins") {
+        const startCoins = state.contracts?.startCoins ?? 0;
+        const earned = Math.max(0, (state.coins ?? 0) - startCoins);
+        lines.push(`Earn coins: ${fmt(earned)} / ${fmt(r.coins ?? 0)}`);
+      } else if (r.kind === "deliverGood") {
+        const have = state.inventory?.[r.goodKey] ?? 0;
+        lines.push(`Deliver ${r.goodKey}: ${have} / ${r.qty ?? 0}`);
+      } else {
+        lines.push(`${r.kind}`);
+      }
+    }
+    req.textContent = lines.join(" · ");
+
+    const rewards = document.createElement("div");
+    rewards.className = "muted";
+    rewards.style.marginTop = "8px";
+    rewards.textContent = `Reward: +${active.reward.coins} coins · Penalty: -${active.penalty.coins} coins`;
 
     const btnRow = document.createElement("div");
     btnRow.className = "row";
@@ -220,7 +248,7 @@ function renderContract() {
     });
 
     btnRow.append(abandon);
-    div.append(top, desc, btnRow);
+    div.append(top, desc, req, rewards, btnRow);
     els.contract.appendChild(div);
     return;
   }
