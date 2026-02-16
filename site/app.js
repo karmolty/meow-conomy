@@ -11,6 +11,7 @@ import {
 
 import { JOB_DEFS, JOB_CAPS, assignCatJob, jobCounts } from "./cats.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
+import { GOALS } from "../src/goals.js";
 
 const STORAGE_KEY = "meowconomy.save.v0.2.1";
 
@@ -573,13 +574,7 @@ function render() {
   // Level goals (manual “Level Up” button).
   // v0: unlock Catnip at 100 coins.
   const level = Number(state.level) || 0;
-  const goals = [
-    { coins: 100, unlock: { catnip: true } },
-    { coins: 250, unlock: { contract: true } },
-    { coins: 500, unlock: { heat: true } },
-    { coins: 800, unlock: { traders: true } },
-    { coins: 1200, unlock: { cats: true } }
-  ];
+  const goals = GOALS;
   const maxLevel = goals.length; // levels are 0..(maxLevel-1)
 
   if (level >= maxLevel) {
@@ -641,10 +636,7 @@ els.btnHardReset.addEventListener("click", () => {
 els.btnLevelUp?.addEventListener("click", () => {
   const coins = state.coins ?? 0;
   const level = Number(state.level) || 0;
-  const goals = [
-    { coins: 100, reward: { unlock: { catnip: true } } },
-    { coins: 250, reward: { unlock: { contract: true } } }
-  ];
+  const goals = GOALS;
   const maxLevel = goals.length;
   if (level >= maxLevel) return;
 
