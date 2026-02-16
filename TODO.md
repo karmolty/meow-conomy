@@ -27,7 +27,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add **saturation**: repeatedly trading the same good reduces its profitability (per-good pressure variable)
 - [x] Implement price update rule that depends on saturation + mild drift (deterministic or seedable RNG)
 - [ ] **Add price pattern unpredictability**: move beyond obvious sine cycles (e.g., regime switches, bounded random walk with mean reversion, or noise + events), while keeping it learnable.
-- [ ] Add a **tiny price graph widget** (sparkline per good) so players can see recent trend at a glance.
+- [x] Add a **tiny price graph widget** (sparkline per good) so players can see recent trend at a glance.
 
 ### Cats / capacity
 - [ ] Define Cat roster + jobs (production/scouting/negotiating/guarding)

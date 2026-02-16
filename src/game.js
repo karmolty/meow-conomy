@@ -70,6 +70,9 @@ export const DEFAULT_STATE = {
   market: {
     // goodKey: { price, pressure }
     // pressure is “saturation”: buying pushes it up (more expensive), selling pushes it down.
+  },
+  history: {
+    // goodKey: number[] (recent prices)
   }
 };
 
@@ -152,6 +155,17 @@ export function tick(state, dt) {
 
   decayPressure(state, safeDt);
   recomputeMarket(state);
+
+  // Record price history for UI sparklines.
+  state.history ||= {};
+  const maxPoints = 30;
+  for (const g of GOODS) {
+    state.history[g.key] ||= [];
+    const arr = state.history[g.key];
+    arr.push(state.market?.[g.key]?.price ?? 0);
+    if (arr.length > maxPoints) arr.splice(0, arr.length - maxPoints);
+  }
+
   return state;
 }
 

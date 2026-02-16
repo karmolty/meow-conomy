@@ -61,6 +61,29 @@ function pulse(btn, kind = "green") {
   setTimeout(() => btn.classList.remove(cls), 260);
 }
 
+function sparkline(values) {
+  const vals = (values || []).filter(n => Number.isFinite(n));
+  if (vals.length < 2) return "";
+
+  let min = Infinity;
+  let max = -Infinity;
+  for (const v of vals) {
+    if (v < min) min = v;
+    if (v > max) max = v;
+  }
+  if (!Number.isFinite(min) || !Number.isFinite(max) || min === max) return "";
+
+  const blocks = "▁▂▃▄▅▆▇█";
+  const span = max - min;
+  return vals
+    .map(v => {
+      const t = (v - min) / span;
+      const i = Math.max(0, Math.min(blocks.length - 1, Math.round(t * (blocks.length - 1))));
+      return blocks[i];
+    })
+    .join("");
+}
+
 function renderMarket() {
   els.market.innerHTML = "";
 
@@ -79,7 +102,9 @@ function renderMarket() {
 
     const right = document.createElement("div");
     const pressure = state.market?.[g.key]?.pressure ?? 0;
-    right.innerHTML = `<strong class="num">${fmt(price)}</strong> <span class="muted">coins</span> <span class="muted">(sat ${pressure.toFixed(2)})</span>`;
+    const hist = state.history?.[g.key] ?? [];
+    const spark = sparkline(hist);
+    right.innerHTML = `<strong class="num">${fmt(price)}</strong> <span class="muted">coins</span> <span class="muted">(sat ${pressure.toFixed(2)})</span>${spark ? ` <span class="muted" title="recent trend">${spark}</span>` : ""}`;
 
     top.append(left, right);
 
