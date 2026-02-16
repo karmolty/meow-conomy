@@ -75,6 +75,16 @@ This section turns the principles above into a **minimal, active-first** design 
 3. **Trigger a Scheme (cooldown ability)**: a short, player-initiated burst move.
    - Examples: “Hustle” (double output for 20s), “Price Pounce” (lock a favorable price briefly), “Nine Lives” (insurance against one bad outcome).
 
+#### Unlock pacing decision (goods)
+To reduce early overwhelm and make the first goal feel like a *real* milestone:
+- Start with **1 good unlocked** (Kibble).
+- When the player reaches the first goal (**100 coins**), **unlock Catnip**.
+
+Rationale:
+- Keeps the first minutes teachable (one loop: buy low/sell high).
+- The goal becomes a clear “chapter break” that introduces volatility as the next challenge.
+- Avoids introducing an explicit “pay-to-unlock” gate this early; we can add optional unlock costs later as a strategic choice.
+
 **Supporting verb (strategic):**
 4. **Take a Contract**: pick one active objective that shapes the next few minutes.
    - Contracts create pressure and define what “good play” means right now.
