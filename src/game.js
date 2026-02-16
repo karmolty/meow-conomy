@@ -244,16 +244,32 @@ export function tick(state, dt) {
   return state;
 }
 
+function hasJob(state, jobKey) {
+  const cats = state?.cats || [];
+  return cats.some(c => c?.job === jobKey);
+}
+
+function buyPrice(state, goodKey) {
+  const p = getPrice(state, goodKey);
+  // Negotiating gives a tiny edge.
+  return hasJob(state, "negotiating") ? round2(p * 0.98) : p;
+}
+
+function sellPrice(state, goodKey) {
+  const p = getPrice(state, goodKey);
+  return hasJob(state, "negotiating") ? round2(p * 1.02) : p;
+}
+
 export function canBuy(state, goodKey, qty = 1) {
   const q = Math.max(0, Math.floor(qty));
-  const price = getPrice(state, goodKey);
+  const price = buyPrice(state, goodKey);
   const unlocked = state.unlocked?.[goodKey] ?? true;
   return unlocked && q > 0 && (state.coins ?? 0) >= price * q;
 }
 
 export function buy(state, goodKey, qty = 1) {
   const q = Math.max(0, Math.floor(qty));
-  const price = getPrice(state, goodKey);
+  const price = buyPrice(state, goodKey);
   const cost = price * q;
   if (q <= 0) return false;
   if ((state.coins ?? 0) < cost) return false;
@@ -276,7 +292,7 @@ export function canSell(state, goodKey, qty = 1) {
 
 export function sell(state, goodKey, qty = 1) {
   const q = Math.max(0, Math.floor(qty));
-  const price = getPrice(state, goodKey);
+  const price = sellPrice(state, goodKey);
   if (q <= 0) return false;
   if ((state.inventory?.[goodKey] ?? 0) < q) return false;
 

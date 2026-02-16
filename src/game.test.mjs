@@ -36,6 +36,16 @@ function clone(x) {
   assert.equal(a.inventory[g0], 1);
   assert.equal(a.coins, +(startCoins - price).toFixed(2));
 
+  // Negotiating job gives a small edge.
+  const n = clone(DEFAULT_STATE);
+  tick(n, 1);
+  n.cats[0].job = "negotiating";
+  const pBuy = n.market[g0].price;
+  const buyCost = +(pBuy * 0.98).toFixed(2);
+  const coins0 = n.coins;
+  assert.ok(buy(n, g0, 1));
+  assert.equal(n.coins, +(coins0 - buyCost).toFixed(2));
+
   // Selling restores coins, reduces inventory.
   assert.ok(canSell(a, g0, 1));
   const coinsBeforeSell = a.coins;
