@@ -11,7 +11,7 @@ import {
 
 import { JOB_DEFS, JOB_CAPS, assignCatJob, jobCounts } from "./cats.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
-import { GOALS } from "../src/goals.js";
+import { GOALS } from "./goals.js";
 
 const STORAGE_KEY = "meowconomy.save.v0.2.1";
 
