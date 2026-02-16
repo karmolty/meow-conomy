@@ -59,6 +59,20 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ### Balance checks
 - [x] Add 2 “viable strategy” smoke tests (even if manual): trade-first vs produce-first can both clear a starter contract
 
+## v0.2.2 — Goal Ladder + Unlock Gating
+- [ ] Define goal ladder table in code (levels, targets, rewards)
+- [ ] Persist `state.level` + ensure it can’t exceed defined goals
+- [ ] Gate UI panels by unlocks:
+  - [ ] Contracts panel gated until unlocked (already mostly done)
+  - [ ] Heat row hidden until unlocked (already)
+  - [ ] Traders panel hidden until unlocked (already)
+  - [ ] Cats panel hidden until unlocked (already)
+- [ ] Add new unlock steps:
+  - [ ] Level 2 @ 500: unlock Heat + make Heat affect something (e.g. contract availability or trader constraint)
+  - [ ] Level 3 @ 800: unlock Traders + tie at least one constraint to Heat
+  - [ ] Level 4 @ 1200: unlock Cats + ensure at least one job has a visible effect
+- [ ] UI: after max level reached, show a friendly “more goals soon” message (already)
+
 ## v0.3 — Schemes + Heat
 ### Schemes
 - [ ] Implement Scheme system (cooldowns, duration, effect application)

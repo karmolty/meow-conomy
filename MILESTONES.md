@@ -47,6 +47,24 @@ These milestones are written as **deliverables with acceptance criteria** (AC). 
 - AC4: Distinct feel: measured price volatility satisfies `vol(kibble) < vol(catnip) < vol(shiny)` over a representative window (e.g. 2 minutes).
 - AC5: Pressure works: repeated buys measurably worsen execution price on that good, and it recovers toward baseline after ~30–90s of no trading.
 
+## v0.2.2 — Goal Ladder + Unlock Gating (reduce early clutter)
+### Deliverables
+- Replace ad-hoc unlocks with a simple **goal ladder** (level → goal → reward → next).
+- Unlocks gate both **mechanics** and **UI panels** (don’t show panels that aren’t unlocked).
+- At minimum, define and implement these unlock steps:
+  1) **Level 0 → 100 coins:** unlock Catnip (already)
+  2) **Level 1 → 250 coins:** unlock Contracts (already)
+  3) **Level 2 → 500 coins:** unlock Heat (meter becomes visible + has at least one gameplay consequence)
+  4) **Level 3 → 800 coins:** unlock Traders (panel visible; traders have at least one meaningful constraint tied to Heat)
+  5) **Level 4 → 1200 coins:** unlock Cats (panel visible; at least one job has a real effect)
+
+### Acceptance criteria
+- AC1: A fresh save shows only **Core + Market + Inventory**; additional panels appear only when unlocked.
+- AC2: Each goal has a single clear reward (new good or new system). The UI reflects the current goal only.
+- AC3: After leveling up, the next goal cannot be leveled again repeatedly (no infinite level-up loops).
+- AC4: Heat is not just cosmetic when unlocked: it changes at least one probability/cost/constraint.
+- AC5: Traders are not fire-and-forget: they incur a meaningful constraint (fee/actions/Heat) once unlocked.
+
 ## v0.3 — Schemes (active abilities) + Risk (Heat)
 ### Deliverables
 - **Scheme system**: 3 ability cards with cooldowns (Hustle/Price Pounce/Nine Lives or similar)
