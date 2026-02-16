@@ -5,9 +5,9 @@ import {
   getActiveContract,
   acceptContractById,
   abandonActiveContract
-} from "../src/contracts.js";
+} from "./contracts.js";
 
-import { JOB_DEFS, JOB_CAPS, assignCatJob, jobCounts } from "../src/cats.js";
+import { JOB_DEFS, JOB_CAPS, assignCatJob, jobCounts } from "./cats.js";
 
 const STORAGE_KEY = "meowconomy.save.v0.1";
 
