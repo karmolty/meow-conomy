@@ -236,6 +236,52 @@ To keep agency high, avoid:
 - **Saturation / pressure**: repeatedly buying the same good pushes its price up; repeatedly selling pushes it down. Mastery comes from timing + diversifying trades and letting markets “recover”.
 - **Run planning**: setting goals for a session; choosing when to reset.
 
+### Market dynamics (systematic plan)
+**Problem:** a visible, perfectly repeating sine pattern (8→9→10→…→8) makes the market solvable by rote and kills decision-making.
+
+**Design goals:**
+- Prices should be **learnable but not predictable**: players can form *probabilistic* expectations ("kibble is calmer", "catnip is spiky") without being able to time exact peaks forever.
+- Preserve **short feedback loops**: prices move enough to matter within ~10–60s.
+- Support **multiple strategies**: trend-following, mean-reversion, diversification, pressure management.
+- Keep it **fair + reproducible**: deterministic simulation from a seed (same inputs → same outputs) so saves are stable and debugging is possible.
+
+**Approach:** model price as the sum of several components operating at different time scales.
+1) **Anchor / mean price** (slow): each good has a long-term anchor value it reverts toward.
+2) **Regimes** (slow/medium): a hidden state that changes volatility and drift for a while (e.g. calm / choppy / hype). Regime switches are occasional and not player-triggered.
+3) **Stochastic drift** (medium): a bounded random walk (Ornstein–Uhlenbeck-like) so the "shape" changes over time without exploding.
+4) **Noise** (fast): small jitter to prevent exact point prediction (smoothed so it doesn’t look like TV static).
+5) **Player pressure** (fast/medium): existing saturation mechanic shifts price up/down based on repeated buys/sells, then decays.
+
+**What the player should be able to read (telegraphing):**
+- Show a tiny **trend indicator** (already: sparkline) and optionally a **"volatility" tag** (calm/choppy) derived from regime, *without exposing the exact model*.
+- Make "calmer vs swingier" goods distinct via parameters (kibble low vol, catnip higher vol, shiny highest).
+
+**Implementation plan (incremental, testable):**
+- Step 1: Replace pure sine with a **seeded price process** per good.
+  - Add `state.seed` (set once on new save) and a tiny PRNG (xorshift32 is fine).
+  - Maintain per-good latent values in state, e.g. `state.marketLatent[goodKey] = { anchor, drift, regime, regimeT }`.
+- Step 2: Each tick, update latent values:
+  - Drift toward anchor (mean reversion)
+  - Apply regime-based volatility + drift
+  - Add smoothed noise (e.g. value noise / low-pass filtered random)
+  - Apply pressure multiplier last
+- Step 3: Add **regime switching**:
+  - Every N seconds on average (e.g. 45–120s), roll to switch regime.
+  - Regimes define `(vol, driftBias, meanReversion)`.
+- Step 4: Calibrate parameters by good:
+  - Kibble: low vol, strong mean reversion.
+  - Catnip: higher vol, weaker mean reversion, occasional hype regime.
+  - Shiny: rare + very volatile.
+- Step 5: Add tests/invariants:
+  - Price always `>= 1`.
+  - No runaway growth (bounded latent drift).
+  - Given same seed + actions, simulation is deterministic.
+
+**Acceptance criteria:**
+- Watching 2–3 minutes of prices should not reveal an exact repeating loop.
+- Prices should still feel "patterned" enough to learn: kibble stable, catnip swingy.
+- Trading the same good repeatedly should visibly worsen your execution via pressure, but recover over time.
+
 ## High-level architecture
 - **src/**: core logic (simulation/economy rules, state updates)
 - **site/**: static site / UI wrapper (if any)
