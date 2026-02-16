@@ -82,21 +82,30 @@ function renderMarket() {
     buyBtn.className = "primary square";
     buyBtn.textContent = "Buy";
     buyBtn.disabled = state.coins < price;
-    buyBtn.addEventListener("click", () => {
+    function doBuyOne(e) {
+      // iOS Safari: prevent touch gestures (double-tap zoom) from winning.
+      if (e?.cancelable) e.preventDefault();
       if (!buy(state, g.key, 1)) return;
       save(state);
       render();
-    });
+    }
+
+    buyBtn.addEventListener("click", doBuyOne);
+    buyBtn.addEventListener("touchend", doBuyOne, { passive: false });
 
     const sellBtn = document.createElement("button");
     sellBtn.className = "square";
     sellBtn.textContent = "Sell";
     sellBtn.disabled = (state.inventory?.[g.key] ?? 0) < 1;
-    sellBtn.addEventListener("click", () => {
+    function doSellOne(e) {
+      if (e?.cancelable) e.preventDefault();
       if (!sell(state, g.key, 1)) return;
       save(state);
       render();
-    });
+    }
+
+    sellBtn.addEventListener("click", doSellOne);
+    sellBtn.addEventListener("touchend", doSellOne, { passive: false });
 
     btnRow.append(buyBtn, sellBtn);
     bottom.append(desc, btnRow);
