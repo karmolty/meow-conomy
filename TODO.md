@@ -70,7 +70,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [ ] Add new unlock steps:
   - [x] Level 2 @ 500: unlock Heat + Schemes + make Heat affect something (e.g. contract availability or trader constraint)
   - [x] Level 3 @ 800: unlock Traders + tie at least one constraint to Heat
-  - [ ] Level 4 @ 1200: unlock Cats + ensure at least one job has a visible effect
+  - [x] Level 4 @ 1200: unlock Cats + ensure at least one job has a visible effect
 - [ ] UI: after max level reached, show a friendly “more goals soon” message (already)
 
 ## v0.3 — Schemes + Heat
