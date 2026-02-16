@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Meow-conomy</title>
   <meta name="description" content="A minimalist cat-themed incremental game." />
   <style>
@@ -148,12 +148,9 @@
        This reduces double-tap zoom and other browser gestures inside the app.
        (We design the page to not require scrolling.) */
     #app {
-      touch-action: none;
-      -webkit-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
+      touch-action: pan-y;
     }
-    button.primary {
+button.primary {
       border-color: rgba(43,122,120,.35);
       background: rgba(43,122,120,.10);
     }
