@@ -7,6 +7,8 @@ import {
   abandonActiveContract
 } from "../src/contracts.js";
 
+import { JOB_DEFS, JOB_CAPS, assignCatJob, jobCounts } from "../src/cats.js";
+
 const STORAGE_KEY = "meowconomy.save.v0.1";
 
 function nowMs() { return Date.now(); }
@@ -40,6 +42,7 @@ const els = {
   market: document.getElementById("market"),
   inventory: document.getElementById("inventory"),
   contract: document.getElementById("contract"),
+  cats: document.getElementById("cats"),
   saveStatus: document.getElementById("saveStatus"),
   btnHardReset: document.getElementById("btnHardReset"),
   repoLink: document.getElementById("repoLink"),
@@ -188,6 +191,75 @@ function renderInventory() {
   }
 }
 
+function renderCats() {
+  if (!els.cats) return;
+  els.cats.innerHTML = "";
+
+  const cats = state.cats || [];
+  const counts = jobCounts(state);
+
+  for (const c of cats) {
+    const div = document.createElement("div");
+    div.className = "item";
+
+    const top = document.createElement("div");
+    top.className = "row";
+
+    const name = document.createElement("div");
+    name.innerHTML = `<strong>${c.name}</strong> <span class="muted">(${c.id})</span>`;
+
+    const select = document.createElement("select");
+    select.style.minHeight = "48px";
+    select.style.border = "1px solid var(--line)";
+    select.style.borderRadius = "12px";
+    select.style.padding = "10px 12px";
+    select.style.fontWeight = "800";
+    select.style.background = "#fff";
+
+    const optNone = document.createElement("option");
+    optNone.value = "";
+    optNone.textContent = "Unassigned";
+    select.appendChild(optNone);
+
+    for (const j of JOB_DEFS) {
+      const opt = document.createElement("option");
+      opt.value = j.key;
+      const cap = JOB_CAPS[j.key] ?? 0;
+      const used = counts[j.key] ?? 0;
+      const isThis = c.job === j.key;
+      const full = used >= cap && !isThis;
+      opt.disabled = full;
+      opt.textContent = `${j.label}${cap ? ` (${used}/${cap})` : ""}`;
+      select.appendChild(opt);
+    }
+
+    select.value = c.job ?? "";
+    select.addEventListener("change", () => {
+      const v = select.value || null;
+      const ok = assignCatJob(state, c.id, v);
+      if (!ok) {
+        // revert
+        select.value = c.job ?? "";
+        pulse(select, "red");
+        return;
+      }
+      save(state);
+      render();
+    });
+
+    top.append(name, select);
+
+    const desc = document.createElement("div");
+    desc.className = "muted";
+    desc.style.marginTop = "8px";
+    const jobDef = JOB_DEFS.find(j => j.key === c.job);
+    desc.textContent = jobDef ? jobDef.desc : "Pick a job for bonuses later.";
+
+    div.append(top, desc);
+    els.cats.appendChild(div);
+  }
+}
+
 function renderContract() {
   if (!els.contract) return;
   els.contract.innerHTML = "";
@@ -305,6 +377,7 @@ function render() {
   renderMarket();
   renderInventory();
   renderContract();
+  renderCats();
 
   setSaveStatus("saved");
 }
