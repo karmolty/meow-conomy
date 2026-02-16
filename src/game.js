@@ -94,6 +94,12 @@ export const DEFAULT_STATE = {
   // Risk meter (v0.3): currently informational only.
   heat: 0,
 
+  // Meta progression (v0.4)
+  meta: {
+    whiskers: 0,
+    seasons: 0
+  },
+
   history: {
     // goodKey: number[] (recent prices)
   },

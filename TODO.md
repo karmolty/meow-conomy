@@ -89,7 +89,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Ensure events are not unavoidable death spirals: add mitigation paths (cats/schemes/pivot)
 
 ## v0.4 — Season Prestige
-- [ ] Implement “End Season” action
+- [x] Implement “End Season” action
 - [ ] Implement Whisker Points (meta currency) award formula
 - [ ] Implement carryover/unlocks:
   - unlock new district/market OR

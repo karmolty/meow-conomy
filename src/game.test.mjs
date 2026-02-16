@@ -13,6 +13,7 @@ import { JOB_DEFS, JOB_CAPS, STARTER_CATS, isValidCat, assignCatJob } from "./ca
 import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
 import { EVENT_DEFS, maybeTriggerEvent, eventProb } from "./events.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
+import { endSeason } from "./prestige.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -194,6 +195,23 @@ function clone(x) {
   tick(s, 0);
   assert.ok(activateScheme(s, SCHEMES[0].id));
   assert.ok((s.schemes?.[SCHEMES[0].id]?.cooldownLeft ?? 0) > 0);
+}
+
+// Prestige: end season awards whiskers and resets run state.
+{
+  const s = clone(DEFAULT_STATE);
+  tick(s, 1);
+  s.coins = 450;
+  s.inventory.kibble = 3;
+  s.heat = 80;
+
+  const w0 = s.meta?.whiskers ?? 0;
+  const { whiskersAwarded } = endSeason(s);
+  assert.equal(whiskersAwarded, Math.floor(450 / 200));
+  assert.equal(s.meta.whiskers, w0 + whiskersAwarded);
+  assert.equal(s.coins, 50);
+  assert.equal(s.inventory.kibble, 0);
+  assert.equal(s.heat, 0);
 }
 
 console.log("ok - game.test.mjs");
