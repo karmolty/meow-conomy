@@ -43,6 +43,7 @@ const els = {
   inventory: document.getElementById("inventory"),
   contract: document.getElementById("contract"),
   cats: document.getElementById("cats"),
+  traders: document.getElementById("traders"),
   saveStatus: document.getElementById("saveStatus"),
   btnHardReset: document.getElementById("btnHardReset"),
   repoLink: document.getElementById("repoLink"),
@@ -260,6 +261,90 @@ function renderCats() {
   }
 }
 
+function renderTraders() {
+  if (!els.traders) return;
+  els.traders.innerHTML = "";
+
+  const traders = state.traders || [];
+  if (!traders.length) {
+    els.traders.innerHTML = `<div class="muted">No traders yet.</div>`;
+    return;
+  }
+
+  for (const t of traders) {
+    const div = document.createElement("div");
+    div.className = "item";
+
+    const top = document.createElement("div");
+    top.className = "row";
+
+    const left = document.createElement("div");
+    left.innerHTML = `<strong>${t.name}</strong> <span class="muted">(fee ${(t.feeBps / 100).toFixed(2)}%)</span>`;
+
+    const toggle = document.createElement("button");
+    toggle.className = t.enabled ? "primary" : "";
+    toggle.textContent = t.enabled ? "Enabled" : "Disabled";
+    toggle.addEventListener("click", () => {
+      t.enabled = !t.enabled;
+      save(state);
+      render();
+    });
+
+    top.append(left, toggle);
+
+    const rulesWrap = document.createElement("div");
+    rulesWrap.className = "list";
+    rulesWrap.style.marginTop = "10px";
+
+    for (const r of t.rules || []) {
+      const row = document.createElement("div");
+      row.className = "row";
+
+      const label = document.createElement("div");
+      label.className = "muted";
+      label.textContent = `${r.kind} ${r.goodKey}`;
+
+      const price = document.createElement("input");
+      price.type = "number";
+      price.step = "0.1";
+      price.value = String(r.price ?? 0);
+      price.style.width = "90px";
+      price.style.minHeight = "48px";
+      price.style.border = "1px solid var(--line)";
+      price.style.borderRadius = "12px";
+      price.style.padding = "10px 12px";
+      price.addEventListener("change", () => {
+        r.price = Number(price.value) || 0;
+        save(state);
+        setSaveStatus("saved");
+      });
+
+      const qty = document.createElement("input");
+      qty.type = "number";
+      qty.step = "1";
+      qty.min = "1";
+      qty.value = String(r.qty ?? 1);
+      qty.style.width = "70px";
+      qty.style.minHeight = "48px";
+      qty.style.border = "1px solid var(--line)";
+      qty.style.borderRadius = "12px";
+      qty.style.padding = "10px 12px";
+      qty.addEventListener("change", () => {
+        r.qty = Math.max(1, Math.floor(Number(qty.value) || 1));
+        qty.value = String(r.qty);
+        save(state);
+        setSaveStatus("saved");
+      });
+
+      row.append(label, price, qty);
+      rulesWrap.appendChild(row);
+    }
+
+    div.append(top, rulesWrap);
+    els.traders.appendChild(div);
+  }
+}
+
 function renderContract() {
   if (!els.contract) return;
   els.contract.innerHTML = "";
@@ -378,6 +463,7 @@ function render() {
   renderInventory();
   renderContract();
   renderCats();
+  renderTraders();
 
   setSaveStatus("saved");
 }
