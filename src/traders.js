@@ -73,6 +73,10 @@ export function isValidTrader(t) {
   return true;
 }
 
+function clamp(n, lo, hi) {
+  return Math.max(lo, Math.min(hi, Number.isFinite(n) ? n : 0));
+}
+
 function feeMultBuy(feeBps) {
   return 1 + (Number(feeBps) || 0) / 10000;
 }
@@ -103,7 +107,14 @@ export function runTraders(state, dt) {
     if (!isValidTrader(t)) continue;
 
     const rt = (state.traderRuntime[t.id] ||= { budget: 0 });
-    rt.budget += (t.actionsPerMin * safeDt) / 60;
+
+    // Heat constraint: as Heat rises, traders get skittish and act less.
+    // This makes Heat matter even when you're using automation.
+    const heatEnabled = Boolean(state?.unlocked?.heat);
+    const heat = Number(state?.heat) || 0;
+    const heatMult = heatEnabled ? clamp(1 - heat / 120, 0.2, 1) : 1;
+
+    rt.budget += (t.actionsPerMin * heatMult * safeDt) / 60;
 
     // Hard cap per tick so a long dt doesn't spam.
     let steps = 0;

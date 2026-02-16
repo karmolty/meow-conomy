@@ -154,6 +154,18 @@ function clone(x) {
   runTraders(s, 5);
   assert.ok(s.inventory.kibble >= 1);
   assert.ok(s.coins < coins0);
+
+  // Heat constraint reduces trader action rate.
+  const hot = clone(DEFAULT_STATE);
+  tick(hot, 1);
+  hot.unlocked.heat = true;
+  hot.heat = 100;
+  hot.traders[0].enabled = true;
+  hot.market.kibble.price = 9;
+  runTraders(hot, 5);
+  // With heat=100 and clamp to 0.2, budget should accrue slower.
+  // (We just sanity-check the runtime budget is small.)
+  assert.ok((hot.traderRuntime?.tuna?.budget ?? 0) < 1);
 }
 
 // Heat events: defs exist + deterministic trigger path + mitigation.
