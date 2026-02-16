@@ -1,6 +1,6 @@
-import { DEFAULT_STATE, TECH_TREE, RESOURCE_DEFS, clamp0, canAfford, payCost } from "../src/game-data.js";
+import { DEFAULT_STATE, GOODS, tick, buy, sell, getPrice } from "../src/game.js";
 
-const STORAGE_KEY = "meowconomy.save.v1";
+const STORAGE_KEY = "meowconomy.save.v0.1";
 
 function nowMs() { return Date.now(); }
 
@@ -22,19 +22,17 @@ function save(state) {
 function fmt(n) {
   if (n >= 1e6) return (n / 1e6).toFixed(2) + "M";
   if (n >= 1e3) return (n / 1e3).toFixed(2) + "K";
-  return String(Math.floor(n));
+  return (Math.round(n * 100) / 100).toFixed(2);
 }
 
 const els = {
-  purr: document.getElementById("statPurr"),
-  btnPurr: document.getElementById("btnPurr"),
-  btnAuto: document.getElementById("btnAuto"),
-  autoHint: document.getElementById("autoHint"),
-  resources: document.getElementById("resources"),
-  tech: document.getElementById("tech"),
+  coins: document.getElementById("statCoins"),
+  market: document.getElementById("market"),
+  inventory: document.getElementById("inventory"),
   saveStatus: document.getElementById("saveStatus"),
   btnHardReset: document.getElementById("btnHardReset"),
-  repoLink: document.getElementById("repoLink")
+  repoLink: document.getElementById("repoLink"),
+  gameTitle: document.getElementById("gameTitle")
 };
 
 const state = load();
@@ -45,95 +43,89 @@ function setSaveStatus(text) {
   els.saveStatus.style.borderColor = text === "saved" ? "var(--line)" : "rgba(43,122,120,.35)";
 }
 
-function earn(state, key, amount) {
-  state.resources[key] = clamp0((state.resources[key] ?? 0) + amount);
-}
+function renderMarket() {
+  els.market.innerHTML = "";
 
-function tick() {
-  const t = nowMs();
-  const dt = Math.min(5, (t - state._lastTickMs) / 1000);
-  state._lastTickMs = t;
-
-  // passive production (scaffold)
-  const interns = state.upgrades.purrInterns || 0;
-  if (interns > 0) {
-    earn(state, "purr", interns * dt);
-  }
-
-  render();
-}
-
-function renderResources() {
-  els.resources.innerHTML = "";
-  for (const r of RESOURCE_DEFS) {
-    const v = state.resources[r.key] ?? 0;
-    const div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `<div class="row"><div><strong>${r.label}</strong></div><div>${fmt(v)}</div></div><div class="muted">${r.desc}</div>`;
-    els.resources.appendChild(div);
-  }
-}
-
-function renderTech() {
-  els.tech.innerHTML = "";
-
-  for (const tech of TECH_TREE) {
-    const unlocked = state.tech[tech.id] === true;
-    const affordable = canAfford(state.resources, tech.cost);
+  for (const g of GOODS) {
+    const price = getPrice(state, g.key);
 
     const div = document.createElement("div");
     div.className = "item";
 
-    const btn = document.createElement("button");
-    btn.textContent = unlocked ? "researched" : `research (${Object.entries(tech.cost).map(([k,v])=>`${v} ${k}`).join(", ")})`;
-    btn.disabled = unlocked || !affordable;
-    btn.addEventListener("click", () => {
-      if (state.tech[tech.id]) return;
-      if (!canAfford(state.resources, tech.cost)) return;
-      payCost(state.resources, tech.cost);
-      state.tech[tech.id] = true;
-      setSaveStatus("saved");
+    const buyBtn = document.createElement("button");
+    buyBtn.className = "primary";
+    buyBtn.textContent = "Buy 1";
+    buyBtn.disabled = state.coins < price;
+    buyBtn.addEventListener("click", () => {
+      if (!buy(state, g.key, 1)) return;
       save(state);
       render();
     });
 
-    div.innerHTML = `<div class="row"><div><strong>${tech.name}</strong></div><div></div></div><div class="muted">${tech.desc}</div>`;
-    div.querySelector(".row div:last-child")?.replaceWith(btn);
+    const sellBtn = document.createElement("button");
+    sellBtn.textContent = "Sell 1";
+    sellBtn.disabled = (state.inventory?.[g.key] ?? 0) < 1;
+    sellBtn.addEventListener("click", () => {
+      if (!sell(state, g.key, 1)) return;
+      save(state);
+      render();
+    });
 
-    els.tech.appendChild(div);
+    div.innerHTML = `
+      <div class="row">
+        <div><strong>${g.label}</strong></div>
+        <div><strong>${fmt(price)}</strong> <span class="muted">coins</span></div>
+      </div>
+      <div class="row" style="margin-top: 10px;">
+        <div class="muted" style="max-width: 360px;">${g.desc}</div>
+        <div class="row" style="justify-content: flex-end;">
+          <span></span>
+        </div>
+      </div>
+    `;
+
+    const btnRow = div.querySelector(".row" + ":nth-of-type(2) .row");
+    btnRow.replaceChildren(buyBtn, sellBtn);
+
+    els.market.appendChild(div);
+  }
+}
+
+function renderInventory() {
+  els.inventory.innerHTML = "";
+  for (const g of GOODS) {
+    const qty = state.inventory?.[g.key] ?? 0;
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `<div class="row"><div><strong>${g.label}</strong></div><div>${qty}</div></div>`;
+    els.inventory.appendChild(div);
   }
 }
 
 function render() {
-  els.purr.textContent = fmt(state.resources.purr ?? 0);
+  els.coins.textContent = fmt(state.coins ?? 0);
 
-  const interns = state.upgrades.purrInterns || 0;
-  const cost = 25 + interns * 25;
-  els.btnAuto.textContent = `Hire a purr intern (${cost} purrs)`;
-  els.btnAuto.disabled = (state.resources.purr ?? 0) < cost;
-  els.autoHint.textContent = interns ? `Interns: ${interns} (passive +${interns}/sec)` : "No interns yet.";
+  // Tiny “win” indicator.
+  if ((state.coins ?? 0) >= 100) {
+    els.gameTitle.textContent = "Meow-conomy (goal reached!)";
+  } else {
+    els.gameTitle.textContent = "Meow-conomy";
+  }
 
-  renderResources();
-  renderTech();
+  renderMarket();
+  renderInventory();
 
   setSaveStatus("saved");
 }
 
-els.btnPurr.addEventListener("click", () => {
-  earn(state, "purr", 1);
-  save(state);
-  render();
-});
+function frameTick() {
+  const t = nowMs();
+  const dt = Math.min(0.25, Math.max(0, (t - state._lastTickMs) / 1000));
+  state._lastTickMs = t;
 
-els.btnAuto.addEventListener("click", () => {
-  const interns = state.upgrades.purrInterns || 0;
-  const cost = 25 + interns * 25;
-  if ((state.resources.purr ?? 0) < cost) return;
-  state.resources.purr -= cost;
-  state.upgrades.purrInterns = interns + 1;
-  save(state);
+  tick(state, dt);
   render();
-});
+}
 
 els.btnHardReset.addEventListener("click", () => {
   if (!confirm("Hard reset? This deletes your save.")) return;
@@ -144,5 +136,7 @@ els.btnHardReset.addEventListener("click", () => {
 // set repo link if we're on pages
 els.repoLink.href = "https://github.com/karmolty/" + location.pathname.split("/")[1].replaceAll("/", "");
 
+// Init
+tick(state, 0);
 render();
-setInterval(tick, 250);
+setInterval(frameTick, 250);
