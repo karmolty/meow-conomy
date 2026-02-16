@@ -276,8 +276,9 @@ export function tick(state, dt) {
   // Traders (assistive automation).
   runTraders(state, safeDt);
 
-  // Heat (v0.3): baseline decay (no sources yet).
-  state.heat = clamp((state.heat ?? 0) - 0.02 * safeDt, 0, 100);
+  // Heat (v0.3): baseline decay; guarding increases decay a bit.
+  const decay = hasJob(state, "guarding") ? 0.035 : 0.02;
+  state.heat = clamp((state.heat ?? 0) - decay * safeDt, 0, 100);
 
   return state;
 }
@@ -291,6 +292,19 @@ function buyPrice(state, goodKey) {
   const p = getPrice(state, goodKey);
   // Negotiating gives a tiny edge.
   return hasJob(state, "negotiating") ? round2(p * 0.98) : p;
+}
+
+function heatMult(state) {
+  // Guarding reduces how much Heat you generate.
+  return hasJob(state, "guarding") ? 0.7 : 1;
+}
+
+function heatForTrade(goodKey, qty) {
+  // Heat is a risk meter (v0.3): trading creates attention.
+  // Riskier goods generate more Heat.
+  const q = Math.max(0, Math.floor(qty));
+  const base = goodKey === "kibble" ? 0.05 : goodKey === "catnip" ? 0.12 : 0.18;
+  return base * q;
 }
 
 function sellPrice(state, goodKey) {
@@ -315,6 +329,9 @@ export function buy(state, goodKey, qty = 1) {
   state.coins = round2((state.coins ?? 0) - cost);
   state.inventory[goodKey] = clamp0((state.inventory?.[goodKey] ?? 0) + q);
 
+  // Heat: buying creates attention.
+  state.heat = clamp((state.heat ?? 0) + heatMult(state) * heatForTrade(goodKey, q), 0, 100);
+
   // Buying pushes pressure up (future buys are a bit pricier).
   applyPressure(state, goodKey, +q);
   recomputeMarket(state);
@@ -336,6 +353,9 @@ export function sell(state, goodKey, qty = 1) {
 
   state.inventory[goodKey] = clamp0((state.inventory?.[goodKey] ?? 0) - q);
   state.coins = round2((state.coins ?? 0) + price * q);
+
+  // Heat: selling creates attention.
+  state.heat = clamp((state.heat ?? 0) + heatMult(state) * heatForTrade(goodKey, q), 0, 100);
 
   // Selling pushes pressure down (you’re adding supply).
   applyPressure(state, goodKey, -q);

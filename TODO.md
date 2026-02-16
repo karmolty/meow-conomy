@@ -62,7 +62,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ### Heat + events
 - [x] Add Heat meter to state
-- [ ] Heat increases with certain profitable/risky actions; decreases with calming actions/jobs
+- [x] Heat increases with certain profitable/risky actions; decreases with calming actions/jobs
 - [ ] Add at least 3 event types (tax, rival, confiscation) whose probability/scaling depends on Heat
 - [ ] Ensure events are not unavoidable death spirals: add mitigation paths (cats/schemes/pivot)
 

@@ -47,6 +47,22 @@ function clone(x) {
   assert.ok(buy(n, g0, 1));
   assert.equal(n.coins, +(coins0 - buyCost).toFixed(2));
 
+  // Heat increases on trades; guarding reduces it.
+  const h1 = clone(DEFAULT_STATE);
+  tick(h1, 1);
+  h1.market.kibble.price = 10;
+  assert.equal(h1.heat, 0);
+  buy(h1, "kibble", 2);
+  assert.ok(h1.heat > 0);
+
+  const h2 = clone(DEFAULT_STATE);
+  tick(h2, 1);
+  h2.cats[0].job = "guarding";
+  h2.market.kibble.price = 10;
+  buy(h2, "kibble", 2);
+  assert.ok(h2.heat > 0);
+  assert.ok(h2.heat < h1.heat);
+
   // Selling restores coins, reduces inventory.
   assert.ok(canSell(a, g0, 1));
   const coinsBeforeSell = a.coins;
