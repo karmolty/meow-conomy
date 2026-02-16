@@ -66,6 +66,36 @@ export const CONTRACTS = [
  * @param {any} c
  * @returns {c is Contract}
  */
+/**
+ * Attempt to start a contract.
+ * Enforces: at most 1 active contract.
+ * @param {import('./game.js').DEFAULT_STATE} _t (dummy to hint editors)
+ */
+
+/**
+ * @param {any} state
+ * @param {Contract} contract
+ * @returns {boolean} true if accepted
+ */
+export function acceptContract(state, contract) {
+  state.contracts ||= { activeId: null, startedAtSec: null, startCoins: null };
+  if (state.contracts.activeId) return false;
+  state.contracts.activeId = contract.id;
+  state.contracts.startedAtSec = Number.isFinite(state.time) ? state.time : 0;
+  state.contracts.startCoins = Number.isFinite(state.coins) ? state.coins : 0;
+  return true;
+}
+
+/**
+ * @param {any} state
+ * @returns {Contract | null}
+ */
+export function getActiveContract(state) {
+  const id = state.contracts?.activeId;
+  if (!id) return null;
+  return CONTRACTS.find(c => c.id === id) || null;
+}
+
 export function isValidContract(c) {
   if (!c || typeof c !== "object") return false;
   if (typeof c.id !== "string" || !c.id) return false;

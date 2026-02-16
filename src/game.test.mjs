@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { DEFAULT_STATE, tick, buy, sell, canBuy, canSell, GOODS } from "./game.js";
-import { CONTRACTS, isValidContract } from "./contracts.js";
+import { CONTRACTS, isValidContract, acceptContract, getActiveContract } from "./contracts.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -43,10 +43,18 @@ function clone(x) {
   for (const g of GOODS) assert.ok(a.inventory[g.key] >= 0);
 }
 
-// Contract schema sanity.
+// Contract schema + single-active enforcement.
 {
   assert.ok(CONTRACTS.length >= 1);
   for (const c of CONTRACTS) assert.ok(isValidContract(c), `valid contract: ${c?.id}`);
+
+  const s = clone(DEFAULT_STATE);
+  tick(s, 0);
+
+  assert.equal(getActiveContract(s), null);
+  assert.ok(acceptContract(s, CONTRACTS[0]));
+  assert.equal(getActiveContract(s)?.id, CONTRACTS[0].id);
+  assert.equal(acceptContract(s, CONTRACTS[1]), false, "cannot accept a second contract");
 }
 
 console.log("ok - game.test.mjs");

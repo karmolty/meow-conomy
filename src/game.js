@@ -79,6 +79,13 @@ export const DEFAULT_STATE = {
   },
   history: {
     // goodKey: number[] (recent prices)
+  },
+
+  // Contracts (v0.2; at most one active)
+  contracts: {
+    activeId: null,
+    startedAtSec: null,
+    startCoins: null
   }
 };
 
