@@ -5,26 +5,26 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v0.1 — Playable Active Skeleton
 ### Core code
 - [ ] Define `GameState` type (coins, inventory, market, cats, time/tick)
-- [ ] Implement `tick(state, dt)` (deterministic update; no UI side effects)
-- [ ] Implement basic **Trade** action(s): `buy(good, qty)` / `sell(good, qty)`
-- [ ] Add 2 goods + coins (simple fixed or gently moving prices for v0.1)
+- [x] Implement `tick(state, dt)` (deterministic update; no UI side effects)
+- [x] Implement basic **Trade** action(s): `buy(good, qty)` / `sell(good, qty)`
+- [x] Add 2 goods + coins (simple fixed or gently moving prices for v0.1)
 
 ### UI (minimal is fine)
-- [ ] Add a minimal play UI in `site/` (or console) that:
+- [x] Add a minimal play UI in `site/` (or console) that:
   - shows coins + inventory
   - shows current prices
   - lets player buy/sell
-- [ ] Add a short “goal” message (e.g., Earn 100 coins) for the <10 min AC
+- [x] Add a short “goal” message (e.g., Earn 100 coins) for the <10 min AC
 
 ### Quality
-- [ ] Add a tiny test harness for `tick` and `buy/sell` invariants (coins never negative unless explicitly allowed, inventory non-negative)
-- [ ] Add README instructions: run locally + what the player is trying to do
+- [x] Add a tiny test harness for `tick` and `buy/sell` invariants (coins never negative unless explicitly allowed, inventory non-negative)
+- [x] Add README instructions: run locally + what the player is trying to do
 
 ## v0.2 — Decision-Rich Economy + Contracts
 ### Economy
 - [ ] Expand to 3 goods (Kibble/Catnip/Shiny Things or renamed)
-- [ ] Add **saturation**: repeatedly trading the same good reduces its profitability (per-good pressure variable)
-- [ ] Implement price update rule that depends on saturation + mild drift (deterministic or seedable RNG)
+- [x] Add **saturation**: repeatedly trading the same good reduces its profitability (per-good pressure variable)
+- [x] Implement price update rule that depends on saturation + mild drift (deterministic or seedable RNG)
 
 ### Cats / capacity
 - [ ] Define Cat roster + jobs (production/scouting/negotiating/guarding)
