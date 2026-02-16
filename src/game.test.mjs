@@ -92,6 +92,12 @@ function clone(x) {
   assert.equal(getActiveContract(s), null);
   assert.deepEqual(getAvailableContracts(s).map(c => c.id), CONTRACTS.map(c => c.id));
 
+  // Heat gating: when heat is unlocked and high, no contracts are offered.
+  s.unlocked.heat = true;
+  s.heat = 75;
+  assert.equal(getAvailableContracts(s).length, 0);
+  s.heat = 0;
+
   assert.ok(acceptContractById(s, CONTRACTS[0].id));
   assert.equal(getActiveContract(s)?.id, CONTRACTS[0].id);
   assert.equal(getAvailableContracts(s).length, 0, "no available contracts while one is active");

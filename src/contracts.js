@@ -100,6 +100,13 @@ export function isValidContract(c) {
  */
 export function getAvailableContracts(state) {
   if (state?.contracts?.activeId) return [];
+
+  // Heat gating (v0.2.2 / v0.3): at high Heat, nobody wants to work with you.
+  // This gives Heat an immediate, visible gameplay effect without hard-failing.
+  const heatEnabled = Boolean(state?.unlocked?.heat);
+  const heat = Number(state?.heat) || 0;
+  if (heatEnabled && heat >= 70) return [];
+
   return CONTRACTS;
 }
 

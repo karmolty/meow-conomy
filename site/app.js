@@ -518,7 +518,10 @@ function renderContract() {
 
   const available = getAvailableContracts(state);
   if (!available.length) {
-    els.contract.innerHTML = `<div class="muted">No contracts available.</div>`;
+    const heatBlocked = (state.unlocked?.heat && (state.heat ?? 0) >= 70);
+    els.contract.innerHTML = heatBlocked
+      ? `<div class="muted">Too much Heat. Lay low to get contracts again.</div>`
+      : `<div class="muted">No contracts available.</div>`;
     return;
   }
 
