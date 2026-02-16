@@ -9,7 +9,7 @@ import {
   getActiveContract,
   abandonActiveContract
 } from "./contracts.js";
-import { JOB_DEFS, STARTER_CATS, isValidCat } from "./cats.js";
+import { JOB_DEFS, JOB_CAPS, STARTER_CATS, isValidCat, assignCatJob } from "./cats.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -76,16 +76,26 @@ function clone(x) {
   assert.equal(s.coins, 100 - CONTRACTS[0].penalty.coins);
 }
 
-// Cats / jobs schema sanity.
+// Cats / jobs schema sanity + allocation caps.
 {
   assert.ok(JOB_DEFS.length >= 1);
   assert.ok(STARTER_CATS.length >= 1);
   for (const c of STARTER_CATS) assert.ok(isValidCat(c));
 
+  // caps exist
+  for (const j of JOB_DEFS) assert.ok(Number.isFinite(JOB_CAPS[j.key]));
+
   const s = clone(DEFAULT_STATE);
   assert.ok(Array.isArray(s.cats));
   assert.ok(s.cats.length >= 1);
   for (const c of s.cats) assert.ok(isValidCat(c));
+
+  // Allocation enforces 1 slot per job (current caps).
+  const [c0, c1] = s.cats;
+  assert.ok(assignCatJob(s, c0.id, "production"));
+  assert.equal(assignCatJob(s, c1.id, "production"), false);
+  assert.ok(assignCatJob(s, c0.id, null));
+  assert.ok(assignCatJob(s, c1.id, "production"));
 }
 
 console.log("ok - game.test.mjs");

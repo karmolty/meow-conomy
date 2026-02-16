@@ -31,7 +31,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ### Cats / capacity
 - [x] Define Cat roster + jobs (production/scouting/negotiating/guarding)
-- [ ] Implement **allocation** constraints (limited cats/slots) + effects (e.g., production per tick, better trade prices, reduced Heat)
+- [x] Implement **allocation** constraints (limited cats/slots) + effects (e.g., production per tick, better trade prices, reduced Heat)
 - [ ] UI to assign/unassign cats
 
 ### Contracts
