@@ -45,6 +45,15 @@ export const GOODS = [
     amp: 8,
     freq: 0.65,
     phase: 1.3
+  },
+  {
+    key: "shiny",
+    label: "Shiny Things",
+    desc: "Rare-ish and swingy. Great for chaotic profit.",
+    base: 40,
+    amp: 18,
+    freq: 0.22,
+    phase: 2.4
   }
 ];
 
@@ -55,7 +64,8 @@ export const DEFAULT_STATE = {
   inventory: Object.fromEntries(GOODS.map(g => [g.key, 0])),
   unlocked: {
     kibble: true,
-    catnip: false
+    catnip: false,
+    shiny: false
   },
   market: {
     // goodKey: { price, pressure }
@@ -130,13 +140,15 @@ export function tick(state, dt) {
   const safeDt = Math.max(0, Math.min(5, Number(dt) || 0));
   state.time = (Number(state.time) || 0) + safeDt;
 
-  // Staged unlocks (v0.1): start with Kibble; unlock Catnip at 100 coins.
+  // Staged unlocks (v0.1+): start with Kibble; unlock Catnip at 100 coins.
+  // v0.2 adds a third good (Shiny Things) unlocked a bit later.
   state.unlocked ||= {};
   if (state.unlocked.kibble === undefined) state.unlocked.kibble = true;
   if (state.unlocked.catnip === undefined) state.unlocked.catnip = false;
-  if (!state.unlocked.catnip && (state.coins ?? 0) >= 100) {
-    state.unlocked.catnip = true;
-  }
+  if (state.unlocked.shiny === undefined) state.unlocked.shiny = false;
+
+  if (!state.unlocked.catnip && (state.coins ?? 0) >= 100) state.unlocked.catnip = true;
+  if (!state.unlocked.shiny && (state.coins ?? 0) >= 250) state.unlocked.shiny = true;
 
   decayPressure(state, safeDt);
   recomputeMarket(state);
