@@ -198,8 +198,11 @@
             <div class="muted">coins</div>
           </div>
           <div class="list" style="min-width: 260px;">
-            <div><strong>Goal:</strong> reach <strong>100 coins</strong> (unlocks Catnip). Next: <strong>250</strong> unlocks Shiny Things.</div>
-            <div class="muted">Buy low, sell high. Kibble is calmer; catnip swings.</div>
+            <div id="goalText"><strong>Goal:</strong> reach <strong>100 coins</strong> (unlocks Catnip).</div>
+            <div class="muted" id="coreHint">Buy low, sell high. Kibble is calmer; catnip swings.</div>
+            <div class="row" style="justify-content:flex-end; margin-top: 8px;">
+              <button id="btnLevelUp" class="primary" style="display:none;">Level Up</button>
+            </div>
 
             <div class="progress" aria-label="Progress to next level">
               <div class="progressFill" id="progressFill" style="width:0%"></div>

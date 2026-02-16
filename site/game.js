@@ -24,9 +24,18 @@ export const GOODS = [
 
 export const DEFAULT_STATE = {
   time: 0,
+  level: 0,
   coins: 50,
   inventory: Object.fromEntries(GOODS.map(g => [g.key, 0])),
-  market: {}
+  market: {},
+  unlocked: {
+    kibble: true,
+    catnip: false,
+    contract: true,
+    cats: false,
+    traders: false,
+    heat: false
+  }
 };
 
 export function clamp0(n) {

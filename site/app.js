@@ -49,6 +49,9 @@ const els = {
   heat: document.getElementById("statHeat"),
   progressFill: document.getElementById("progressFill"),
   progressLabel: document.getElementById("progressLabel"),
+  goalText: document.getElementById("goalText"),
+  coreHint: document.getElementById("coreHint"),
+  btnLevelUp: document.getElementById("btnLevelUp"),
   market: document.getElementById("market"),
   inventory: document.getElementById("inventory"),
   contract: document.getElementById("contract"),
@@ -497,22 +500,54 @@ function renderContract() {
   }
 }
 
+function setPanelVisible(listEl, visible) {
+  const panel = listEl?.closest?.("section.panel");
+  if (!panel) return;
+  panel.style.display = visible ? "" : "none";
+}
+
 function render() {
   const coins = state.coins ?? 0;
   els.coins.textContent = fmt(coins);
+
+  // Hide Heat until it’s a real mechanic.
+  const heatRow = els.heat?.parentElement?.parentElement; // <div class="muted">Heat: <strong .../></div>
+  if (heatRow) heatRow.style.display = state.unlocked?.heat ? "" : "none";
   if (els.heat) els.heat.textContent = Math.round(state.heat ?? 0);
 
-  // Progress to next level (first goal).
-  const nextGoal = 100;
-  const p = Math.max(0, Math.min(1, coins / nextGoal));
+  // Level goals (manual “Level Up” button).
+  // v0: unlock Catnip at 100 coins.
+  const level = Number(state.level) || 0;
+  const goals = [
+    { coins: 100, reward: { unlock: { catnip: true } }, label: "reach 100 coins (unlocks Catnip)" },
+    { coins: 250, reward: { unlock: {} }, label: "reach 250 coins" }
+  ];
+  const cur = goals[Math.min(level, goals.length - 1)];
+  const goalCoins = cur?.coins ?? 100;
+
+  if (els.goalText) {
+    els.goalText.innerHTML = `<strong>Goal:</strong> ${cur?.label ?? `reach ${goalCoins} coins`}.`;
+  }
+
+  const p = Math.max(0, Math.min(1, coins / goalCoins));
   if (els.progressFill) els.progressFill.style.width = `${Math.round(p * 100)}%`;
-  if (els.progressLabel) els.progressLabel.textContent = `${fmt(coins)} / ${nextGoal}`;
+  if (els.progressLabel) els.progressLabel.textContent = `${fmt(coins)} / ${goalCoins}`;
+
+  if (els.btnLevelUp) {
+    const canLevel = coins >= goalCoins;
+    els.btnLevelUp.style.display = canLevel ? "" : "none";
+  }
+
+  // Hide panels that aren’t unlocked yet to reduce initial clutter.
+  setPanelVisible(els.contract, state.unlocked?.contract ?? true);
+  setPanelVisible(els.cats, state.unlocked?.cats ?? false);
+  setPanelVisible(els.traders, state.unlocked?.traders ?? false);
 
   renderMarket();
   renderInventory();
-  renderContract();
-  renderCats();
-  renderTraders();
+  if (state.unlocked?.contract ?? true) renderContract();
+  if (state.unlocked?.cats) renderCats();
+  if (state.unlocked?.traders) renderTraders();
 
   setSaveStatus("saved");
 }
@@ -530,6 +565,29 @@ els.btnHardReset.addEventListener("click", () => {
   if (!confirm("Hard reset? This deletes your save.")) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
+});
+
+els.btnLevelUp?.addEventListener("click", () => {
+  const coins = state.coins ?? 0;
+  const level = Number(state.level) || 0;
+  const goals = [
+    { coins: 100, reward: { unlock: { catnip: true } } },
+    { coins: 250, reward: { unlock: {} } }
+  ];
+  const cur = goals[Math.min(level, goals.length - 1)];
+  const goalCoins = cur?.coins ?? 100;
+  if (coins < goalCoins) return;
+
+  // Apply reward.
+  state.unlocked ||= {};
+  for (const [k, v] of Object.entries(cur?.reward?.unlock || {})) {
+    state.unlocked[k] = Boolean(v);
+  }
+
+  // Advance level.
+  state.level = level + 1;
+  save(state);
+  render();
 });
 
 // set repo link if we're on pages

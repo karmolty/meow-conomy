@@ -80,6 +80,12 @@ To reduce early overwhelm and make the first goal feel like a *real* milestone:
 - Start with **1 good unlocked** (Kibble).
 - When the player reaches the first goal (**100 coins**), **unlock Catnip**.
 
+#### Unlock pacing decision (UI panels)
+To keep the initial UI teachable and non-overwhelming:
+- Start by showing **Core + Market + Inventory**.
+- Hide **Heat**, **Cats**, and **Traders** panels until they are actually unlocked/meaningful.
+- Prefer explicit progression actions (e.g. a **Level Up** button) over surprise auto-advances.
+
 Rationale:
 - Keeps the first minutes teachable (one loop: buy low/sell high).
 - The goal becomes a clear “chapter break” that introduces volatility as the next challenge.
