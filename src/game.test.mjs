@@ -12,6 +12,7 @@ import {
 import { JOB_DEFS, JOB_CAPS, STARTER_CATS, isValidCat, assignCatJob } from "./cats.js";
 import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
 import { EVENT_DEFS, maybeTriggerEvent, eventProb } from "./events.js";
+import { SCHEMES, activateScheme } from "./schemes.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -166,6 +167,15 @@ function clone(x) {
   const ea = maybeTriggerEvent(a);
   const eb = maybeTriggerEvent(b);
   assert.deepEqual(ea, eb);
+}
+
+// Schemes: can activate and cooldown starts.
+{
+  assert.ok(SCHEMES.length >= 3);
+  const s = clone(DEFAULT_STATE);
+  tick(s, 0);
+  assert.ok(activateScheme(s, SCHEMES[0].id));
+  assert.ok((s.schemes?.[SCHEMES[0].id]?.cooldownLeft ?? 0) > 0);
 }
 
 console.log("ok - game.test.mjs");

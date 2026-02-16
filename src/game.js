@@ -2,6 +2,7 @@
 // Intent: deterministic tick + simple trade loop (active, no idle waiting required).
 
 import { runTraders } from "./traders.js";
+import { tickSchemes } from "./schemes.js";
 
 /**
  * @typedef {Object} GoodDef
@@ -102,6 +103,13 @@ export const DEFAULT_STATE = {
     { id: "miso", name: "Miso", job: null },
     { id: "beans", name: "Beans", job: null }
   ],
+
+  // Schemes (v0.3 runtime)
+  schemes: {
+    hustle: { cooldownLeft: 0, activeLeft: 0, charges: 0 },
+    pricePounce: { cooldownLeft: 0, activeLeft: 0, charges: 0 },
+    nineLives: { cooldownLeft: 0, activeLeft: 0, charges: 0 }
+  },
 
   // Contracts (v0.2; at most one active)
   contracts: {
@@ -360,6 +368,9 @@ export function tick(state, dt) {
 
   // Traders (assistive automation).
   runTraders(state, safeDt);
+
+  // Schemes (v0.3)
+  tickSchemes(state, safeDt);
 
   // Heat (v0.3): baseline decay; guarding increases decay a bit.
   const decay = hasJob(state, "guarding") ? 0.035 : 0.02;

@@ -75,7 +75,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v0.3 — Schemes + Heat
 ### Schemes
-- [ ] Implement Scheme system (cooldowns, duration, effect application)
+- [x] Implement Scheme system (cooldowns, duration, effect application)
 - [ ] Add 3 starter schemes (placeholder names OK):
   - Hustle (burst output)
   - Price Pounce (temporary favorable price)
