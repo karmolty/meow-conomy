@@ -60,8 +60,8 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add 2 “viable strategy” smoke tests (even if manual): trade-first vs produce-first can both clear a starter contract
 
 ## v0.2.2 — Goal Ladder + Unlock Gating
-- [ ] Define goal ladder table in code (levels, targets, rewards)
-- [ ] Persist `state.level` + ensure it can’t exceed defined goals
+- [x] Define goal ladder table in code (levels, targets, rewards)
+- [x] Persist `state.level` + ensure it can’t exceed defined goals
 - [ ] Gate UI panels by unlocks:
   - [ ] Contracts panel gated until unlocked (already mostly done)
   - [ ] Heat row hidden until unlocked (already)

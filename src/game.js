@@ -349,9 +349,18 @@ export function tick(state, dt) {
   if (state.unlocked.kibble === undefined) state.unlocked.kibble = true;
   if (state.unlocked.catnip === undefined) state.unlocked.catnip = false;
   if (state.unlocked.shiny === undefined) state.unlocked.shiny = false;
+  if (state.unlocked.contract === undefined) state.unlocked.contract = false;
+  if (state.unlocked.heat === undefined) state.unlocked.heat = false;
+  if (state.unlocked.traders === undefined) state.unlocked.traders = false;
+  if (state.unlocked.cats === undefined) state.unlocked.cats = false;
+  if (state.unlocked.schemes === undefined) state.unlocked.schemes = false;
 
   if (!state.unlocked.catnip && (state.coins ?? 0) >= 100) state.unlocked.catnip = true;
   if (!state.unlocked.shiny && (state.coins ?? 0) >= 250) state.unlocked.shiny = true;
+  if (!state.unlocked.contract && (state.coins ?? 0) >= 250) state.unlocked.contract = true;
+  if (!state.unlocked.heat && (state.coins ?? 0) >= 500) state.unlocked.heat = true;
+  if (!state.unlocked.traders && (state.coins ?? 0) >= 800) state.unlocked.traders = true;
+  if (!state.unlocked.cats && (state.coins ?? 0) >= 1200) state.unlocked.cats = true;
 
   decayPressure(state, safeDt);
   recomputeMarket(state);

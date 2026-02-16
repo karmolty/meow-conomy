@@ -574,8 +574,11 @@ function render() {
   // v0: unlock Catnip at 100 coins.
   const level = Number(state.level) || 0;
   const goals = [
-    { coins: 100, reward: { unlock: { catnip: true } }, label: "reach 100 coins (unlocks Catnip)" },
-    { coins: 250, reward: { unlock: { contract: true } }, label: "reach 250 coins (unlocks Contracts)" }
+    { coins: 100, unlock: { catnip: true } },
+    { coins: 250, unlock: { contract: true } },
+    { coins: 500, unlock: { heat: true } },
+    { coins: 800, unlock: { traders: true } },
+    { coins: 1200, unlock: { cats: true } }
   ];
   const maxLevel = goals.length; // levels are 0..(maxLevel-1)
 
@@ -605,17 +608,17 @@ function render() {
   }
 
   // Hide panels that aren’t unlocked yet to reduce initial clutter.
-  setPanelVisible(els.contract, state.unlocked?.contract ?? true);
+  setPanelVisible(els.contract, state.unlocked?.contract ?? false);
   setPanelVisible(els.cats, state.unlocked?.cats ?? false);
   setPanelVisible(els.traders, state.unlocked?.traders ?? false);
-  setPanelVisible(els.schemes, state.unlocked?.schemes ?? true);
+  setPanelVisible(els.schemes, state.unlocked?.schemes ?? false);
 
   renderMarket();
   renderInventory();
-  if (state.unlocked?.contract ?? true) renderContract();
+  if (state.unlocked?.contract) renderContract();
   if (state.unlocked?.cats) renderCats();
   if (state.unlocked?.traders) renderTraders();
-  if (state.unlocked?.schemes ?? true) renderSchemes();
+  if (state.unlocked?.schemes) renderSchemes();
 
   setSaveStatus("saved");
 }
@@ -651,7 +654,7 @@ els.btnLevelUp?.addEventListener("click", () => {
 
   // Apply reward.
   state.unlocked ||= {};
-  for (const [k, v] of Object.entries(cur?.reward?.unlock || {})) {
+  for (const [k, v] of Object.entries(cur?.unlock || {})) {
     state.unlocked[k] = Boolean(v);
   }
 
