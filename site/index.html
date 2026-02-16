@@ -77,7 +77,8 @@
       .wrap { padding: 18px 12px 48px; }
       .big { font-size: 38px; min-width: 6ch; }
       .num { min-width: 7ch; }
-      button { width: 100%; }
+      /* keep buy/sell as chunky squares instead of full-width */
+      button { width: auto; }
       .panel .row > .row { width: 100%; }
     }
 
@@ -86,11 +87,18 @@
       border: 1px solid var(--line);
       background: #fff;
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: 14px 14px;
       font-weight: 800;
       cursor: pointer;
       touch-action: manipulation; /* reduce double-tap zoom, improve tap responsiveness */
       -webkit-tap-highlight-color: transparent;
+      min-height: 48px; /* iOS recommended tap target */
+    }
+
+    /* Square-ish tap targets for buy/sell */
+    button.square {
+      width: 56px;
+      padding: 0;
     }
 
     /* iOS Safari: apply to the whole interactive surface too */

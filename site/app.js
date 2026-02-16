@@ -79,8 +79,8 @@ function renderMarket() {
     btnRow.style.justifyContent = "flex-end";
 
     const buyBtn = document.createElement("button");
-    buyBtn.className = "primary";
-    buyBtn.textContent = "Buy 1";
+    buyBtn.className = "primary square";
+    buyBtn.textContent = "Buy";
     buyBtn.disabled = state.coins < price;
     buyBtn.addEventListener("click", () => {
       if (!buy(state, g.key, 1)) return;
@@ -89,7 +89,8 @@ function renderMarket() {
     });
 
     const sellBtn = document.createElement("button");
-    sellBtn.textContent = "Sell 1";
+    sellBtn.className = "square";
+    sellBtn.textContent = "Sell";
     sellBtn.disabled = (state.inventory?.[g.key] ?? 0) < 1;
     sellBtn.addEventListener("click", () => {
       if (!sell(state, g.key, 1)) return;
