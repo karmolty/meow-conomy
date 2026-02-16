@@ -39,7 +39,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Implement contract generation/selection
 - [x] Enforce **max 1 active contract**
 - [x] Implement abandon contract + defined penalty
-- [ ] UI: show active contract + progress + time remaining
+- [ ] UI: show active contract + progress + time remaining (basic accept/abandon UI exists; needs progress + timer)
 
 ### Automation (assistive)
 - [ ] Design + implement **Hire Traders**: limited automation with player-configured rules (buy/sell thresholds, caps), plus constraints (fees, action rate, Heat).

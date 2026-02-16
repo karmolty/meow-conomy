@@ -1,4 +1,11 @@
 import { DEFAULT_STATE, GOODS, tick, buy, sell, getPrice } from "./game.js";
+import {
+  CONTRACTS,
+  getAvailableContracts,
+  getActiveContract,
+  acceptContractById,
+  abandonActiveContract
+} from "../src/contracts.js";
 
 const STORAGE_KEY = "meowconomy.save.v0.1";
 
@@ -32,6 +39,7 @@ const els = {
   progressLabel: document.getElementById("progressLabel"),
   market: document.getElementById("market"),
   inventory: document.getElementById("inventory"),
+  contract: document.getElementById("contract"),
   saveStatus: document.getElementById("saveStatus"),
   btnHardReset: document.getElementById("btnHardReset"),
   repoLink: document.getElementById("repoLink"),
@@ -180,6 +188,82 @@ function renderInventory() {
   }
 }
 
+function renderContract() {
+  if (!els.contract) return;
+  els.contract.innerHTML = "";
+
+  const active = getActiveContract(state);
+  if (active) {
+    const div = document.createElement("div");
+    div.className = "item";
+
+    const top = document.createElement("div");
+    top.className = "row";
+    top.innerHTML = `<div><strong>${active.title}</strong></div><div class="muted">reward +${active.reward.coins}</div>`;
+
+    const desc = document.createElement("div");
+    desc.className = "muted";
+    desc.style.marginTop = "8px";
+    desc.textContent = active.desc;
+
+    const btnRow = document.createElement("div");
+    btnRow.className = "row";
+    btnRow.style.justifyContent = "flex-end";
+    btnRow.style.marginTop = "10px";
+
+    const abandon = document.createElement("button");
+    abandon.textContent = `Abandon (-${active.penalty.coins} coins)`;
+    abandon.addEventListener("click", () => {
+      abandonActiveContract(state);
+      save(state);
+      render();
+    });
+
+    btnRow.append(abandon);
+    div.append(top, desc, btnRow);
+    els.contract.appendChild(div);
+    return;
+  }
+
+  const available = getAvailableContracts(state);
+  if (!available.length) {
+    els.contract.innerHTML = `<div class="muted">No contracts available.</div>`;
+    return;
+  }
+
+  for (const c of available) {
+    const div = document.createElement("div");
+    div.className = "item";
+
+    const top = document.createElement("div");
+    top.className = "row";
+    top.innerHTML = `<div><strong>${c.title}</strong></div><div class="muted">+${c.reward.coins} coins</div>`;
+
+    const desc = document.createElement("div");
+    desc.className = "muted";
+    desc.style.marginTop = "8px";
+    desc.textContent = c.desc;
+
+    const btnRow = document.createElement("div");
+    btnRow.className = "row";
+    btnRow.style.justifyContent = "flex-end";
+    btnRow.style.marginTop = "10px";
+
+    const accept = document.createElement("button");
+    accept.className = "primary";
+    accept.textContent = "Accept";
+    accept.addEventListener("click", () => {
+      acceptContractById(state, c.id);
+      save(state);
+      render();
+    });
+
+    btnRow.append(accept);
+    div.append(top, desc, btnRow);
+    els.contract.appendChild(div);
+  }
+}
+
 function render() {
   const coins = state.coins ?? 0;
   els.coins.textContent = fmt(coins);
@@ -192,6 +276,7 @@ function render() {
 
   renderMarket();
   renderInventory();
+  renderContract();
 
   setSaveStatus("saved");
 }
