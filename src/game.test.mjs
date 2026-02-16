@@ -1,6 +1,12 @@
 import assert from "node:assert/strict";
 import { DEFAULT_STATE, tick, buy, sell, canBuy, canSell, GOODS } from "./game.js";
-import { CONTRACTS, isValidContract, acceptContract, getActiveContract } from "./contracts.js";
+import {
+  CONTRACTS,
+  isValidContract,
+  acceptContract,
+  getActiveContract,
+  abandonActiveContract
+} from "./contracts.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -55,6 +61,12 @@ function clone(x) {
   assert.ok(acceptContract(s, CONTRACTS[0]));
   assert.equal(getActiveContract(s)?.id, CONTRACTS[0].id);
   assert.equal(acceptContract(s, CONTRACTS[1]), false, "cannot accept a second contract");
+
+  // Abandon applies penalty and clears active.
+  s.coins = 100;
+  assert.ok(abandonActiveContract(s));
+  assert.equal(getActiveContract(s), null);
+  assert.equal(s.coins, 100 - CONTRACTS[0].penalty.coins);
 }
 
 console.log("ok - game.test.mjs");

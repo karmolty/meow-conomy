@@ -96,6 +96,26 @@ export function getActiveContract(state) {
   return CONTRACTS.find(c => c.id === id) || null;
 }
 
+/**
+ * Abandon the currently active contract.
+ * Applies penalty (coins) and clears active.
+ * @param {any} state
+ * @returns {boolean} true if abandoned
+ */
+export function abandonActiveContract(state) {
+  const c = getActiveContract(state);
+  if (!c) return false;
+
+  const penalty = c.penalty?.coins ?? 0;
+  state.coins = Math.max(0, (Number(state.coins) || 0) - penalty);
+
+  state.contracts.activeId = null;
+  state.contracts.startedAtSec = null;
+  state.contracts.startCoins = null;
+
+  return true;
+}
+
 export function isValidContract(c) {
   if (!c || typeof c !== "object") return false;
   if (typeof c.id !== "string" || !c.id) return false;
