@@ -26,6 +26,7 @@ import { runTraders } from "./traders.js";
  * @property {Record<string, number>} inventory goodKey -> qty
  * @property {Record<string, boolean>} unlocked goodKey -> unlocked
  * @property {Record<string, MarketEntry>} market goodKey -> market info
+ * @property {number} heat
  * @property {Array<{id:string,name:string,job:(null|"production"|"scouting"|"negotiating"|"guarding")}>} cats
  * @property {Array<{id:string,name:string,enabled:boolean,feeBps:number,actionsPerMin:number,rules:Array<{kind:"buyBelow"|"sellAbove",goodKey:string,price:number,qty:number}>}>} traders
  */
@@ -81,6 +82,10 @@ export const DEFAULT_STATE = {
     // goodKey: { price, pressure }
     // pressure is “saturation”: buying pushes it up (more expensive), selling pushes it down.
   },
+
+  // Risk meter (v0.3): currently informational only.
+  heat: 0,
+
   history: {
     // goodKey: number[] (recent prices)
   },
@@ -120,6 +125,11 @@ export const DEFAULT_STATE = {
 
 export function clamp0(n) {
   return Math.max(0, Number.isFinite(n) ? n : 0);
+}
+
+export function clamp(n, lo, hi) {
+  const x = Number.isFinite(n) ? n : 0;
+  return Math.max(lo, Math.min(hi, x));
 }
 
 export function round2(n) {
@@ -265,6 +275,9 @@ export function tick(state, dt) {
 
   // Traders (assistive automation).
   runTraders(state, safeDt);
+
+  // Heat (v0.3): baseline decay (no sources yet).
+  state.heat = clamp((state.heat ?? 0) - 0.02 * safeDt, 0, 100);
 
   return state;
 }

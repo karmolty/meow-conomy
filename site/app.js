@@ -37,6 +37,7 @@ function fmt(n) {
 const els = {
   app: document.getElementById("app"),
   coins: document.getElementById("statCoins"),
+  heat: document.getElementById("statHeat"),
   progressFill: document.getElementById("progressFill"),
   progressLabel: document.getElementById("progressLabel"),
   market: document.getElementById("market"),
@@ -452,6 +453,7 @@ function renderContract() {
 function render() {
   const coins = state.coins ?? 0;
   els.coins.textContent = fmt(coins);
+  if (els.heat) els.heat.textContent = Math.round(state.heat ?? 0);
 
   // Progress to next level (first goal).
   const nextGoal = 100;
