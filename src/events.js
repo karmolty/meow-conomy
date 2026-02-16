@@ -37,6 +37,24 @@ function clamp(n, lo, hi) {
   return Math.max(lo, Math.min(hi, Number.isFinite(n) ? n : 0));
 }
 
+function hasJob(state, jobKey) {
+  const cats = state?.cats || [];
+  return cats.some(c => c?.job === jobKey);
+}
+
+/**
+ * Event probability per second based on Heat.
+ * Guarding reduces probability.
+ * @param {number} heat
+ * @param {boolean} guarding
+ */
+export function eventProb(heat, guarding) {
+  const h = clamp(heat, 0, 100);
+  const base = clamp((h - 20) / 400, 0, 0.18); // 0% under 20 heat; up to 18%/sec at 100 heat
+  const mult = guarding ? 0.7 : 1;
+  return clamp(base * mult, 0, 0.18);
+}
+
 /**
  * xorshift32 in-place RNG.
  * @param {number} u32
@@ -115,8 +133,7 @@ export function maybeTriggerEvent(state) {
   if (sec === state._lastEventSec) return null;
   state._lastEventSec = sec;
 
-  const heat = clamp(state.heat ?? 0, 0, 100);
-  const p = clamp((heat - 20) / 400, 0, 0.18); // 0% under 20 heat; up to 18%/sec at 100 heat
+  const p = eventProb(state.heat ?? 0, hasJob(state, "guarding"));
   if (p <= 0) return null;
 
   if (rand01(state) >= p) return null;

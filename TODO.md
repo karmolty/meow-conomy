@@ -86,7 +86,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add Heat meter to state
 - [x] Heat increases with certain profitable/risky actions; decreases with calming actions/jobs
 - [x] Add at least 3 event types (tax, rival, confiscation) whose probability/scaling depends on Heat
-- [ ] Ensure events are not unavoidable death spirals: add mitigation paths (cats/schemes/pivot)
+- [x] Ensure events are not unavoidable death spirals: add mitigation paths (cats/schemes/pivot)
 
 ## v0.4 — Season Prestige
 - [ ] Implement “End Season” action

@@ -11,7 +11,7 @@ import {
 } from "./contracts.js";
 import { JOB_DEFS, JOB_CAPS, STARTER_CATS, isValidCat, assignCatJob } from "./cats.js";
 import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
-import { EVENT_DEFS, maybeTriggerEvent } from "./events.js";
+import { EVENT_DEFS, maybeTriggerEvent, eventProb } from "./events.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -149,9 +149,13 @@ function clone(x) {
   assert.ok(s.coins < coins0);
 }
 
-// Heat events: defs exist + deterministic trigger path.
+// Heat events: defs exist + deterministic trigger path + mitigation.
 {
   assert.ok(Object.keys(EVENT_DEFS).length >= 3);
+
+  // Guarding reduces event probability.
+  assert.ok(eventProb(100, true) < eventProb(100, false));
+
   const s = clone(DEFAULT_STATE);
   tick(s, 1);
   s.heat = 100;
