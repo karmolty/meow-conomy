@@ -48,6 +48,7 @@ function renderMarket() {
   els.market.innerHTML = "";
 
   for (const g of GOODS) {
+    if (!(state.unlocked?.[g.key] ?? true)) continue;
     const price = getPrice(state, g.key);
 
     const div = document.createElement("div");
@@ -118,6 +119,7 @@ function renderMarket() {
 function renderInventory() {
   els.inventory.innerHTML = "";
   for (const g of GOODS) {
+    if (!(state.unlocked?.[g.key] ?? true)) continue;
     const qty = state.inventory?.[g.key] ?? 0;
     const div = document.createElement("div");
     div.className = "item";

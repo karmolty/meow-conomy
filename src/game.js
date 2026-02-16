@@ -26,6 +26,10 @@ export const DEFAULT_STATE = {
   time: 0, // seconds since start (sim time)
   coins: 50,
   inventory: Object.fromEntries(GOODS.map(g => [g.key, 0])),
+  unlocked: {
+    kibble: true,
+    catnip: false
+  },
   market: {
     // goodKey: { price, pressure }
     // pressure is “saturation”: buying pushes it up (more expensive), selling pushes it down.
@@ -99,6 +103,14 @@ export function tick(state, dt) {
   const safeDt = Math.max(0, Math.min(5, Number(dt) || 0));
   state.time = (Number(state.time) || 0) + safeDt;
 
+  // Staged unlocks (v0.1): start with Kibble; unlock Catnip at 100 coins.
+  state.unlocked ||= {};
+  if (state.unlocked.kibble === undefined) state.unlocked.kibble = true;
+  if (state.unlocked.catnip === undefined) state.unlocked.catnip = false;
+  if (!state.unlocked.catnip && (state.coins ?? 0) >= 100) {
+    state.unlocked.catnip = true;
+  }
+
   decayPressure(state, safeDt);
   recomputeMarket(state);
   return state;
@@ -107,7 +119,8 @@ export function tick(state, dt) {
 export function canBuy(state, goodKey, qty = 1) {
   const q = Math.max(0, Math.floor(qty));
   const price = getPrice(state, goodKey);
-  return q > 0 && (state.coins ?? 0) >= price * q;
+  const unlocked = state.unlocked?.[goodKey] ?? true;
+  return unlocked && q > 0 && (state.coins ?? 0) >= price * q;
 }
 
 export function buy(state, goodKey, qty = 1) {
@@ -129,7 +142,8 @@ export function buy(state, goodKey, qty = 1) {
 
 export function canSell(state, goodKey, qty = 1) {
   const q = Math.max(0, Math.floor(qty));
-  return q > 0 && (state.inventory?.[goodKey] ?? 0) >= q;
+  const unlocked = state.unlocked?.[goodKey] ?? true;
+  return unlocked && q > 0 && (state.inventory?.[goodKey] ?? 0) >= q;
 }
 
 export function sell(state, goodKey, qty = 1) {

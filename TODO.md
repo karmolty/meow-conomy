@@ -8,7 +8,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Implement `tick(state, dt)` (deterministic update; no UI side effects)
 - [x] Implement basic **Trade** action(s): `buy(good, qty)` / `sell(good, qty)`
 - [x] Add 2 goods + coins (simple fixed or gently moving prices for v0.1)
-- [ ] Decide + implement **staged goods unlock**: start with 1 good, then unlock the next good when the player hits the first goal (100 coins).
+- [x] Decide + implement **staged goods unlock**: start with 1 good, then unlock the next good when the player hits the first goal (100 coins).
 
 ### UI (minimal is fine)
 - [x] Add a minimal play UI in `site/` (or console) that:
