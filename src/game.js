@@ -24,6 +24,7 @@
  * @property {Record<string, number>} inventory goodKey -> qty
  * @property {Record<string, boolean>} unlocked goodKey -> unlocked
  * @property {Record<string, MarketEntry>} market goodKey -> market info
+ * @property {Array<{id:string,name:string,job:(null|"production"|"scouting"|"negotiating"|"guarding")}>} cats
  */
 
 /** @type {GoodDef[]} */
@@ -80,6 +81,12 @@ export const DEFAULT_STATE = {
   history: {
     // goodKey: number[] (recent prices)
   },
+
+  // Cats / jobs (v0.2)
+  cats: [
+    { id: "miso", name: "Miso", job: null },
+    { id: "beans", name: "Beans", job: null }
+  ],
 
   // Contracts (v0.2; at most one active)
   contracts: {

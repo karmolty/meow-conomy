@@ -9,6 +9,7 @@ import {
   getActiveContract,
   abandonActiveContract
 } from "./contracts.js";
+import { JOB_DEFS, STARTER_CATS, isValidCat } from "./cats.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -73,6 +74,18 @@ function clone(x) {
   assert.ok(abandonActiveContract(s));
   assert.equal(getActiveContract(s), null);
   assert.equal(s.coins, 100 - CONTRACTS[0].penalty.coins);
+}
+
+// Cats / jobs schema sanity.
+{
+  assert.ok(JOB_DEFS.length >= 1);
+  assert.ok(STARTER_CATS.length >= 1);
+  for (const c of STARTER_CATS) assert.ok(isValidCat(c));
+
+  const s = clone(DEFAULT_STATE);
+  assert.ok(Array.isArray(s.cats));
+  assert.ok(s.cats.length >= 1);
+  for (const c of s.cats) assert.ok(isValidCat(c));
 }
 
 console.log("ok - game.test.mjs");

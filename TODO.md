@@ -30,7 +30,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add a **tiny price graph widget** (sparkline per good) so players can see recent trend at a glance.
 
 ### Cats / capacity
-- [ ] Define Cat roster + jobs (production/scouting/negotiating/guarding)
+- [x] Define Cat roster + jobs (production/scouting/negotiating/guarding)
 - [ ] Implement **allocation** constraints (limited cats/slots) + effects (e.g., production per tick, better trade prices, reduced Heat)
 - [ ] UI to assign/unassign cats
 
