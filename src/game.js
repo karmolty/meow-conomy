@@ -25,6 +25,7 @@
  * @property {Record<string, boolean>} unlocked goodKey -> unlocked
  * @property {Record<string, MarketEntry>} market goodKey -> market info
  * @property {Array<{id:string,name:string,job:(null|"production"|"scouting"|"negotiating"|"guarding")}>} cats
+ * @property {Array<{id:string,name:string,enabled:boolean,feeBps:number,actionsPerMin:number,rules:Array<{kind:"buyBelow"|"sellAbove",goodKey:string,price:number,qty:number}>}>} traders
  */
 
 /** @type {GoodDef[]} */
@@ -93,7 +94,22 @@ export const DEFAULT_STATE = {
     activeId: null,
     startedAtSec: null,
     startCoins: null
-  }
+  },
+
+  // Traders (assistive automation; v0.2+)
+  traders: [
+    {
+      id: "tuna",
+      name: "Tuna",
+      enabled: false,
+      feeBps: 50,
+      actionsPerMin: 10,
+      rules: [
+        { kind: "buyBelow", goodKey: "kibble", price: 9.5, qty: 1 },
+        { kind: "sellAbove", goodKey: "kibble", price: 10.8, qty: 1 }
+      ]
+    }
+  ]
 };
 
 export function clamp0(n) {

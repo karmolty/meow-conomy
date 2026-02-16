@@ -10,6 +10,7 @@ import {
   abandonActiveContract
 } from "./contracts.js";
 import { JOB_DEFS, JOB_CAPS, STARTER_CATS, isValidCat, assignCatJob } from "./cats.js";
+import { STARTER_TRADERS, isValidTrader } from "./traders.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -106,6 +107,17 @@ function clone(x) {
   assert.equal(assignCatJob(s, c1.id, "production"), false);
   assert.ok(assignCatJob(s, c0.id, null));
   assert.ok(assignCatJob(s, c1.id, "production"));
+}
+
+// Trader schema sanity.
+{
+  assert.ok(STARTER_TRADERS.length >= 1);
+  for (const t of STARTER_TRADERS) assert.ok(isValidTrader(t));
+
+  const s = clone(DEFAULT_STATE);
+  assert.ok(Array.isArray(s.traders));
+  assert.ok(s.traders.length >= 1);
+  for (const t of s.traders) assert.ok(isValidTrader(t));
 }
 
 console.log("ok - game.test.mjs");
