@@ -53,6 +53,20 @@
       font-weight: 900;
       letter-spacing: -0.04em;
       line-height: 1;
+      /* prevent layout shift as numbers grow */
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+      display: inline-block;
+      min-width: 8ch;
+      text-align: right;
+    }
+
+    .num {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+      display: inline-block;
+      min-width: 10ch;
+      text-align: right;
     }
 
     button {

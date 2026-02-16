@@ -60,7 +60,7 @@ function renderMarket() {
 
     const right = document.createElement("div");
     const pressure = state.market?.[g.key]?.pressure ?? 0;
-    right.innerHTML = `<strong>${fmt(price)}</strong> <span class="muted">coins</span> <span class="muted">(sat ${pressure.toFixed(2)})</span>`;
+    right.innerHTML = `<strong class="num">${fmt(price)}</strong> <span class="muted">coins</span> <span class="muted">(sat ${pressure.toFixed(2)})</span>`;
 
     top.append(left, right);
 
@@ -118,12 +118,8 @@ function renderInventory() {
 function render() {
   els.coins.textContent = fmt(state.coins ?? 0);
 
-  // Tiny “win” indicator.
-  if ((state.coins ?? 0) >= 100) {
-    els.gameTitle.textContent = "Meow-conomy (goal reached!)";
-  } else {
-    els.gameTitle.textContent = "Meow-conomy";
-  }
+  // Avoid changing header layout; keep title stable.
+  // (We can add a dedicated win badge later.)
 
   renderMarket();
   renderInventory();
