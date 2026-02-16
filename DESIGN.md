@@ -194,6 +194,7 @@ To keep agency high, avoid:
 - **Timing & cooldown play**: chaining abilities for bursts; avoiding dead time.
 - **Risk vs reward**: leverage/speculation; learning when to hedge.
 - **Market reading**: recognizing patterns (shortages, gluts) and reacting.
+- **Saturation / pressure**: repeatedly buying the same good pushes its price up; repeatedly selling pushes it down. Mastery comes from timing + diversifying trades and letting markets “recover”.
 - **Run planning**: setting goals for a session; choosing when to reset.
 
 ## High-level architecture

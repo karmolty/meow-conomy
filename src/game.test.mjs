@@ -29,9 +29,13 @@ function clone(x) {
   // Selling restores coins, reduces inventory.
   assert.ok(canSell(a, g0, 1));
   const coinsBeforeSell = a.coins;
+  const sellPrice = a.market[g0].price;
   assert.ok(sell(a, g0, 1));
   assert.equal(a.inventory[g0], 0);
-  assert.equal(a.coins, +(coinsBeforeSell + price).toFixed(2));
+  assert.equal(a.coins, +(coinsBeforeSell + sellPrice).toFixed(2));
+
+  // Pressure/saturation responds to trading.
+  assert.ok(Number.isFinite(a.market[g0].pressure));
 
   // Never go negative.
   assert.ok(a.coins >= 0);

@@ -59,7 +59,8 @@ function renderMarket() {
     left.innerHTML = `<strong>${g.label}</strong>`;
 
     const right = document.createElement("div");
-    right.innerHTML = `<strong>${fmt(price)}</strong> <span class="muted">coins</span>`;
+    const pressure = state.market?.[g.key]?.pressure ?? 0;
+    right.innerHTML = `<strong>${fmt(price)}</strong> <span class="muted">coins</span> <span class="muted">(sat ${pressure.toFixed(2)})</span>`;
 
     top.append(left, right);
 
