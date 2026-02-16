@@ -26,7 +26,15 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Expand to 3 goods (Kibble/Catnip/Shiny Things or renamed)
 - [x] Add **saturation**: repeatedly trading the same good reduces its profitability (per-good pressure variable)
 - [x] Implement price update rule that depends on saturation + mild drift (deterministic or seedable RNG)
-- [x] **Add price pattern unpredictability**: move beyond obvious sine cycles (e.g., regime switches, bounded random walk with mean reversion, or noise + events), while keeping it learnable.
+- [ ] **v0.2.1 Price Engine v1** (see MILESTONES.md / DESIGN.md)
+  - [ ] Add `state.seed` (persisted in save); initialize once for new saves
+  - [ ] Add tiny PRNG (xorshift32) + helpers (uniform, maybe gaussian-ish via sum-of-uniforms)
+  - [ ] Add `state.marketLatent` per good (anchor, drift, regime, timers)
+  - [ ] Replace `basePriceAtTime()` with latent update + multi-timescale components
+  - [ ] Implement regime switching (calm/choppy/hype) with durations and per-good parameterization
+  - [ ] Ensure determinism: same seed + same actions => same prices
+  - [ ] Calibrate vol by good (kibble < catnip < shiny)
+  - [ ] Add tests for invariants + determinism + no obvious periodic loop in a 3-min window
 - [x] Add a **tiny price graph widget** (sparkline per good) so players can see recent trend at a glance.
 
 ### Cats / capacity

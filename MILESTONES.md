@@ -27,6 +27,26 @@ These milestones are written as **deliverables with acceptance criteria** (AC). 
 - AC3: The player must make a meaningful choice at least every **30–120 seconds** (no long mandatory waits).
 - AC4: Market “saturation” exists: repeatedly exploiting one good reduces its profitability until the player pivots.
 
+## v0.2.1 — Price Engine v1 (less predictable, still learnable)
+### Deliverables
+- Replace visible repeating price cycles with a **seeded, multi-timescale price process** (see DESIGN.md: Market dynamics plan).
+- Prices remain **deterministic per save** (same seed + same actions → same prices).
+- Goods feel distinct:
+  - Kibble = calmer (lower volatility, stronger mean reversion)
+  - Catnip = swingier (higher volatility, occasional "hype" regime)
+  - Shiny = chaotic/high-vol (later-good feel)
+- Existing **pressure/saturation** continues to influence prices and decays over time.
+- Basic test coverage for invariants + determinism.
+
+### Acceptance criteria
+- AC1: Watching any good for **3 minutes** does **not** reveal an exact repeating loop with a fixed period.
+- AC2: Prices are bounded + sane:
+  - price >= 1 always
+  - no runaway drift over a 10-minute idle simulation
+- AC3: Determinism: given fixed `state.seed` and a fixed sequence of actions, the price series matches exactly across runs.
+- AC4: Distinct feel: measured price volatility satisfies `vol(kibble) < vol(catnip) < vol(shiny)` over a representative window (e.g. 2 minutes).
+- AC5: Pressure works: repeated buys measurably worsen execution price on that good, and it recovers toward baseline after ~30–90s of no trading.
+
 ## v0.3 — Schemes (active abilities) + Risk (Heat)
 ### Deliverables
 - **Scheme system**: 3 ability cards with cooldowns (Hustle/Price Pounce/Nine Lives or similar)
