@@ -1,6 +1,32 @@
 // Core game logic for v0.1.
 // Intent: deterministic tick + simple trade loop (active, no idle waiting required).
 
+/**
+ * @typedef {Object} GoodDef
+ * @property {string} key
+ * @property {string} label
+ * @property {string} desc
+ * @property {number} base
+ * @property {number} amp
+ * @property {number} freq
+ * @property {number} phase
+ */
+
+/**
+ * @typedef {{ price: number, pressure: number }} MarketEntry
+ */
+
+/**
+ * Single source of truth for the game.
+ * @typedef {Object} GameState
+ * @property {number} time Seconds since start (sim time)
+ * @property {number} coins
+ * @property {Record<string, number>} inventory goodKey -> qty
+ * @property {Record<string, boolean>} unlocked goodKey -> unlocked
+ * @property {Record<string, MarketEntry>} market goodKey -> market info
+ */
+
+/** @type {GoodDef[]} */
 export const GOODS = [
   {
     key: "kibble",
@@ -22,6 +48,7 @@ export const GOODS = [
   }
 ];
 
+/** @type {GameState} */
 export const DEFAULT_STATE = {
   time: 0, // seconds since start (sim time)
   coins: 50,

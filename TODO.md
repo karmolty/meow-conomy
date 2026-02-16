@@ -4,7 +4,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v0.1 — Playable Active Skeleton
 ### Core code
-- [ ] Define `GameState` type (coins, inventory, market, cats, time/tick)
+- [x] Define `GameState` type (coins, inventory, market, cats, time/tick)
 - [x] Implement `tick(state, dt)` (deterministic update; no UI side effects)
 - [x] Implement basic **Trade** action(s): `buy(good, qty)` / `sell(good, qty)`
 - [x] Add 2 goods + coins (simple fixed or gently moving prices for v0.1)
