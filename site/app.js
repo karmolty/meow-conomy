@@ -86,9 +86,12 @@ function pulse(btn, kind = "green") {
   setTimeout(() => btn.classList.remove(cls), 260);
 }
 
-function sparkline(values) {
-  const vals = (values || []).filter(n => Number.isFinite(n));
-  if (vals.length < 2) return "";
+function sparkline(values, width = 14) {
+  const valsAll = (values || []).filter(n => Number.isFinite(n));
+  if (valsAll.length < 2) return "";
+
+  // Keep it a fixed, small width to avoid UI reshuffles.
+  const vals = valsAll.slice(-width);
 
   let min = Infinity;
   let max = -Infinity;
@@ -100,13 +103,16 @@ function sparkline(values) {
 
   const blocks = "▁▂▃▄▅▆▇█";
   const span = max - min;
-  return vals
+  const s = vals
     .map(v => {
       const t = (v - min) / span;
       const i = Math.max(0, Math.min(blocks.length - 1, Math.round(t * (blocks.length - 1))));
       return blocks[i];
     })
     .join("");
+
+  // Pad to fixed width so it doesn’t jitter as history grows.
+  return s.padStart(width, " ");
 }
 
 function renderMarket() {
@@ -128,8 +134,11 @@ function renderMarket() {
     const right = document.createElement("div");
     const pressure = state.market?.[g.key]?.pressure ?? 0;
     const hist = state.history?.[g.key] ?? [];
-    const spark = sparkline(hist);
-    right.innerHTML = `<strong class="num">${fmt(price)}</strong> <span class="muted">coins</span> <span class="muted">(sat ${pressure.toFixed(2)})</span>${spark ? ` <span class="muted" title="recent trend">${spark}</span>` : ""}`;
+    const spark = sparkline(hist, 14);
+    const sparkSpan = spark
+      ? ` <span class="muted" title="recent trend" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;">${spark}</span>`
+      : "";
+    right.innerHTML = `<strong class="num">${fmt(price)}</strong> <span class="muted">coins</span> <span class="muted">(sat ${pressure.toFixed(2)})</span>${sparkSpan}`;
 
     top.append(left, right);
 

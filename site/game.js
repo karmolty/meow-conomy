@@ -31,6 +31,7 @@ export const DEFAULT_STATE = {
 
   // Recent price history per good (for UI sparklines).
   history: {},
+  _histAcc: 0,
 
   unlocked: {
     kibble: true,
@@ -71,14 +72,18 @@ export function tick(state, dt) {
   state.time = (Number(state.time) || 0) + safeDt;
   recomputeMarket(state);
 
-  // Record price history for UI sparklines.
+  // Record price history for UI sparklines (downsample to ~1Hz to reduce hectic updates).
   state.history ||= {};
+  state._histAcc = (Number(state._histAcc) || 0) + safeDt;
   const maxPoints = 30;
-  for (const g of GOODS) {
-    state.history[g.key] ||= [];
-    const arr = state.history[g.key];
-    arr.push(state.market?.[g.key]?.price ?? 0);
-    if (arr.length > maxPoints) arr.splice(0, arr.length - maxPoints);
+  while (state._histAcc >= 1) {
+    state._histAcc -= 1;
+    for (const g of GOODS) {
+      state.history[g.key] ||= [];
+      const arr = state.history[g.key];
+      arr.push(state.market?.[g.key]?.price ?? 0);
+      if (arr.length > maxPoints) arr.splice(0, arr.length - maxPoints);
+    }
   }
 
   return state;
