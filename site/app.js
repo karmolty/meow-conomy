@@ -28,6 +28,8 @@ function fmt(n) {
 const els = {
   app: document.getElementById("app"),
   coins: document.getElementById("statCoins"),
+  progressFill: document.getElementById("progressFill"),
+  progressLabel: document.getElementById("progressLabel"),
   market: document.getElementById("market"),
   inventory: document.getElementById("inventory"),
   saveStatus: document.getElementById("saveStatus"),
@@ -129,10 +131,14 @@ function renderInventory() {
 }
 
 function render() {
-  els.coins.textContent = fmt(state.coins ?? 0);
+  const coins = state.coins ?? 0;
+  els.coins.textContent = fmt(coins);
 
-  // Avoid changing header layout; keep title stable.
-  // (We can add a dedicated win badge later.)
+  // Progress to next level (first goal).
+  const nextGoal = 100;
+  const p = Math.max(0, Math.min(1, coins / nextGoal));
+  if (els.progressFill) els.progressFill.style.width = `${Math.round(p * 100)}%`;
+  if (els.progressLabel) els.progressLabel.textContent = `${fmt(coins)} / ${nextGoal}`;
 
   renderMarket();
   renderInventory();
