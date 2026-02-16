@@ -511,8 +511,9 @@ function render() {
   els.coins.textContent = fmt(coins);
 
   // Hide Heat until it’s a real mechanic.
-  const heatRow = els.heat?.parentElement?.parentElement; // <div class="muted">Heat: <strong .../></div>
-  if (heatRow) heatRow.style.display = state.unlocked?.heat ? "" : "none";
+  // NOTE: els.heat is the <strong> inside the heat line; its parent is the line container.
+  const heatLine = els.heat?.parentElement; // <div class="muted">Heat: <strong .../></div>
+  if (heatLine) heatLine.style.display = state.unlocked?.heat ? "" : "none";
   if (els.heat) els.heat.textContent = Math.round(state.heat ?? 0);
 
   // Level goals (manual “Level Up” button).
