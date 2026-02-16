@@ -46,6 +46,21 @@ function setSaveStatus(text) {
   els.saveStatus.style.borderColor = text === "saved" ? "var(--line)" : "rgba(43,122,120,.35)";
 }
 
+function maybeHaptic() {
+  // Android only; iOS Safari generally does not support navigator.vibrate.
+  try { navigator.vibrate?.(10); } catch {}
+}
+
+function pulse(btn, kind = "green") {
+  if (!btn) return;
+  const cls = kind === "red" ? "pulseRed" : "pulse";
+  btn.classList.remove(cls);
+  // force reflow so re-adding restarts the animation
+  void btn.offsetWidth;
+  btn.classList.add(cls);
+  setTimeout(() => btn.classList.remove(cls), 260);
+}
+
 function renderMarket() {
   els.market.innerHTML = "";
 
@@ -88,7 +103,12 @@ function renderMarket() {
     function doBuyOne(e) {
       // iOS Safari: prevent touch gestures (double-tap zoom) from winning.
       if (e?.cancelable) e.preventDefault();
-      if (!buy(state, g.key, 1)) return;
+      if (!buy(state, g.key, 1)) {
+        pulse(buyBtn, "red");
+        return;
+      }
+      maybeHaptic();
+      pulse(buyBtn, "green");
       save(state);
       render();
     }
@@ -102,7 +122,12 @@ function renderMarket() {
     sellBtn.disabled = (state.inventory?.[g.key] ?? 0) < 1;
     function doSellOne(e) {
       if (e?.cancelable) e.preventDefault();
-      if (!sell(state, g.key, 1)) return;
+      if (!sell(state, g.key, 1)) {
+        pulse(sellBtn, "red");
+        return;
+      }
+      maybeHaptic();
+      pulse(sellBtn, "green");
       save(state);
       render();
     }
