@@ -14,6 +14,16 @@ function clamp0(n) {
 }
 
 /**
+ * Whisker Point award formula.
+ * Keep it simple and explainable; tune later.
+ * @param {number} runCoins
+ */
+export function whiskersForCoins(runCoins) {
+  const coins = clamp0(Number(runCoins) || 0);
+  return Math.floor(coins / 200);
+}
+
+/**
  * @param {any} state
  * @returns {{whiskersAwarded:number}}
  */
@@ -21,8 +31,7 @@ export function endSeason(state) {
   state.meta ||= { whiskers: 0, seasons: 0 };
 
   const coins = clamp0(Number(state.coins) || 0);
-  // Simple, transparent formula for now.
-  const whiskersAwarded = Math.floor(coins / 200);
+  const whiskersAwarded = whiskersForCoins(coins);
   state.meta.whiskers = clamp0((Number(state.meta.whiskers) || 0) + whiskersAwarded);
   state.meta.seasons = clamp0((Number(state.meta.seasons) || 0) + 1);
 

@@ -13,7 +13,7 @@ import { JOB_DEFS, JOB_CAPS, STARTER_CATS, isValidCat, assignCatJob } from "./ca
 import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
 import { EVENT_DEFS, maybeTriggerEvent, eventProb } from "./events.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
-import { endSeason } from "./prestige.js";
+import { endSeason, whiskersForCoins } from "./prestige.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -206,8 +206,9 @@ function clone(x) {
   s.heat = 80;
 
   const w0 = s.meta?.whiskers ?? 0;
+  assert.equal(whiskersForCoins(450), Math.floor(450 / 200));
   const { whiskersAwarded } = endSeason(s);
-  assert.equal(whiskersAwarded, Math.floor(450 / 200));
+  assert.equal(whiskersAwarded, whiskersForCoins(450));
   assert.equal(s.meta.whiskers, w0 + whiskersAwarded);
   assert.equal(s.coins, 50);
   assert.equal(s.inventory.kibble, 0);

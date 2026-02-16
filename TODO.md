@@ -90,7 +90,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v0.4 — Season Prestige
 - [x] Implement “End Season” action
-- [ ] Implement Whisker Points (meta currency) award formula
+- [x] Implement Whisker Points (meta currency) award formula
 - [ ] Implement carryover/unlocks:
   - unlock new district/market OR
   - unlock new contract type OR
