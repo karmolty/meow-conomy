@@ -10,7 +10,7 @@ import {
   abandonActiveContract
 } from "./contracts.js";
 import { JOB_DEFS, JOB_CAPS, STARTER_CATS, isValidCat, assignCatJob } from "./cats.js";
-import { STARTER_TRADERS, isValidTrader } from "./traders.js";
+import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -109,7 +109,7 @@ function clone(x) {
   assert.ok(assignCatJob(s, c1.id, "production"));
 }
 
-// Trader schema sanity.
+// Trader schema sanity + execution.
 {
   assert.ok(STARTER_TRADERS.length >= 1);
   for (const t of STARTER_TRADERS) assert.ok(isValidTrader(t));
@@ -118,6 +118,18 @@ function clone(x) {
   assert.ok(Array.isArray(s.traders));
   assert.ok(s.traders.length >= 1);
   for (const t of s.traders) assert.ok(isValidTrader(t));
+
+  // Execute one buy when rule matches.
+  tick(s, 1);
+  s.traders[0].enabled = true;
+  // Force the market price below the buy threshold.
+  s.market.kibble.price = 9;
+  const coins0 = s.coins;
+  // dt is capped internally, so accrue budget across a couple calls.
+  runTraders(s, 5);
+  runTraders(s, 5);
+  assert.ok(s.inventory.kibble >= 1);
+  assert.ok(s.coins < coins0);
 }
 
 console.log("ok - game.test.mjs");

@@ -1,6 +1,8 @@
 // Core game logic for v0.1.
 // Intent: deterministic tick + simple trade loop (active, no idle waiting required).
 
+import { runTraders } from "./traders.js";
+
 /**
  * @typedef {Object} GoodDef
  * @property {string} key
@@ -109,7 +111,11 @@ export const DEFAULT_STATE = {
         { kind: "sellAbove", goodKey: "kibble", price: 10.8, qty: 1 }
       ]
     }
-  ]
+  ],
+  traderRuntime: {
+    // traderId: { budget: number }
+    // budget accumulates actions based on actionsPerMin.
+  }
 };
 
 export function clamp0(n) {
@@ -256,6 +262,9 @@ export function tick(state, dt) {
     arr.push(state.market?.[g.key]?.price ?? 0);
     if (arr.length > maxPoints) arr.splice(0, arr.length - maxPoints);
   }
+
+  // Traders (assistive automation).
+  runTraders(state, safeDt);
 
   return state;
 }
