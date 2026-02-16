@@ -520,7 +520,7 @@ function render() {
   const level = Number(state.level) || 0;
   const goals = [
     { coins: 100, reward: { unlock: { catnip: true } }, label: "reach 100 coins (unlocks Catnip)" },
-    { coins: 250, reward: { unlock: {} }, label: "reach 250 coins" }
+    { coins: 250, reward: { unlock: { contract: true } }, label: "reach 250 coins (unlocks Contracts)" }
   ];
   const cur = goals[Math.min(level, goals.length - 1)];
   const goalCoins = cur?.coins ?? 100;
@@ -572,7 +572,7 @@ els.btnLevelUp?.addEventListener("click", () => {
   const level = Number(state.level) || 0;
   const goals = [
     { coins: 100, reward: { unlock: { catnip: true } } },
-    { coins: 250, reward: { unlock: {} } }
+    { coins: 250, reward: { unlock: { contract: true } } }
   ];
   const cur = goals[Math.min(level, goals.length - 1)];
   const goalCoins = cur?.coins ?? 100;

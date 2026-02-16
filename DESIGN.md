@@ -83,6 +83,7 @@ To reduce early overwhelm and make the first goal feel like a *real* milestone:
 #### Unlock pacing decision (UI panels)
 To keep the initial UI teachable and non-overwhelming:
 - Start by showing **Core + Market + Inventory**.
+- Unlock **Contracts** later (after the player has learned the basic trade loop).
 - Hide **Heat**, **Cats**, and **Traders** panels until they are actually unlocked/meaningful.
 - Prefer explicit progression actions (e.g. a **Level Up** button) over surprise auto-advances.
 

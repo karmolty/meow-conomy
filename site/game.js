@@ -31,7 +31,7 @@ export const DEFAULT_STATE = {
   unlocked: {
     kibble: true,
     catnip: false,
-    contract: true,
+    contract: false,
     cats: false,
     traders: false,
     heat: false
