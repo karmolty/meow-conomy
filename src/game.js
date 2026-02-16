@@ -71,6 +71,8 @@ export const GOODS = [
 /** @type {GameState} */
 export const DEFAULT_STATE = {
   time: 0, // seconds since start (sim time)
+  // Persisted seed: deterministic per-save.
+  seed: 0,
   coins: 50,
   inventory: Object.fromEntries(GOODS.map(g => [g.key, 0])),
   unlocked: {
@@ -81,6 +83,11 @@ export const DEFAULT_STATE = {
   market: {
     // goodKey: { price, pressure }
     // pressure is “saturation”: buying pushes it up (more expensive), selling pushes it down.
+  },
+
+  // v0.2.1 latent per-good state for price engine.
+  marketLatent: {
+    // goodKey: { anchor, drift, regime, regimeT, slow, fast }
   },
 
   // Risk meter (v0.3): currently informational only.
@@ -167,40 +174,113 @@ function rand01(seedU32) {
   return u32ToUnitFloat(x);
 }
 
-function smoothstep(t) {
-  return t * t * (3 - 2 * t);
+// --- v0.2.1 Price Engine v1 ---
+
+function xorshift32Step(x) {
+  // returns next u32
+  let y = x >>> 0;
+  y ^= y << 13;
+  y >>>= 0;
+  y ^= y >>> 17;
+  y >>>= 0;
+  y ^= y << 5;
+  y >>>= 0;
+  return y >>> 0;
 }
 
-function valueNoise1D(key, x) {
-  // Deterministic, continuous-ish noise in [-1, 1].
-  const x0 = Math.floor(x);
-  const x1 = x0 + 1;
-  const t = x - x0;
-
-  const h0 = hashU32(`${key}:${x0}`);
-  const h1 = hashU32(`${key}:${x1}`);
-  const v0 = rand01(h0) * 2 - 1;
-  const v1 = rand01(h1) * 2 - 1;
-
-  const s = smoothstep(Math.max(0, Math.min(1, t)));
-  return v0 * (1 - s) + v1 * s;
+function prngNext01(state, streamKey) {
+  // streamKey ensures different deterministic streams per good.
+  state.seed = (state.seed >>> 0) || 0;
+  const sk = hashU32(`stream:${streamKey}`);
+  const mixed = (state.seed ^ sk) >>> 0;
+  const next = xorshift32Step(mixed);
+  // fold back into base seed so actions affect future prices deterministically.
+  state.seed = xorshift32Step(state.seed ^ next);
+  return u32ToUnitFloat(next);
 }
 
-function basePriceAtTime(good, t) {
-  // Deterministic oscillation + deterministic noise:
-  // keeps patterns learnable, but avoids an overly-obvious perfect sine.
-  // Always keep price >= 1.
+function prngNormish(state, streamKey) {
+  // Cheap gaussian-ish: sum of uniforms.
+  let t = 0;
+  for (let i = 0; i < 6; i++) t += prngNext01(state, `${streamKey}:${i}`);
+  return (t / 6 - 0.5) * 2; // roughly [-1,1]
+}
 
-  const cyc = good.base + good.amp * Math.sin(good.freq * t + good.phase);
+function goodParams(goodKey) {
+  // Keep kibble calmer; shiny wild.
+  if (goodKey === "kibble") {
+    return { base: 10, volSlow: 0.35, volFast: 0.65, drift: 0.03, meanRev: 0.18, regimeMin: 20, regimeMax: 55 };
+  }
+  if (goodKey === "catnip") {
+    return { base: 18, volSlow: 0.8, volFast: 1.6, drift: 0.05, meanRev: 0.12, regimeMin: 18, regimeMax: 50 };
+  }
+  return { base: 40, volSlow: 1.6, volFast: 3.2, drift: 0.08, meanRev: 0.08, regimeMin: 14, regimeMax: 45 };
+}
 
-  // Add gentle, smoothed “market mood” noise.
-  const noiseAmp = good.noiseAmp ?? 0;
-  const noiseFreq = good.noiseFreq ?? 0;
-  const mood = noiseAmp ? noiseAmp * valueNoise1D(good.key, t * noiseFreq) : 0;
+function initLatentForGood(state, goodKey) {
+  state.marketLatent ||= {};
+  if (state.marketLatent[goodKey]) return;
+  const p = goodParams(goodKey);
 
-  const raw = cyc + mood;
+  // Deterministic per-save initial anchor.
+  const jitter = prngNormish(state, `init:${goodKey}`) * 0.8;
+  const anchor = Math.max(1, round2(p.base + jitter));
+  state.marketLatent[goodKey] = {
+    anchor,
+    drift: 0,
+    regime: "calm",
+    regimeT: 0,
+    slow: 0,
+    fast: 0
+  };
+}
+
+function maybeSwitchRegime(state, goodKey, dt) {
+  const l = state.marketLatent[goodKey];
+  const p = goodParams(goodKey);
+  l.regimeT -= dt;
+  if (l.regimeT > 0) return;
+
+  // Switch regime deterministically using PRNG.
+  const r = prngNext01(state, `regime:${goodKey}`);
+  l.regime = r < 0.62 ? "calm" : r < 0.9 ? "choppy" : "hype";
+  const dur = p.regimeMin + Math.floor(prngNext01(state, `regimeDur:${goodKey}`) * (p.regimeMax - p.regimeMin));
+  l.regimeT = dur;
+}
+
+function updateLatent(state, goodKey, dt) {
+  initLatentForGood(state, goodKey);
+  const l = state.marketLatent[goodKey];
+  const p = goodParams(goodKey);
+
+  maybeSwitchRegime(state, goodKey, dt);
+
+  const regimeVol = l.regime === "calm" ? 0.75 : l.regime === "choppy" ? 1.1 : 1.6;
+  const driftKick = prngNormish(state, `drift:${goodKey}`) * p.drift * regimeVol;
+  l.drift = clamp(l.drift * 0.92 + driftKick, -0.6, 0.6);
+
+  // Two-timescale components (OU-ish).
+  const slowKick = prngNormish(state, `slow:${goodKey}`) * p.volSlow * regimeVol;
+  const fastKick = prngNormish(state, `fast:${goodKey}`) * p.volFast * regimeVol;
+
+  l.slow = l.slow * 0.985 + slowKick * (dt ** 0.5);
+  l.fast = l.fast * 0.90 + fastKick * (dt ** 0.5);
+
+  // Anchor mean-reverts toward base and nudges with drift.
+  const target = p.base + l.drift * 2;
+  l.anchor = round2(l.anchor + (target - l.anchor) * (p.meanRev * dt));
+}
+
+function basePriceAtTime(state, goodKey, dt) {
+  // Stateful, seeded, multi-timescale; deterministic per save + action sequence.
+  updateLatent(state, goodKey, dt);
+  const l = state.marketLatent[goodKey];
+  const raw = (l.anchor ?? 1) + (l.slow ?? 0) + (l.fast ?? 0);
   return Math.max(1, round2(raw));
 }
+
+
+// (v0.2.1 price engine replaced old sine+noise)
 
 function withPressure(basePrice, pressure = 0) {
   // Pressure is a lightweight “saturation” mechanic:
@@ -217,7 +297,7 @@ export function recomputeMarket(state) {
   for (const g of GOODS) {
     const prev = state.market[g.key] || {};
     const pressure = Number.isFinite(prev.pressure) ? prev.pressure : 0;
-    const base = basePriceAtTime(g, state.time);
+    const base = basePriceAtTime(state, g.key, 0.25);
     state.market[g.key] = { price: withPressure(base, pressure), pressure };
   }
 }
@@ -249,6 +329,11 @@ export function tick(state, dt) {
   // dt in seconds; deterministic update.
   const safeDt = Math.max(0, Math.min(5, Number(dt) || 0));
   state.time = (Number(state.time) || 0) + safeDt;
+
+  // Seed init (persisted). If absent/0, derive from deterministic sim time.
+  if (!Number.isFinite(state.seed) || (state.seed >>> 0) === 0) {
+    state.seed = hashU32(`seed:${Math.floor(state.time * 1000)}`) || 123456789;
+  }
 
   // Staged unlocks (v0.1+): start with Kibble; unlock Catnip at 100 coins.
   // v0.2 adds a third good (Shiny Things) unlocked a bit later.

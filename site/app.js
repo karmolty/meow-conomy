@@ -11,7 +11,7 @@ import {
 
 import { JOB_DEFS, JOB_CAPS, assignCatJob, jobCounts } from "./cats.js";
 
-const STORAGE_KEY = "meowconomy.save.v0.1";
+const STORAGE_KEY = "meowconomy.save.v0.2.1";
 
 function nowMs() { return Date.now(); }
 
@@ -550,8 +550,8 @@ function render() {
 
     const p = Math.max(0, Math.min(1, coins / goalCoins));
     if (els.progressFill) els.progressFill.style.width = `${Math.round(p * 100)}%`;
-    // The big coin stat already shows the numerator; keep the bar label minimal.
-    if (els.progressLabel) els.progressLabel.textContent = `/${goalCoins}`;
+    // No extra text under the progress bar (coins + goal text already cover it).
+    if (els.progressLabel) els.progressLabel.textContent = ``;
 
     if (els.btnLevelUp) {
       const canLevel = coins >= goalCoins;
