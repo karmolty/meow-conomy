@@ -11,6 +11,7 @@ import {
 } from "./contracts.js";
 import { JOB_DEFS, JOB_CAPS, STARTER_CATS, isValidCat, assignCatJob } from "./cats.js";
 import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
+import { EVENT_DEFS, maybeTriggerEvent } from "./events.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -146,6 +147,21 @@ function clone(x) {
   runTraders(s, 5);
   assert.ok(s.inventory.kibble >= 1);
   assert.ok(s.coins < coins0);
+}
+
+// Heat events: defs exist + deterministic trigger path.
+{
+  assert.ok(Object.keys(EVENT_DEFS).length >= 3);
+  const s = clone(DEFAULT_STATE);
+  tick(s, 1);
+  s.heat = 100;
+
+  // Determinism: same rng/time/heat produces same outcome.
+  const a = clone(s);
+  const b = clone(s);
+  const ea = maybeTriggerEvent(a);
+  const eb = maybeTriggerEvent(b);
+  assert.deepEqual(ea, eb);
 }
 
 console.log("ok - game.test.mjs");
