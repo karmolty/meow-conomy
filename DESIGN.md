@@ -102,6 +102,28 @@ A contract is a timed objective with explicit inputs/outputs and stakes.
   - At any time the player can hold **at most 1 active contract** (keeps focus and prevents checklist spam).
   - The player should be able to **abandon** a contract (small penalty) to preserve agency.
 
+#### Automation decision: “Hire Traders” (assistive, not idle)
+We *will* add automation, but it must preserve active gameplay and player agency.
+
+**Design:**
+- Traders are **limited helpers** you can hire/unlock.
+- Each trader has a **simple rule** that the player configures (small decision UI), e.g.:
+  - “If Kibble price ≤ 9.5, buy 1 (max 10 in inventory)”
+  - “If Catnip price ≥ 24, sell 1 (keep 2 reserve)”
+- Traders run on tick, but are constrained by:
+  - **capacity** (traders have limited actions per minute)
+  - **fees** (take a small % cut or fixed wage)
+  - **risk/Heat** (automation can increase Heat or draw attention)
+
+**When it unlocks:**
+- After the first goal/level (e.g., **100 coins**) OR as a first prestige/contract reward.
+- Early game remains fully manual so the player learns the core loop.
+
+**Why this keeps the game active:**
+- Traders don’t discover strategies; they execute *your* strategy.
+- Market regimes change (volatility/saturation/Heat), so rules need supervision and periodic retuning.
+- Player still drives bursts via schemes/contracts and pivots between goods.
+
 ### The economy model (minimal but decision-rich)
 - 3 starter goods (example placeholders):
   - **Kibble** (stable, low margin)

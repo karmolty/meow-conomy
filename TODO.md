@@ -41,6 +41,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [ ] Implement abandon contract + defined penalty
 - [ ] UI: show active contract + progress + time remaining
 
+### Automation (assistive)
+- [ ] Design + implement **Hire Traders**: limited automation with player-configured rules (buy/sell thresholds, caps), plus constraints (fees, action rate, Heat).
+
 ### Balance checks
 - [ ] Add 2 “viable strategy” smoke tests (even if manual): trade-first vs produce-first can both clear a starter contract
 
