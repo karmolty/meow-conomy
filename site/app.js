@@ -4,7 +4,9 @@ import {
   getAvailableContracts,
   getActiveContract,
   acceptContractById,
-  abandonActiveContract
+  abandonActiveContract,
+  isActiveContractComplete,
+  redeemActiveContract
 } from "./contracts.js";
 
 import { JOB_DEFS, JOB_CAPS, assignCatJob, jobCounts } from "./cats.js";
@@ -375,34 +377,72 @@ function renderContract() {
     desc.style.marginTop = "8px";
     desc.textContent = active.desc;
 
-    const req = document.createElement("div");
-    req.className = "muted";
-    req.style.marginTop = "10px";
+    const reqWrap = document.createElement("div");
+    reqWrap.className = "list";
+    reqWrap.style.marginTop = "12px";
 
-    const lines = [];
     for (const r of active.requirements) {
+      const row = document.createElement("div");
+      row.className = "muted";
+
+      let label = "";
+      let cur = 0;
+      let goal = 0;
+
       if (r.kind === "earnCoins") {
         const startCoins = state.contracts?.startCoins ?? 0;
-        const earned = Math.max(0, (state.coins ?? 0) - startCoins);
-        lines.push(`Earn coins: ${fmt(earned)} / ${fmt(r.coins ?? 0)}`);
+        cur = Math.max(0, (state.coins ?? 0) - startCoins);
+        goal = r.coins ?? 0;
+        label = `Earn coins: ${fmt(cur)} / ${fmt(goal)}`;
       } else if (r.kind === "deliverGood") {
-        const have = state.inventory?.[r.goodKey] ?? 0;
-        lines.push(`Deliver ${r.goodKey}: ${have} / ${r.qty ?? 0}`);
+        cur = state.inventory?.[r.goodKey] ?? 0;
+        goal = r.qty ?? 0;
+        label = `Deliver ${r.goodKey}: ${cur} / ${goal}`;
       } else {
-        lines.push(`${r.kind}`);
+        label = `${r.kind}`;
       }
+
+      const text = document.createElement("div");
+      text.textContent = label;
+
+      const p = goal > 0 ? Math.max(0, Math.min(1, cur / goal)) : 0;
+      const bar = document.createElement("div");
+      bar.className = "progress";
+      bar.style.height = "10px";
+      bar.style.marginTop = "6px";
+
+      const fill = document.createElement("div");
+      fill.className = "progressFill";
+      fill.style.width = `${Math.round(p * 100)}%`;
+      bar.appendChild(fill);
+
+      row.append(text, bar);
+      reqWrap.appendChild(row);
     }
-    req.textContent = lines.join(" · ");
 
     const rewards = document.createElement("div");
     rewards.className = "muted";
-    rewards.style.marginTop = "8px";
+    rewards.style.marginTop = "10px";
     rewards.textContent = `Reward: +${active.reward.coins} coins · Penalty: -${active.penalty.coins} coins`;
 
     const btnRow = document.createElement("div");
     btnRow.className = "row";
     btnRow.style.justifyContent = "flex-end";
     btnRow.style.marginTop = "10px";
+
+    const complete = isActiveContractComplete(state);
+
+    if (complete) {
+      const redeem = document.createElement("button");
+      redeem.className = "primary";
+      redeem.textContent = "Redeem";
+      redeem.addEventListener("click", () => {
+        redeemActiveContract(state);
+        save(state);
+        render();
+      });
+      btnRow.append(redeem);
+    }
 
     const abandon = document.createElement("button");
     abandon.textContent = `Abandon (-${active.penalty.coins} coins)`;
@@ -413,7 +453,7 @@ function renderContract() {
     });
 
     btnRow.append(abandon);
-    div.append(top, desc, req, rewards, btnRow);
+    div.append(top, desc, reqWrap, rewards, btnRow);
     els.contract.appendChild(div);
     return;
   }

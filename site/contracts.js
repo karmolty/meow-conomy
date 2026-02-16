@@ -161,3 +161,50 @@ export function abandonActiveContract(state) {
 
   return true;
 }
+
+/**
+ * Check whether the active contract's requirements are currently satisfied.
+ * (Does not consider deadline; UI should still show remaining time.)
+ * @param {any} state
+ * @returns {boolean}
+ */
+export function isActiveContractComplete(state) {
+  const c = getActiveContract(state);
+  if (!c) return false;
+
+  for (const r of c.requirements || []) {
+    if (r.kind === "earnCoins") {
+      const startCoins = Number(state.contracts?.startCoins) || 0;
+      const earned = Math.max(0, (Number(state.coins) || 0) - startCoins);
+      if (earned < (r.coins ?? 0)) return false;
+    } else if (r.kind === "deliverGood") {
+      const have = Number(state.inventory?.[r.goodKey] ?? 0) || 0;
+      if (have < (r.qty ?? 0)) return false;
+    } else {
+      // Unknown requirement type → treat as incomplete.
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Redeem the active contract if complete: grants reward and clears active.
+ * @param {any} state
+ * @returns {boolean} true if redeemed
+ */
+export function redeemActiveContract(state) {
+  const c = getActiveContract(state);
+  if (!c) return false;
+  if (!isActiveContractComplete(state)) return false;
+
+  const reward = c.reward?.coins ?? 0;
+  state.coins = (Number(state.coins) || 0) + reward;
+
+  state.contracts.activeId = null;
+  state.contracts.startedAtSec = null;
+  state.contracts.startCoins = null;
+
+  return true;
+}
