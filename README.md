@@ -9,6 +9,11 @@ A minimalist cat-themed incremental browser game (inspired by the genre, not a c
 - Static site output lives in `site/`
 - Deployed to GitHub Pages via GitHub Actions on push to `main`
 
+## Deployment (GitHub Pages)
+- Push to `main` → GitHub Actions publishes `site/` to Pages.
+- Live URL: https://karmolty.github.io/meow-conomy/
+- If you change paths/asset URLs, verify `site/index.html` still works when served from `/meow-conomy/`.
+
 ## Local dev
 Open `site/index.html` in a browser.
 

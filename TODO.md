@@ -101,7 +101,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Save/load (localStorage or JSON) for run + meta progression
 - [ ] Document tuning knobs (pacing, price volatility, heat scaling, contract rewards)
 - [ ] Add tests for tick/pricing/contracts (core invariants)
-- [ ] Deployment instructions (GitHub Pages if applicable)
+- [x] Deployment instructions (GitHub Pages if applicable)
 
 ## Nice-to-have (after v1.0)
 - [ ] Opt-in challenge modes (explicit fail states)
