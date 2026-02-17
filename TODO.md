@@ -95,7 +95,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - unlock new district/market OR
   - unlock new contract type OR
   - unlock new scheme slot
-- [ ] UI: prestige explainer (what resets, what carries, why)
+- [x] UI: prestige explainer (what resets, what carries, why)
 
 ## v1.0 — Stable Minimal Game
 - [ ] Save/load (localStorage or JSON) for run + meta progression

@@ -12,6 +12,7 @@ import {
 import { JOB_DEFS, JOB_CAPS, assignCatJob, jobCounts } from "./cats.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
 import { GOALS } from "./goals.js";
+import { endSeason, whiskersForCoins } from "./prestige.js";
 
 const STORAGE_KEY = "meowconomy.save.v0.2.1";
 
@@ -49,6 +50,8 @@ const els = {
   app: document.getElementById("app"),
   coins: document.getElementById("statCoins"),
   heat: document.getElementById("statHeat"),
+  whiskers: document.getElementById("statWhiskers"),
+  seasons: document.getElementById("statSeasons"),
   progressFill: document.getElementById("progressFill"),
   progressLabel: document.getElementById("progressLabel"),
   goalText: document.getElementById("goalText"),
@@ -62,6 +65,8 @@ const els = {
   schemes: document.getElementById("schemes"),
   saveStatus: document.getElementById("saveStatus"),
   btnHardReset: document.getElementById("btnHardReset"),
+  btnEndSeason: document.getElementById("btnEndSeason"),
+  prestigeExplainer: document.getElementById("prestigeExplainer"),
   repoLink: document.getElementById("repoLink"),
   gameTitle: document.getElementById("gameTitle")
 };
@@ -579,6 +584,15 @@ function render() {
   if (heatLine) heatLine.style.display = state.unlocked?.heat ? "" : "none";
   if (els.heat) els.heat.textContent = Math.round(state.heat ?? 0);
 
+  // Meta (prestige)
+  state.meta ||= { whiskers: 0, seasons: 0 };
+  if (els.whiskers) els.whiskers.textContent = Math.round(state.meta.whiskers ?? 0);
+  if (els.seasons) els.seasons.textContent = Math.round(state.meta.seasons ?? 0);
+  if (els.prestigeExplainer) {
+    const award = whiskersForCoins(state.coins ?? 0);
+    els.prestigeExplainer.textContent = `End Season resets coins, inventory, contracts, Heat, and market pressure. You keep Whiskers + Seasons. (You'd gain ${award} Whiskers right now.)`;
+  }
+
   // Level goals (manual “Level Up” button).
   // v0: unlock Catnip at 100 coins.
   const level = Number(state.level) || 0;
@@ -639,6 +653,17 @@ els.btnHardReset.addEventListener("click", () => {
   if (!confirm("Hard reset? This deletes your save.")) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
+});
+
+els.btnEndSeason?.addEventListener("click", () => {
+  const award = whiskersForCoins(state.coins ?? 0);
+  const ok = confirm(
+    `End Season?\n\nYou will RESET: coins, inventory, contracts, Heat, and market pressure.\nYou will KEEP: Whiskers, Seasons, and your seed (deterministic save).\n\nWhiskers gained now: ${award}.`
+  );
+  if (!ok) return;
+  endSeason(state);
+  save(state);
+  render();
 });
 
 els.btnLevelUp?.addEventListener("click", () => {
