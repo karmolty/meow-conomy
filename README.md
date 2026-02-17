@@ -47,3 +47,11 @@ Manual “viable strategy” smoke tests (v0.2 AC1 support):
 - Click **End Season** in the Core panel.
 - You gain **Whiskers** based on your current coins, then your run state resets (coins/inventory/contracts/Heat/market pressure).
 - You keep **Whiskers** and **Seasons**.
+
+## Tuning knobs (balance)
+Quick pointers for pacing/balance tweaks:
+- **Goods feel / volatility**: `goodParams()` in `src/game.js` (`volSlow`, `volFast`, `drift`, `meanRev`, regime durations).
+- **Saturation strength + recovery**: `withPressure()` (multiplier per pressure) + `decayPressure()` (`decayPerSec`) in `src/game.js`.
+- **Heat scaling**: trade Heat deltas in `buy()`/`sell()` and job mitigation in cats logic (`src/game.js`, `src/cats.js`).
+- **Trader constraints**: fees + action rate in `src/traders.js`.
+- **Prestige rewards**: `whiskersForCoins()` in `src/prestige.js`.
