@@ -12,6 +12,10 @@ A minimalist cat-themed incremental browser game (inspired by the genre, not a c
 ## Local dev
 Open `site/index.html` in a browser.
 
+## Saving
+- The game auto-saves to `localStorage`.
+- Use **Hard reset** to clear your save.
+
 ## Smoke test
 Automated:
 

@@ -98,7 +98,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] UI: prestige explainer (what resets, what carries, why)
 
 ## v1.0 — Stable Minimal Game
-- [ ] Save/load (localStorage or JSON) for run + meta progression
+- [x] Save/load (localStorage or JSON) for run + meta progression
 - [ ] Document tuning knobs (pacing, price volatility, heat scaling, contract rewards)
 - [ ] Add tests for tick/pricing/contracts (core invariants)
 - [ ] Deployment instructions (GitHub Pages if applicable)
