@@ -34,7 +34,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Implement regime switching (calm/choppy/hype) with durations and per-good parameterization
   - [x] Ensure determinism: same seed + same actions => same prices
   - [x] Calibrate vol by good (kibble < catnip < shiny)
-  - [ ] Add tests for invariants + determinism + no obvious periodic loop in a 3-min window
+  - [x] Add tests for invariants + determinism + no obvious periodic loop in a 3-min window
 - [x] Add a **tiny price graph widget** (sparkline per good) so players can see recent trend at a glance.
 
 ### Cats / capacity

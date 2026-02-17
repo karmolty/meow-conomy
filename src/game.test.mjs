@@ -39,6 +39,7 @@ function clone(x) {
 
   for (const g of GOODS) {
     assert.equal(a.market[g.key].price, b.market[g.key].price, "prices deterministic for same time");
+    assert.ok(a.market[g.key].price >= 1, "price bounded >= 1");
   }
 
   // Buying reduces coins, increases inventory.
@@ -90,6 +91,53 @@ function clone(x) {
   // Never go negative.
   assert.ok(a.coins >= 0);
   for (const g of GOODS) assert.ok(a.inventory[g.key] >= 0);
+}
+
+// Price engine: determinism across runs + no obvious short periodic loop.
+{
+  const dt = 0.25;
+  const steps = Math.round(180 / dt); // 3 minutes
+
+  const s1 = clone(DEFAULT_STATE);
+  const s2 = clone(DEFAULT_STATE);
+  s1.seed = 123;
+  s2.seed = 123;
+
+  const series = {};
+  for (const g of GOODS) series[g.key] = [];
+
+  for (let i = 0; i < steps; i++) {
+    tick(s1, dt);
+    tick(s2, dt);
+    for (const g of GOODS) {
+      const p1 = s1.market[g.key].price;
+      const p2 = s2.market[g.key].price;
+      assert.equal(p1, p2, "seeded series deterministic across runs");
+      assert.ok(p1 >= 1);
+      series[g.key].push(p1);
+    }
+  }
+
+  // Reject exact repeating loops with short periods (super obvious cycles).
+  // We only check exact equality since prices are rounded to cents.
+  function hasExactPeriod(arr, period) {
+    for (let i = period; i < arr.length; i++) {
+      if (arr[i] !== arr[i - period]) return false;
+    }
+    return true;
+  }
+
+  for (const g of GOODS) {
+    const arr = series[g.key];
+    // Periods from 1s..30s (4..120 steps)
+    for (let period = 4; period <= 120; period++) {
+      assert.equal(
+        hasExactPeriod(arr, period),
+        false,
+        `no exact repeating loop: ${g.key} period=${(period * dt).toFixed(2)}s`
+      );
+    }
+  }
 }
 
 // Contract schema + single-active enforcement.
