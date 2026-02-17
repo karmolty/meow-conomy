@@ -29,11 +29,11 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [ ] **v0.2.1 Price Engine v1** (see MILESTONES.md / DESIGN.md)
   - [x] Add `state.seed` (persisted in save); initialize once for new saves
   - [x] Add tiny PRNG (xorshift32) + helpers (uniform, maybe gaussian-ish via sum-of-uniforms)
-  - [ ] Add `state.marketLatent` per good (anchor, drift, regime, timers)
-  - [ ] Replace `basePriceAtTime()` with latent update + multi-timescale components
-  - [ ] Implement regime switching (calm/choppy/hype) with durations and per-good parameterization
-  - [ ] Ensure determinism: same seed + same actions => same prices
-  - [ ] Calibrate vol by good (kibble < catnip < shiny)
+  - [x] Add `state.marketLatent` per good (anchor, drift, regime, timers)
+  - [x] Replace `basePriceAtTime()` with latent update + multi-timescale components
+  - [x] Implement regime switching (calm/choppy/hype) with durations and per-good parameterization
+  - [x] Ensure determinism: same seed + same actions => same prices
+  - [x] Calibrate vol by good (kibble < catnip < shiny)
   - [ ] Add tests for invariants + determinism + no obvious periodic loop in a 3-min window
 - [x] Add a **tiny price graph widget** (sparkline per good) so players can see recent trend at a glance.
 
