@@ -94,6 +94,12 @@ export const DEFAULT_STATE = {
   // Risk meter (v0.3): currently informational only.
   heat: 0,
 
+  // Meta progression (v0.4)
+  meta: {
+    whiskers: 0,
+    seasons: 0
+  },
+
   history: {
     // goodKey: number[] (recent prices)
   },
@@ -217,12 +223,12 @@ function prngNormish(state, streamKey) {
 function goodParams(goodKey) {
   // Keep kibble calmer; shiny wild.
   if (goodKey === "kibble") {
-    return { base: 10, volSlow: 0.35, volFast: 0.65, drift: 0.03, meanRev: 0.18, regimeMin: 20, regimeMax: 55 };
+    return { base: 10, volSlow: 0.22, volFast: 0.40, drift: 0.02, meanRev: 0.24, regimeMin: 24, regimeMax: 60 };
   }
   if (goodKey === "catnip") {
-    return { base: 18, volSlow: 0.8, volFast: 1.6, drift: 0.05, meanRev: 0.12, regimeMin: 18, regimeMax: 50 };
+    return { base: 18, volSlow: 0.55, volFast: 1.05, drift: 0.035, meanRev: 0.16, regimeMin: 20, regimeMax: 55 };
   }
-  return { base: 40, volSlow: 1.6, volFast: 3.2, drift: 0.08, meanRev: 0.08, regimeMin: 14, regimeMax: 45 };
+  return { base: 40, volSlow: 1.10, volFast: 2.20, drift: 0.055, meanRev: 0.10, regimeMin: 16, regimeMax: 50 };
 }
 
 function initLatentForGood(state, goodKey) {
@@ -263,7 +269,7 @@ function updateLatent(state, goodKey, dt) {
 
   maybeSwitchRegime(state, goodKey, dt);
 
-  const regimeVol = l.regime === "calm" ? 0.75 : l.regime === "choppy" ? 1.1 : 1.6;
+  const regimeVol = l.regime === "calm" ? 0.70 : l.regime === "choppy" ? 1.0 : 1.35;
   const driftKick = prngNormish(state, `drift:${goodKey}`) * p.drift * regimeVol;
   l.drift = clamp(l.drift * 0.92 + driftKick, -0.6, 0.6);
 
@@ -361,7 +367,6 @@ export function tick(state, dt) {
   if (!state.unlocked.heat && (state.coins ?? 0) >= 500) state.unlocked.heat = true;
   if (!state.unlocked.traders && (state.coins ?? 0) >= 800) state.unlocked.traders = true;
   if (!state.unlocked.cats && (state.coins ?? 0) >= 1200) state.unlocked.cats = true;
-  if (!state.unlocked.schemes && (state.coins ?? 0) >= 500) state.unlocked.schemes = true;
 
   decayPressure(state, safeDt);
   recomputeMarket(state);
