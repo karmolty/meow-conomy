@@ -67,6 +67,11 @@ const els = {
 };
 
 const state = load();
+// Seed should be initialized once per new save so price evolution can be deterministic per-save.
+if (!state.seed) {
+  state.seed = (Math.random() * 2 ** 32) >>> 0;
+  save(state);
+}
 state._lastTickMs ??= nowMs();
 
 function setSaveStatus(text) {
