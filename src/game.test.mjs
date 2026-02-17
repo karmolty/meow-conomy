@@ -14,6 +14,7 @@ import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
 import { EVENT_DEFS, maybeTriggerEvent, eventProb } from "./events.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
 import { endSeason, whiskersForCoins } from "./prestige.js";
+import { createRng } from "./rng.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -21,6 +22,15 @@ function clone(x) {
 
 // Basic invariants + determinism smoke tests.
 {
+  // PRNG determinism (seeded).
+  {
+    const r1 = createRng(123);
+    const r2 = createRng(123);
+    for (let i = 0; i < 10; i++) {
+      assert.equal(r1.nextU32(), r2.nextU32(), "rng: nextU32 deterministic");
+    }
+  }
+
   const a = clone(DEFAULT_STATE);
   const b = clone(DEFAULT_STATE);
 
