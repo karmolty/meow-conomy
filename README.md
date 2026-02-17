@@ -33,3 +33,8 @@ Manual “viable strategy” smoke tests (v0.2 AC1 support):
 - Trade the swingy good:
   - buy dips, sell spikes
 - If you get stuck, pivot back to Kibble to stabilize.
+
+## Prestige (End Season)
+- Click **End Season** in the Core panel.
+- You gain **Whiskers** based on your current coins, then your run state resets (coins/inventory/contracts/Heat/market pressure).
+- You keep **Whiskers** and **Seasons**.
