@@ -26,7 +26,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Expand to 3 goods (Kibble/Catnip/Shiny Things or renamed)
 - [x] Add **saturation**: repeatedly trading the same good reduces its profitability (per-good pressure variable)
 - [x] Implement price update rule that depends on saturation + mild drift (deterministic or seedable RNG)
-- [ ] **v0.2.1 Price Engine v1** (see MILESTONES.md / DESIGN.md)
+- [x] **v0.2.1 Price Engine v1** (see MILESTONES.md / DESIGN.md)
   - [x] Add `state.seed` (persisted in save); initialize once for new saves
   - [x] Add tiny PRNG (xorshift32) + helpers (uniform, maybe gaussian-ish via sum-of-uniforms)
   - [x] Add `state.marketLatent` per good (anchor, drift, regime, timers)
