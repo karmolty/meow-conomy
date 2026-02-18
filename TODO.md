@@ -102,6 +102,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Document tuning knobs (pacing, price volatility, heat scaling, contract rewards)
 - [ ] Add tests for tick/pricing/contracts (core invariants)
   - [x] Contract edge-cases: rejecting unknown ids; abandoning only when active
+  - [x] Prestige reset: clears contract, cat jobs, scheme runtime, trader runtime
 - [x] Deployment instructions (GitHub Pages if applicable)
 
 ## Nice-to-have (after v1.0)

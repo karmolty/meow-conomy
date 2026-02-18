@@ -47,6 +47,23 @@ export function endSeason(state) {
     state.contracts.startCoins = null;
   }
 
+  // Reset schemes runtime (cooldowns/active effects) for a clean new run.
+  if (state.schemes) {
+    for (const k of Object.keys(state.schemes)) {
+      if (!state.schemes[k]) continue;
+      state.schemes[k].cooldownLeft = 0;
+      state.schemes[k].activeLeft = 0;
+    }
+  }
+
+  // Reset cat allocations.
+  if (Array.isArray(state.cats)) {
+    for (const c of state.cats) c.job = null;
+  }
+
+  // Reset trader runtime budgets.
+  state.traderRuntime = {};
+
   // Reset market pressure/latent; keep seed so it stays deterministic per save.
   state.market = {};
   state.marketLatent = {};

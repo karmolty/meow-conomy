@@ -275,15 +275,27 @@ function clone(x) {
   s.coins = 450;
   s.inventory.kibble = 3;
   s.heat = 80;
+  s.contracts.activeId = CONTRACTS[0].id;
+  s.cats[0].job = "production";
+  s.schemes.hustle.cooldownLeft = 12;
+  s.schemes.hustle.activeLeft = 3;
+  s.traderRuntime = { tuna: { budget: 0.8 } };
 
   const w0 = s.meta?.whiskers ?? 0;
   assert.equal(whiskersForCoins(450), Math.floor(450 / 200));
   const { whiskersAwarded } = endSeason(s);
   assert.equal(whiskersAwarded, whiskersForCoins(450));
   assert.equal(s.meta.whiskers, w0 + whiskersAwarded);
+
+  // Run reset.
   assert.equal(s.coins, 50);
   assert.equal(s.inventory.kibble, 0);
   assert.equal(s.heat, 0);
+  assert.equal(s.contracts.activeId, null);
+  assert.equal(s.cats[0].job, null);
+  assert.equal(s.schemes.hustle.cooldownLeft, 0);
+  assert.equal(s.schemes.hustle.activeLeft, 0);
+  assert.deepEqual(s.traderRuntime, {});
 }
 
 console.log("ok - game.test.mjs");
