@@ -8,6 +8,7 @@ import {
   getAvailableContracts,
   getActiveContract,
   abandonActiveContract,
+  failExpiredActiveContract,
   isActiveContractExpired,
   isActiveContractComplete,
   redeemActiveContract
@@ -227,13 +228,28 @@ function clone(x) {
   s.time = s.contracts.startedAtSec + delivery.deadlineSec + 0.01;
   assert.equal(isActiveContractExpired(s), true);
 
+  // Expiry failure applies penalty and clears.
+  s.coins = 100;
+  assert.equal(failExpiredActiveContract(s), true);
+  assert.equal(getActiveContract(s), null);
+  assert.equal(s.coins, 100 - delivery.penalty.coins);
+
+  // Tick integration: failing happens from tick loop too.
+  assert.ok(acceptContract(s, delivery));
+  s.time = s.contracts.startedAtSec + delivery.deadlineSec + 0.01;
+  s.coins = 100;
+  tick(s, 0); // doesn't advance time, but should apply failure
+  assert.equal(getActiveContract(s), null);
+  assert.equal(s.coins, 100 - delivery.penalty.coins);
+
   // Completion and redemption.
   s.time = 0;
   s.inventory.kibble = 8;
+  assert.ok(acceptContract(s, delivery));
   assert.equal(isActiveContractComplete(s), true);
   assert.ok(redeemActiveContract(s));
   assert.equal(s.inventory.kibble, 0, "delivered goods are consumed");
-  assert.equal(s.coins, 50 + delivery.reward.coins, "reward coins granted");
+  assert.equal(s.coins, 100 - delivery.penalty.coins + delivery.reward.coins, "reward coins granted");
   assert.equal(getActiveContract(s), null);
 }
 

@@ -186,6 +186,27 @@ export function abandonActiveContract(state) {
 }
 
 /**
+ * If the active contract is expired, apply penalty and clear it.
+ * Intended to be called from the main tick loop.
+ * @param {any} state
+ * @returns {boolean} true if a contract was failed
+ */
+export function failExpiredActiveContract(state) {
+  const c = getActiveContract(state);
+  if (!c) return false;
+  if (!isActiveContractExpired(state)) return false;
+
+  const penalty = c.penalty?.coins ?? 0;
+  state.coins = Math.max(0, (Number(state.coins) || 0) - penalty);
+
+  state.contracts.activeId = null;
+  state.contracts.startedAtSec = null;
+  state.contracts.startCoins = null;
+
+  return true;
+}
+
+/**
  * Whether the active contract deadline has passed.
  * @param {any} state
  * @returns {boolean}

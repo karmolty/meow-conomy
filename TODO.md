@@ -104,6 +104,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Contract edge-cases: rejecting unknown ids; abandoning only when active
   - [x] Contract redeem: only when complete; consumes deliverables
   - [x] Contract deadline helper: `isActiveContractExpired()`
+  - [x] Contract expiry: auto-fail on tick (penalty + clear)
   - [x] Prestige reset: clears contract, cat jobs, scheme runtime, trader runtime
   - [x] Price engine: 10-min idle sim sanity bounds (no runaway drift)
 - [x] Deployment instructions (GitHub Pages if applicable)
