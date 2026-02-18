@@ -222,6 +222,18 @@ export function redeemActiveContract(state) {
   if (!c) return false;
   if (!isActiveContractComplete(state)) return false;
 
+  // Apply requirement side-effects (e.g., consume delivered goods).
+  for (const r of c.requirements || []) {
+    if (r.kind === "deliverGood") {
+      const key = r.goodKey;
+      const qty = Number(r.qty) || 0;
+      if (key) {
+        const have = Number(state.inventory?.[key] ?? 0) || 0;
+        state.inventory[key] = Math.max(0, have - qty);
+      }
+    }
+  }
+
   const reward = c.reward?.coins ?? 0;
   state.coins = (Number(state.coins) || 0) + reward;
 

@@ -7,7 +7,9 @@ import {
   acceptContractById,
   getAvailableContracts,
   getActiveContract,
-  abandonActiveContract
+  abandonActiveContract,
+  isActiveContractComplete,
+  redeemActiveContract
 } from "./contracts.js";
 import { JOB_DEFS, JOB_CAPS, STARTER_CATS, isValidCat, assignCatJob } from "./cats.js";
 import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
@@ -207,6 +209,22 @@ function clone(x) {
   // No-op cases.
   assert.equal(abandonActiveContract(s), false, "cannot abandon when no active contract");
   assert.equal(acceptContractById(s, "__nope__"), false, "unknown contract id is rejected");
+
+  // Redeem: only succeeds when complete, grants reward, and consumes deliverables.
+  const delivery = CONTRACTS.find(c => c.id === "starter-kibble-8");
+  assert.ok(delivery);
+  s.coins = 50;
+  s.inventory.kibble = 7;
+  assert.ok(acceptContract(s, delivery));
+  assert.equal(isActiveContractComplete(s), false);
+  assert.equal(redeemActiveContract(s), false);
+
+  s.inventory.kibble = 8;
+  assert.equal(isActiveContractComplete(s), true);
+  assert.ok(redeemActiveContract(s));
+  assert.equal(s.inventory.kibble, 0, "delivered goods are consumed");
+  assert.equal(s.coins, 50 + delivery.reward.coins, "reward coins granted");
+  assert.equal(getActiveContract(s), null);
 }
 
 // Cats / jobs schema sanity + allocation caps.
