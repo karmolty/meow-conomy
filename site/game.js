@@ -88,8 +88,11 @@ export const DEFAULT_STATE = {
 
   // v0.2.1 latent per-good state for price engine.
   marketLatent: {
-    // goodKey: { anchor, drift, regime, regimeT, slow, fast }
+    // goodKey: { anchor, drift, regime, regimeT, slow, fast, lastBase }
   },
+
+  // v0.2.1: run the latent price update at ~1Hz for clearer, chunkier moves.
+  _priceAcc: 0,
 
   // Risk meter (v0.3): currently informational only.
   heat: 0,
@@ -223,7 +226,7 @@ function prngNormish(state, streamKey) {
 function goodParams(goodKey) {
   // Keep kibble calmer; shiny wild.
   if (goodKey === "kibble") {
-    return { base: 10, volSlow: 0.22, volFast: 0.40, drift: 0.02, meanRev: 0.24, regimeMin: 24, regimeMax: 60 };
+    return { base: 10, volSlow: 0.40, volFast: 0.95, drift: 0.02, meanRev: 0.22, regimeMin: 26, regimeMax: 70 };
   }
   if (goodKey === "catnip") {
     return { base: 18, volSlow: 0.55, volFast: 1.05, drift: 0.035, meanRev: 0.16, regimeMin: 20, regimeMax: 55 };
@@ -306,12 +309,21 @@ function withPressure(basePrice, pressure = 0) {
   return Math.max(1, round2(basePrice * mult));
 }
 
-export function recomputeMarket(state) {
+export function recomputeMarket(state, { doUpdate = true, dtStep = 1 } = {}) {
   state.market ||= {};
   for (const g of GOODS) {
     const prev = state.market[g.key] || {};
     const pressure = Number.isFinite(prev.pressure) ? prev.pressure : 0;
-    const base = basePriceAtTime(state, g.key, 0.25);
+
+    // Update latent only at ~1Hz (doUpdate true). Otherwise reuse last base.
+    if (doUpdate) {
+      const base = basePriceAtTime(state, g.key, dtStep);
+      state.marketLatent ||= {};
+      state.marketLatent[g.key] ||= {};
+      state.marketLatent[g.key].lastBase = base;
+    }
+
+    const base = state.marketLatent?.[g.key]?.lastBase ?? basePriceAtTime(state, g.key, dtStep);
     state.market[g.key] = { price: withPressure(base, pressure), pressure };
   }
 }
@@ -445,7 +457,8 @@ export function buy(state, goodKey, qty = 1) {
 
   // Buying pushes pressure up (future buys are a bit pricier).
   applyPressure(state, goodKey, +q);
-  recomputeMarket(state);
+  // Recompute price with new pressure but do not advance latent time.
+  recomputeMarket(state, { doUpdate: false, dtStep: 0 });
 
   return true;
 }
@@ -470,7 +483,8 @@ export function sell(state, goodKey, qty = 1) {
 
   // Selling pushes pressure down (you’re adding supply).
   applyPressure(state, goodKey, -q);
-  recomputeMarket(state);
+  // Recompute price with new pressure but do not advance latent time.
+  recomputeMarket(state, { doUpdate: false, dtStep: 0 });
 
   return true;
 }
