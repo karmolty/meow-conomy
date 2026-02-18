@@ -436,9 +436,17 @@ function renderContract() {
     const elapsed = Math.max(0, (state.time ?? 0) - startedAt);
     const remaining = Math.max(0, Math.ceil(active.deadlineSec - elapsed));
 
+    function fmtTime(sec) {
+      const s = Math.max(0, Math.floor(sec));
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return `${m}:${String(r).padStart(2, "0")}`;
+    }
+
     const top = document.createElement("div");
     top.className = "row";
-    top.innerHTML = `<div><strong>${active.title}</strong></div><div class="muted">${remaining}s left</div>`;
+    const urgentStyle = remaining <= 10 ? "color:#b91c1c;font-weight:900;" : "";
+    top.innerHTML = `<div><strong>${active.title}</strong></div><div class="muted" style="${urgentStyle}">${fmtTime(remaining)} left</div>`;
 
     const desc = document.createElement("div");
     desc.className = "muted";
