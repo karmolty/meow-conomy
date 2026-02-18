@@ -140,8 +140,34 @@ function clone(x) {
   }
 }
 
-// Contract schema + single-active enforcement.
+// Price engine: no runaway drift in a 10-minute idle sim.
 {
+  const dt = 0.25;
+  const steps = Math.round(600 / dt); // 10 minutes
+
+  const s = clone(DEFAULT_STATE);
+  s.seed = 123;
+
+  const maxByGood = Object.fromEntries(GOODS.map(g => [g.key, 0]));
+
+  for (let i = 0; i < steps; i++) {
+    tick(s, dt);
+    for (const g of GOODS) {
+      const p = s.market[g.key].price;
+      assert.ok(Number.isFinite(p), "price finite");
+      assert.ok(p >= 1, "price bounded >= 1");
+      maxByGood[g.key] = Math.max(maxByGood[g.key], p);
+    }
+  }
+
+  // Loose sanity bounds; tune later, but this should prevent explosive drift.
+  assert.ok(maxByGood.kibble < 50);
+  assert.ok(maxByGood.catnip < 150);
+  assert.ok(maxByGood.shiny < 500);
+}
+
+// Contract schema + single-active enforcement.
+{ 
   assert.ok(CONTRACTS.length >= 1);
   for (const c of CONTRACTS) assert.ok(isValidContract(c), `valid contract: ${c?.id}`);
 
