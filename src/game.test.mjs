@@ -177,6 +177,10 @@ function clone(x) {
   assert.ok(abandonActiveContract(s));
   assert.equal(getActiveContract(s), null);
   assert.equal(s.coins, 100 - CONTRACTS[0].penalty.coins);
+
+  // No-op cases.
+  assert.equal(abandonActiveContract(s), false, "cannot abandon when no active contract");
+  assert.equal(acceptContractById(s, "__nope__"), false, "unknown contract id is rejected");
 }
 
 // Cats / jobs schema sanity + allocation caps.
