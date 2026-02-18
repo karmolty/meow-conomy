@@ -186,6 +186,20 @@ export function abandonActiveContract(state) {
 }
 
 /**
+ * Whether the active contract deadline has passed.
+ * @param {any} state
+ * @returns {boolean}
+ */
+export function isActiveContractExpired(state) {
+  const c = getActiveContract(state);
+  if (!c) return false;
+  const started = Number(state.contracts?.startedAtSec);
+  const now = Number(state.time);
+  if (!Number.isFinite(started) || !Number.isFinite(now)) return false;
+  return now - started > c.deadlineSec;
+}
+
+/**
  * Check whether the active contract's requirements are currently satisfied.
  * (Does not consider deadline; UI should still show remaining time.)
  * @param {any} state

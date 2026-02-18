@@ -8,6 +8,7 @@ import {
   getAvailableContracts,
   getActiveContract,
   abandonActiveContract,
+  isActiveContractExpired,
   isActiveContractComplete,
   redeemActiveContract
 } from "./contracts.js";
@@ -214,11 +215,20 @@ function clone(x) {
   const delivery = CONTRACTS.find(c => c.id === "starter-kibble-8");
   assert.ok(delivery);
   s.coins = 50;
+  s.time = 0;
   s.inventory.kibble = 7;
   assert.ok(acceptContract(s, delivery));
   assert.equal(isActiveContractComplete(s), false);
   assert.equal(redeemActiveContract(s), false);
 
+  // Deadline helper.
+  s.time = s.contracts.startedAtSec + delivery.deadlineSec - 0.01;
+  assert.equal(isActiveContractExpired(s), false);
+  s.time = s.contracts.startedAtSec + delivery.deadlineSec + 0.01;
+  assert.equal(isActiveContractExpired(s), true);
+
+  // Completion and redemption.
+  s.time = 0;
   s.inventory.kibble = 8;
   assert.equal(isActiveContractComplete(s), true);
   assert.ok(redeemActiveContract(s));
