@@ -186,6 +186,41 @@ export function abandonActiveContract(state) {
 }
 
 /**
+ * If the active contract is expired, apply penalty and clear it.
+ * Intended to be called from the main tick loop.
+ * @param {any} state
+ * @returns {boolean} true if a contract was failed
+ */
+export function failExpiredActiveContract(state) {
+  const c = getActiveContract(state);
+  if (!c) return false;
+  if (!isActiveContractExpired(state)) return false;
+
+  const penalty = c.penalty?.coins ?? 0;
+  state.coins = Math.max(0, (Number(state.coins) || 0) - penalty);
+
+  state.contracts.activeId = null;
+  state.contracts.startedAtSec = null;
+  state.contracts.startCoins = null;
+
+  return true;
+}
+
+/**
+ * Whether the active contract deadline has passed.
+ * @param {any} state
+ * @returns {boolean}
+ */
+export function isActiveContractExpired(state) {
+  const c = getActiveContract(state);
+  if (!c) return false;
+  const started = Number(state.contracts?.startedAtSec);
+  const now = Number(state.time);
+  if (!Number.isFinite(started) || !Number.isFinite(now)) return false;
+  return now - started > c.deadlineSec;
+}
+
+/**
  * Check whether the active contract's requirements are currently satisfied.
  * (Does not consider deadline; UI should still show remaining time.)
  * @param {any} state
@@ -221,6 +256,18 @@ export function redeemActiveContract(state) {
   const c = getActiveContract(state);
   if (!c) return false;
   if (!isActiveContractComplete(state)) return false;
+
+  // Apply requirement side-effects (e.g., consume delivered goods).
+  for (const r of c.requirements || []) {
+    if (r.kind === "deliverGood") {
+      const key = r.goodKey;
+      const qty = Number(r.qty) || 0;
+      if (key) {
+        const have = Number(state.inventory?.[key] ?? 0) || 0;
+        state.inventory[key] = Math.max(0, have - qty);
+      }
+    }
+  }
 
   const reward = c.reward?.coins ?? 0;
   state.coins = (Number(state.coins) || 0) + reward;

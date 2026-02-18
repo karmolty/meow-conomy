@@ -3,6 +3,7 @@
 
 import { runTraders } from "./traders.js";
 import { tickSchemes } from "./schemes.js";
+import { failExpiredActiveContract } from "./contracts.js";
 
 /**
  * @typedef {Object} GoodDef
@@ -402,6 +403,9 @@ export function tick(state, dt) {
   // Heat (v0.3): baseline decay; guarding increases decay a bit.
   const decay = hasJob(state, "guarding") ? 0.035 : 0.02;
   state.heat = clamp((state.heat ?? 0) - decay * safeDt, 0, 100);
+
+  // Contracts: if the deadline passes, fail it and apply penalty.
+  failExpiredActiveContract(state);
 
   return state;
 }
