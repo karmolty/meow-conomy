@@ -149,7 +149,16 @@ function clone(x) {
   tick(s, 0);
 
   assert.equal(getActiveContract(s), null);
-  assert.deepEqual(getAvailableContracts(s).map(c => c.id), CONTRACTS.map(c => c.id));
+  // By default, prestige-gated contracts are hidden.
+  assert.deepEqual(
+    getAvailableContracts(s).map(c => c.id),
+    CONTRACTS.filter(c => !(c.tags || []).includes("prestige")).map(c => c.id)
+  );
+
+  // After at least one season, prestige contracts appear.
+  s.meta ||= { whiskers: 0, seasons: 0 };
+  s.meta.seasons = 1;
+  assert.ok(getAvailableContracts(s).some(c => (c.tags || []).includes("prestige")));
 
   // Heat gating: when heat is unlocked and high, no contracts are offered.
   s.unlocked.heat = true;

@@ -58,6 +58,16 @@ export const CONTRACTS = [
     reward: { coins: 35 },
     penalty: { coins: 12 },
     tags: ["starter", "production", "safe"]
+  },
+  {
+    id: "prestige-heat-hedge",
+    title: "Back-Alley Hedge",
+    desc: "You’ve got a reputation now. Make profit, but keep Heat under control.",
+    requirements: [{ kind: "earnCoins", coins: 120 }],
+    deadlineSec: 240,
+    reward: { coins: 70 },
+    penalty: { coins: 25 },
+    tags: ["prestige", "trade", "risky"]
   }
 ];
 
@@ -107,7 +117,13 @@ export function getAvailableContracts(state) {
   const heat = Number(state?.heat) || 0;
   if (heatEnabled && heat >= 70) return [];
 
-  return CONTRACTS;
+  const seasons = Number(state?.meta?.seasons) || 0;
+  return CONTRACTS.filter(c => {
+    // Prestige-gated contracts only appear after at least 1 completed Season.
+    const isPrestige = (c.tags || []).includes("prestige");
+    if (isPrestige) return seasons >= 1;
+    return true;
+  });
 }
 
 /**

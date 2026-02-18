@@ -58,6 +58,16 @@ export const CONTRACTS = [
     reward: { coins: 35 },
     penalty: { coins: 12 },
     tags: ["starter", "production", "safe"]
+  },
+  {
+    id: "prestige-heat-hedge",
+    title: "Back-Alley Hedge",
+    desc: "You’ve got a reputation now. Make profit, but keep Heat under control.",
+    requirements: [{ kind: "earnCoins", coins: 120 }],
+    deadlineSec: 240,
+    reward: { coins: 70 },
+    penalty: { coins: 25 },
+    tags: ["prestige", "trade", "risky"]
   }
 ];
 
@@ -100,7 +110,20 @@ export function isValidContract(c) {
  */
 export function getAvailableContracts(state) {
   if (state?.contracts?.activeId) return [];
-  return CONTRACTS;
+
+  // Heat gating (v0.2.2 / v0.3): at high Heat, nobody wants to work with you.
+  // This gives Heat an immediate, visible gameplay effect without hard-failing.
+  const heatEnabled = Boolean(state?.unlocked?.heat);
+  const heat = Number(state?.heat) || 0;
+  if (heatEnabled && heat >= 70) return [];
+
+  const seasons = Number(state?.meta?.seasons) || 0;
+  return CONTRACTS.filter(c => {
+    // Prestige-gated contracts only appear after at least 1 completed Season.
+    const isPrestige = (c.tags || []).includes("prestige");
+    if (isPrestige) return seasons >= 1;
+    return true;
+  });
 }
 
 /**
