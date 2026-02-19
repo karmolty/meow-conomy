@@ -228,12 +228,12 @@ function prngNormish(state, streamKey) {
 function goodParams(goodKey) {
   // Keep kibble calmer; shiny wild.
   if (goodKey === "kibble") {
-    return { base: 10, volSlow: 0.40, volFast: 0.95, drift: 0.02, meanRev: 0.22, regimeMin: 26, regimeMax: 70 };
+    return { base: 10, volSlow: 0.55, volFast: 1.35, drift: 0.02, meanRev: 0.20, regimeMin: 26, regimeMax: 70 };
   }
   if (goodKey === "catnip") {
-    return { base: 18, volSlow: 0.55, volFast: 1.05, drift: 0.035, meanRev: 0.16, regimeMin: 20, regimeMax: 55 };
+    return { base: 18, volSlow: 0.75, volFast: 1.45, drift: 0.04, meanRev: 0.14, regimeMin: 20, regimeMax: 55 };
   }
-  return { base: 40, volSlow: 1.10, volFast: 2.20, drift: 0.055, meanRev: 0.10, regimeMin: 16, regimeMax: 50 };
+  return { base: 40, volSlow: 1.45, volFast: 2.95, drift: 0.06, meanRev: 0.09, regimeMin: 16, regimeMax: 50 };
 }
 
 function initLatentForGood(state, goodKey) {
@@ -274,7 +274,7 @@ function updateLatent(state, goodKey, dt) {
 
   maybeSwitchRegime(state, goodKey, dt);
 
-  const regimeVol = l.regime === "calm" ? 0.70 : l.regime === "choppy" ? 1.0 : 1.35;
+  const regimeVol = l.regime === "calm" ? 0.75 : l.regime === "choppy" ? 1.05 : 1.55;
   const driftKick = prngNormish(state, `drift:${goodKey}`) * p.drift * regimeVol;
   l.drift = clamp(l.drift * 0.92 + driftKick, -0.6, 0.6);
 
@@ -383,7 +383,15 @@ export function tick(state, dt) {
   if (!state.unlocked.cats && (state.coins ?? 0) >= 1200) state.unlocked.cats = true;
 
   decayPressure(state, safeDt);
-  recomputeMarket(state);
+
+  // Update latent price engine at ~1Hz for clearer moves.
+  state._priceAcc = (Number(state._priceAcc) || 0) + safeDt;
+  let doUpdate = false;
+  while (state._priceAcc >= 1) {
+    state._priceAcc -= 1;
+    doUpdate = true;
+  }
+  recomputeMarket(state, { doUpdate, dtStep: 1 });
 
   // Record price history for UI sparklines.
   state.history ||= {};
