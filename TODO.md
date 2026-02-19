@@ -54,7 +54,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Define Trader schema + rule format
   - [x] Implement trader execution per tick (respects caps + action rate + fees)
   - [x] UI to configure trader rules
-  - [ ] (later) Heat integration / additional constraints
+  - [x] Heat integration: trader actions generate Heat (and Heat reduces trader action rate)
 
 ### Balance checks
 - [x] Add 2 “viable strategy” smoke tests (even if manual): trade-first vs produce-first can both clear a starter contract

@@ -332,6 +332,17 @@ function clone(x) {
   // With heat=100 and clamp to 0.2, budget should accrue slower.
   // (We just sanity-check the runtime budget is small.)
   assert.ok((hot.traderRuntime?.tuna?.budget ?? 0) < 1);
+
+  // Trader actions generate Heat once Heat is unlocked.
+  const ht = clone(DEFAULT_STATE);
+  tick(ht, 1);
+  ht.unlocked.heat = true;
+  ht.heat = 0;
+  ht.traders[0].enabled = true;
+  ht.market.kibble.price = 9;
+  runTraders(ht, 5);
+  runTraders(ht, 5);
+  assert.ok(ht.heat > 0);
 }
 
 // Heat events: defs exist + deterministic trigger path + mitigation.

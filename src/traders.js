@@ -89,6 +89,13 @@ function round2(n) {
   return Math.round((Number(n) || 0) * 100) / 100;
 }
 
+function heatForTrade(goodKey, qty) {
+  // Mirror core trade Heat generation, but keep it local to avoid coupling.
+  const q = Math.max(0, Math.floor(qty));
+  const base = goodKey === "kibble" ? 0.05 : goodKey === "catnip" ? 0.12 : 0.18;
+  return base * q;
+}
+
 function ensureLots(state, goodKey) {
   state.lots ||= {};
   if (!Array.isArray(state.lots[goodKey])) state.lots[goodKey] = [];
@@ -178,6 +185,12 @@ export function runTraders(state, dt) {
           state.coins = round2(state.coins - cost);
           state.inventory[r.goodKey] = (state.inventory?.[r.goodKey] ?? 0) + qty;
           fifoAddLot(state, r.goodKey, qty, unit);
+
+          // Trader actions also generate Heat once Heat is unlocked.
+          if (state?.unlocked?.heat) {
+            state.heat = clamp((Number(state.heat) || 0) + heatForTrade(r.goodKey, qty), 0, 100);
+          }
+
           break;
         }
 
@@ -196,6 +209,12 @@ export function runTraders(state, dt) {
 
           state.inventory[r.goodKey] = (state.inventory?.[r.goodKey] ?? 0) - qty;
           state.coins = round2(state.coins + proceeds);
+
+          // Trader actions also generate Heat once Heat is unlocked.
+          if (state?.unlocked?.heat) {
+            state.heat = clamp((Number(state.heat) || 0) + heatForTrade(r.goodKey, qty), 0, 100);
+          }
+
           break;
         }
       }
