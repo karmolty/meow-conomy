@@ -43,6 +43,9 @@ export function endSeason(state) {
   // Reset run resources.
   state.coins = 50;
   state.inventory = Object.fromEntries(GOODS.map(g => [g.key, 0]));
+  // Reset FIFO lots (cost basis) for the new season.
+  state.lots = Object.fromEntries(GOODS.map(g => [g.key, []]));
+  state.lastTrade = null;
   state.heat = 0;
 
   // Clear contracts.

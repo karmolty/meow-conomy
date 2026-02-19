@@ -129,6 +129,13 @@ export const DEFAULT_STATE = {
     startCoins: null
   },
 
+  // Cost basis tracking (FIFO lots) for realized P/L display.
+  // lots[goodKey] = [{ qty, unitCost }...]
+  lots: Object.fromEntries(GOODS.map(g => [g.key, []])),
+
+  // Last trade summary for UI (realized P/L, etc.)
+  lastTrade: null,
+
   // Traders (assistive automation; v0.2+)
   traders: [
     {
@@ -448,6 +455,43 @@ function sellPrice(state, goodKey) {
   return hasJob(state, "negotiating") ? round2(p * 1.02) : p;
 }
 
+function ensureLots(state, goodKey) {
+  state.lots ||= {};
+  if (!Array.isArray(state.lots[goodKey])) state.lots[goodKey] = [];
+  return state.lots[goodKey];
+}
+
+function fifoAddLot(state, goodKey, qty, unitCost) {
+  const q = Math.max(0, Math.floor(qty));
+  if (q <= 0) return;
+  const u = Number.isFinite(unitCost) ? unitCost : 0;
+  const lots = ensureLots(state, goodKey);
+  lots.push({ qty: q, unitCost: round2(u) });
+}
+
+function fifoConsumeCost(state, goodKey, qty) {
+  // Consume FIFO lots and return total cost basis.
+  const q = Math.max(0, Math.floor(qty));
+  if (q <= 0) return 0;
+
+  const lots = ensureLots(state, goodKey);
+  let left = q;
+  let cost = 0;
+
+  while (left > 0 && lots.length > 0) {
+    const lot = lots[0];
+    const take = Math.min(left, Math.max(0, Math.floor(lot.qty || 0)));
+    const unit = Number.isFinite(lot.unitCost) ? lot.unitCost : 0;
+    cost += unit * take;
+    lot.qty -= take;
+    left -= take;
+    if (lot.qty <= 0) lots.shift();
+  }
+
+  // If we somehow had less lots than inventory (e.g., old save), assume 0 basis for remainder.
+  return round2(cost);
+}
+
 export function canBuy(state, goodKey, qty = 1) {
   const q = Math.max(0, Math.floor(qty));
   const price = buyPrice(state, goodKey);
@@ -464,6 +508,18 @@ export function buy(state, goodKey, qty = 1) {
 
   state.coins = round2((state.coins ?? 0) - cost);
   state.inventory[goodKey] = clamp0((state.inventory?.[goodKey] ?? 0) + q);
+
+  // FIFO cost basis: buying adds a lot.
+  fifoAddLot(state, goodKey, q, price);
+
+  // Last trade summary for UI.
+  state.lastTrade = {
+    kind: "buy",
+    goodKey,
+    qty: q,
+    unitPrice: price,
+    cost: round2(cost)
+  };
 
   // Heat: buying creates attention.
   state.heat = clamp((state.heat ?? 0) + heatMult(state) * heatForTrade(goodKey, q), 0, 100);
@@ -488,8 +544,24 @@ export function sell(state, goodKey, qty = 1) {
   if (q <= 0) return false;
   if ((state.inventory?.[goodKey] ?? 0) < q) return false;
 
+  // FIFO realized P/L.
+  const proceeds = round2(price * q);
+  const costBasis = fifoConsumeCost(state, goodKey, q);
+  const pnl = round2(proceeds - costBasis);
+
   state.inventory[goodKey] = clamp0((state.inventory?.[goodKey] ?? 0) - q);
-  state.coins = round2((state.coins ?? 0) + price * q);
+  state.coins = round2((state.coins ?? 0) + proceeds);
+
+  // Last trade summary for UI.
+  state.lastTrade = {
+    kind: "sell",
+    goodKey,
+    qty: q,
+    unitPrice: price,
+    proceeds,
+    costBasis,
+    pnl
+  };
 
   // Heat: selling creates attention.
   state.heat = clamp((state.heat ?? 0) + heatMult(state) * heatForTrade(goodKey, q), 0, 100);

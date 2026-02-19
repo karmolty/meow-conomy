@@ -85,6 +85,41 @@ function feeMultSell(feeBps) {
   return 1 - (Number(feeBps) || 0) / 10000;
 }
 
+function round2(n) {
+  return Math.round((Number(n) || 0) * 100) / 100;
+}
+
+function ensureLots(state, goodKey) {
+  state.lots ||= {};
+  if (!Array.isArray(state.lots[goodKey])) state.lots[goodKey] = [];
+  return state.lots[goodKey];
+}
+
+function fifoAddLot(state, goodKey, qty, unitCost) {
+  const q = Math.max(0, Math.floor(qty));
+  if (q <= 0) return;
+  const u = Number.isFinite(unitCost) ? unitCost : 0;
+  ensureLots(state, goodKey).push({ qty: q, unitCost: round2(u) });
+}
+
+function fifoConsumeCost(state, goodKey, qty) {
+  const q = Math.max(0, Math.floor(qty));
+  if (q <= 0) return 0;
+  const lots = ensureLots(state, goodKey);
+  let left = q;
+  let cost = 0;
+  while (left > 0 && lots.length > 0) {
+    const lot = lots[0];
+    const take = Math.min(left, Math.max(0, Math.floor(lot.qty || 0)));
+    const unit = Number.isFinite(lot.unitCost) ? lot.unitCost : 0;
+    cost += unit * take;
+    lot.qty -= take;
+    left -= take;
+    if (lot.qty <= 0) lots.shift();
+  }
+  return round2(cost);
+}
+
 /**
  * Execute enabled traders.
  * v0.2: simple, deterministic rule eval + rate limiting.
@@ -137,8 +172,9 @@ export function runTraders(state, dt) {
           if (qty <= 0) continue;
           if ((state.coins ?? 0) < cost) continue;
 
-          state.coins = Math.round((state.coins - cost) * 100) / 100;
+          state.coins = round2(state.coins - cost);
           state.inventory[r.goodKey] = (state.inventory?.[r.goodKey] ?? 0) + qty;
+          fifoAddLot(state, r.goodKey, qty, unit);
           break;
         }
 
@@ -152,8 +188,11 @@ export function runTraders(state, dt) {
           const unit = price * feeMultSell(t.feeBps);
           const proceeds = unit * qty;
 
+          // Consume FIFO basis so later manual sells compute correctly.
+          fifoConsumeCost(state, r.goodKey, qty);
+
           state.inventory[r.goodKey] = (state.inventory?.[r.goodKey] ?? 0) - qty;
-          state.coins = Math.round((state.coins + proceeds) * 100) / 100;
+          state.coins = round2(state.coins + proceeds);
           break;
         }
       }

@@ -222,8 +222,11 @@ function renderMarket() {
         pulse(sellBtn, "red");
         return;
       }
-      const gained = Math.max(0, (state.coins ?? 0) - (before ?? 0));
-      if (gained > 0) spawnFloater(`+$${fmt(gained)}`, { kind: "gain" });
+      // Show realized P/L (FIFO), not gross proceeds.
+      const pnl = Number(state.lastTrade?.kind === "sell" ? state.lastTrade?.pnl : NaN);
+      if (Number.isFinite(pnl) && pnl !== 0) {
+        spawnFloater(`${pnl >= 0 ? "+" : "-"}$${fmt(Math.abs(pnl))}`, { kind: pnl >= 0 ? "gain" : "lose" });
+      }
       maybeHaptic();
       pulse(sellBtn, "green");
       save(state);
