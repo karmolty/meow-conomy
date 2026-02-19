@@ -406,8 +406,10 @@ export function tick(state, dt) {
   for (const g of GOODS) {
     state.history[g.key] ||= [];
     const arr = state.history[g.key];
-    arr.push(state.market?.[g.key]?.price ?? 0);
-    if (arr.length > maxPoints) arr.splice(0, arr.length - maxPoints);
+    if (doUpdate) {
+      arr.push(state.market?.[g.key]?.price ?? 0);
+      if (arr.length > maxPoints) arr.splice(0, arr.length - maxPoints);
+    }
   }
 
   // Traders (assistive automation).
@@ -470,6 +472,7 @@ function fifoAddLot(state, goodKey, qty, unitCost) {
 }
 
 function fifoConsumeCost(state, goodKey, qty) {
+  // Consume FIFO lots and return total cost basis.
   const q = Math.max(0, Math.floor(qty));
   if (q <= 0) return 0;
 
@@ -487,6 +490,7 @@ function fifoConsumeCost(state, goodKey, qty) {
     if (lot.qty <= 0) lots.shift();
   }
 
+  // If we somehow had less lots than inventory (e.g., old save), assume 0 basis for remainder.
   return round2(cost);
 }
 
@@ -499,8 +503,10 @@ export function canBuy(state, goodKey, qty = 1) {
 
 export function buy(state, goodKey, qty = 1) {
   const q = Math.max(0, Math.floor(qty));
+  const unlocked = state.unlocked?.[goodKey] ?? true;
   const price = buyPrice(state, goodKey);
   const cost = price * q;
+  if (!unlocked) return false;
   if (q <= 0) return false;
   if ((state.coins ?? 0) < cost) return false;
 
@@ -538,10 +544,13 @@ export function canSell(state, goodKey, qty = 1) {
 
 export function sell(state, goodKey, qty = 1) {
   const q = Math.max(0, Math.floor(qty));
+  const unlocked = state.unlocked?.[goodKey] ?? true;
   const price = sellPrice(state, goodKey);
+  if (!unlocked) return false;
   if (q <= 0) return false;
   if ((state.inventory?.[goodKey] ?? 0) < q) return false;
 
+  // FIFO realized P/L.
   const proceeds = round2(price * q);
   const costBasis = fifoConsumeCost(state, goodKey, q);
   const pnl = round2(proceeds - costBasis);
@@ -549,6 +558,7 @@ export function sell(state, goodKey, qty = 1) {
   state.inventory[goodKey] = clamp0((state.inventory?.[goodKey] ?? 0) - q);
   state.coins = round2((state.coins ?? 0) + proceeds);
 
+  // Last trade summary for UI.
   state.lastTrade = {
     kind: "sell",
     goodKey,

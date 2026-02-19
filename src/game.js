@@ -406,8 +406,10 @@ export function tick(state, dt) {
   for (const g of GOODS) {
     state.history[g.key] ||= [];
     const arr = state.history[g.key];
-    arr.push(state.market?.[g.key]?.price ?? 0);
-    if (arr.length > maxPoints) arr.splice(0, arr.length - maxPoints);
+    if (doUpdate) {
+      arr.push(state.market?.[g.key]?.price ?? 0);
+      if (arr.length > maxPoints) arr.splice(0, arr.length - maxPoints);
+    }
   }
 
   // Traders (assistive automation).
