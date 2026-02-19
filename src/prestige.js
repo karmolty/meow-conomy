@@ -28,12 +28,17 @@ export function whiskersForCoins(runCoins) {
  * @returns {{whiskersAwarded:number}}
  */
 export function endSeason(state) {
-  state.meta ||= { whiskers: 0, seasons: 0 };
+  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1 };
 
   const coins = clamp0(Number(state.coins) || 0);
   const whiskersAwarded = whiskersForCoins(coins);
   state.meta.whiskers = clamp0((Number(state.meta.whiskers) || 0) + whiskersAwarded);
   state.meta.seasons = clamp0((Number(state.meta.seasons) || 0) + 1);
+
+  // Carryover unlock: additional scheme slot after the first completed Season.
+  // (This is a small-but-real new lever immediately after prestige.)
+  state.meta.schemeSlots = clamp0(Number(state.meta.schemeSlots) || 1);
+  if (state.meta.seasons >= 1) state.meta.schemeSlots = Math.max(state.meta.schemeSlots, 2);
 
   // Reset run resources.
   state.coins = 50;

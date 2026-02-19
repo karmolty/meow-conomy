@@ -300,10 +300,15 @@ function renderSchemes() {
   if (!els.schemes) return;
   els.schemes.innerHTML = "";
 
-  for (const s of SCHEMES) {
+  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1 };
+  const slots = Math.max(1, Math.floor(Number(state.meta.schemeSlots) || 1));
+
+  SCHEMES.forEach((s, i) => {
     const rt = state.schemes?.[s.id] || { cooldownLeft: 0, activeLeft: 0, charges: 0 };
     const cd = Math.ceil(rt.cooldownLeft ?? 0);
     const active = Math.ceil(rt.activeLeft ?? 0);
+
+    const locked = i >= slots;
 
     const div = document.createElement("div");
     div.className = "item";
@@ -312,13 +317,15 @@ function renderSchemes() {
     top.className = "row";
 
     const left = document.createElement("div");
-    left.innerHTML = `<strong>${s.name}</strong> <span class="muted">${cd > 0 ? `CD ${cd}s` : "ready"}${active > 0 ? ` · active ${active}s` : ""}</span>`;
+    left.innerHTML = `<strong>${s.name}</strong> <span class="muted">${locked ? "locked" : cd > 0 ? `CD ${cd}s` : "ready"}${!locked && active > 0 ? ` · active ${active}s` : ""}</span>`;
 
     const btn = document.createElement("button");
-    btn.className = cd > 0 ? "" : "primary";
-    btn.disabled = cd > 0;
-    btn.textContent = cd > 0 ? "Cooling" : "Use";
+    btn.className = (!locked && cd <= 0) ? "primary" : "";
+    btn.disabled = locked || cd > 0;
+    btn.textContent = locked ? "Locked" : (cd > 0 ? "Cooling" : "Use");
+    btn.title = locked ? "Unlock more scheme slots by ending seasons." : "";
     btn.addEventListener("click", () => {
+      if (locked) return;
       if (!activateScheme(state, s.id)) {
         pulse(btn, "red");
         return;
@@ -334,9 +341,18 @@ function renderSchemes() {
     desc.style.marginTop = "8px";
     desc.textContent = s.desc;
 
-    div.append(top, desc);
+    if (locked) {
+      const hint = document.createElement("div");
+      hint.className = "muted";
+      hint.style.marginTop = "8px";
+      hint.textContent = "End a Season to unlock more scheme slots.";
+      div.append(top, desc, hint);
+    } else {
+      div.append(top, desc);
+    }
+
     els.schemes.appendChild(div);
-  }
+  });
 }
 
 function renderTraders() {
@@ -593,7 +609,7 @@ function render() {
   if (els.heat) els.heat.textContent = Math.round(state.heat ?? 0);
 
   // Meta (prestige)
-  state.meta ||= { whiskers: 0, seasons: 0 };
+  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1 };
   if (els.whiskers) els.whiskers.textContent = Math.round(state.meta.whiskers ?? 0);
   if (els.seasons) els.seasons.textContent = Math.round(state.meta.seasons ?? 0);
   if (els.prestigeExplainer) {

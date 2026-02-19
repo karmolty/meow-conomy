@@ -94,7 +94,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [ ] Implement carryover/unlocks:
   - [ ] unlock new district/market
   - [x] unlock new contract type (prestige-gated contract after Season 1)
-  - [ ] unlock new scheme slot
+  - [x] unlock new scheme slot (meta.schemeSlots; +1 slot after Season 1)
 - [x] UI: prestige explainer (what resets, what carries, why)
 
 ## v1.0 — Stable Minimal Game

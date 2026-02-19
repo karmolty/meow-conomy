@@ -101,7 +101,8 @@ export const DEFAULT_STATE = {
   // Meta progression (v0.4)
   meta: {
     whiskers: 0,
-    seasons: 0
+    seasons: 0,
+    schemeSlots: 1
   },
 
   history: {
