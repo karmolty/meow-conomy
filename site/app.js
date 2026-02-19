@@ -99,6 +99,26 @@ function pulse(btn, kind = "green") {
   setTimeout(() => btn.classList.remove(cls), 260);
 }
 
+function spawnFloater(text, { x, y, kind = "gain" } = {}) {
+  const layer = document.getElementById("floaties");
+  if (!layer) return;
+
+  // Default to a nice spot near the bottom-right quadrant.
+  const px = Number.isFinite(x) ? x : Math.round(window.innerWidth * 0.70);
+  const py = Number.isFinite(y) ? y : Math.round(window.innerHeight * 0.55);
+
+  const el = document.createElement("div");
+  el.className = "floater" + (kind === "lose" ? " lose" : "");
+  el.textContent = text;
+  el.style.left = px + "px";
+  el.style.top = py + "px";
+
+  layer.appendChild(el);
+  // remove after animation
+  setTimeout(() => el.remove(), 1100);
+}
+
+
 function sparkline(values, width = 14) {
   const valsAll = (values || []).filter(n => Number.isFinite(n));
   if (valsAll.length < 2) return "";
@@ -175,10 +195,13 @@ function renderMarket() {
     function doBuyOne(e) {
       // iOS Safari: prevent touch gestures (double-tap zoom) from winning.
       if (e?.cancelable) e.preventDefault();
+      const before = state.coins;
       if (!buy(state, g.key, 1)) {
         pulse(buyBtn, "red");
         return;
       }
+      const spent = Math.max(0, (before ?? 0) - (state.coins ?? 0));
+      if (spent > 0) spawnFloater(`-$${fmt(spent)}`, { kind: "lose" });
       maybeHaptic();
       pulse(buyBtn, "green");
       save(state);
@@ -194,10 +217,13 @@ function renderMarket() {
     sellBtn.disabled = (state.inventory?.[g.key] ?? 0) < 1;
     function doSellOne(e) {
       if (e?.cancelable) e.preventDefault();
+      const before = state.coins;
       if (!sell(state, g.key, 1)) {
         pulse(sellBtn, "red");
         return;
       }
+      const gained = Math.max(0, (state.coins ?? 0) - (before ?? 0));
+      if (gained > 0) spawnFloater(`+$${fmt(gained)}`, { kind: "gain" });
       maybeHaptic();
       pulse(sellBtn, "green");
       save(state);
