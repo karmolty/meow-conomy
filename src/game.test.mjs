@@ -308,6 +308,19 @@ function clone(x) {
   assert.ok(s.inventory.kibble >= 1);
   assert.ok(s.coins < coins0);
 
+  // Traders respect unlock gating too.
+  const locked = clone(DEFAULT_STATE);
+  tick(locked, 1);
+  locked.unlocked.catnip = false;
+  locked.traders[0].enabled = true;
+  locked.traders[0].rules = [{ kind: "buyBelow", goodKey: "catnip", price: 999, qty: 1 }];
+  locked.market.catnip.price = 1;
+  const coins1 = locked.coins;
+  runTraders(locked, 5);
+  runTraders(locked, 5);
+  assert.equal(locked.inventory.catnip, 0);
+  assert.equal(locked.coins, coins1);
+
   // Heat constraint reduces trader action rate.
   const hot = clone(DEFAULT_STATE);
   tick(hot, 1);

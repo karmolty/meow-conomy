@@ -160,6 +160,9 @@ export function runTraders(state, dt) {
       for (const r of t.rules) {
         if (!isValidTraderRule(r)) continue;
 
+        const unlocked = state?.unlocked?.[r.goodKey] ?? true;
+        if (!unlocked) continue;
+
         const price = state.market?.[r.goodKey]?.price;
         if (!Number.isFinite(price) || price <= 0) continue;
 
