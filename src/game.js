@@ -501,8 +501,10 @@ export function canBuy(state, goodKey, qty = 1) {
 
 export function buy(state, goodKey, qty = 1) {
   const q = Math.max(0, Math.floor(qty));
+  const unlocked = state.unlocked?.[goodKey] ?? true;
   const price = buyPrice(state, goodKey);
   const cost = price * q;
+  if (!unlocked) return false;
   if (q <= 0) return false;
   if ((state.coins ?? 0) < cost) return false;
 
@@ -540,7 +542,9 @@ export function canSell(state, goodKey, qty = 1) {
 
 export function sell(state, goodKey, qty = 1) {
   const q = Math.max(0, Math.floor(qty));
+  const unlocked = state.unlocked?.[goodKey] ?? true;
   const price = sellPrice(state, goodKey);
+  if (!unlocked) return false;
   if (q <= 0) return false;
   if ((state.inventory?.[goodKey] ?? 0) < q) return false;
 

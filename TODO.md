@@ -101,6 +101,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Save/load (localStorage or JSON) for run + meta progression
 - [x] Document tuning knobs (pacing, price volatility, heat scaling, contract rewards)
 - [ ] Add tests for tick/pricing/contracts (core invariants)
+  - [x] Trading respects unlock gating (buy/sell return false for locked goods)
   - [x] Contract edge-cases: rejecting unknown ids; abandoning only when active
   - [x] Contract redeem: only when complete; consumes deliverables
   - [x] Contract deadline helper: `isActiveContractExpired()`

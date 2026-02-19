@@ -89,6 +89,17 @@ function clone(x) {
   assert.equal(a.inventory[g0], 0);
   assert.equal(a.coins, +(coinsBeforeSell + sellPrice).toFixed(2));
 
+  // Locked goods cannot be traded via actions (defense-in-depth vs UI bugs).
+  const locked = clone(DEFAULT_STATE);
+  tick(locked, 1);
+  locked.unlocked.catnip = false;
+  locked.market.catnip.price = 10;
+  assert.equal(canBuy(locked, "catnip", 1), false);
+  assert.equal(buy(locked, "catnip", 1), false);
+  locked.inventory.catnip = 1;
+  assert.equal(canSell(locked, "catnip", 1), false);
+  assert.equal(sell(locked, "catnip", 1), false);
+
   // Pressure/saturation responds to trading.
   assert.ok(Number.isFinite(a.market[g0].pressure));
 
