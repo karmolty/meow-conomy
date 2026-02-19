@@ -343,6 +343,17 @@ function clone(x) {
   runTraders(ht, 5);
   runTraders(ht, 5);
   assert.ok(ht.heat > 0);
+
+  // If Heat isn't unlocked yet, traders should not generate Heat.
+  const ht0 = clone(DEFAULT_STATE);
+  tick(ht0, 1);
+  ht0.unlocked.heat = false;
+  ht0.heat = 0;
+  ht0.traders[0].enabled = true;
+  ht0.market.kibble.price = 9;
+  runTraders(ht0, 5);
+  runTraders(ht0, 5);
+  assert.equal(ht0.heat, 0);
 }
 
 // Heat events: defs exist + deterministic trigger path + mitigation.
