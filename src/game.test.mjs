@@ -465,6 +465,14 @@ function clone(x) {
   tick(s, 0);
   assert.ok(activateScheme(s, SCHEMES[0].id));
   assert.ok((s.schemes?.[SCHEMES[0].id]?.cooldownLeft ?? 0) > 0);
+
+  // Cool Whiskers reduces Heat when Heat is unlocked.
+  const h = clone(DEFAULT_STATE);
+  tick(h, 1);
+  h.unlocked.heat = true;
+  h.heat = 60;
+  assert.ok(activateScheme(h, "coolWhiskers"));
+  assert.equal(h.heat, 35);
 }
 
 // Prestige: end season awards whiskers and resets run state.

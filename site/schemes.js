@@ -8,7 +8,7 @@
  */
 
 /**
- * @typedef {"hustle"|"pricePounce"|"nineLives"} SchemeId
+ * @typedef {"hustle"|"pricePounce"|"nineLives"|"coolWhiskers"} SchemeId
  */
 
 /**
@@ -41,6 +41,13 @@ export const SCHEMES = [
     name: "Nine Lives",
     desc: "Negate one bad event (hooked up later).",
     cooldownSec: 60,
+    durationSec: 0
+  },
+  {
+    id: "coolWhiskers",
+    name: "Cool Whiskers",
+    desc: "Shed attention fast: reduce Heat immediately.",
+    cooldownSec: 40,
     durationSec: 0
   }
 ];
@@ -90,6 +97,12 @@ export function activateScheme(state, schemeId) {
   // For Nine Lives, treat it as a single-use “shield” charge.
   if (schemeId === "nineLives") {
     rt.charges = (rt.charges ?? 0) + 1;
+  }
+
+  // Cool Whiskers: immediate Heat reduction (only once Heat exists as a mechanic).
+  if (schemeId === "coolWhiskers" && (state?.unlocked?.heat ?? false)) {
+    const cur = Number(state.heat) || 0;
+    state.heat = Math.max(0, cur - 25);
   }
 
   return true;

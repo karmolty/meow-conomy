@@ -125,7 +125,8 @@ export const DEFAULT_STATE = {
   schemes: {
     hustle: { cooldownLeft: 0, activeLeft: 0, charges: 0 },
     pricePounce: { cooldownLeft: 0, activeLeft: 0, charges: 0 },
-    nineLives: { cooldownLeft: 0, activeLeft: 0, charges: 0 }
+    nineLives: { cooldownLeft: 0, activeLeft: 0, charges: 0 },
+    coolWhiskers: { cooldownLeft: 0, activeLeft: 0, charges: 0 }
   },
 
   // Contracts (v0.2; at most one active)
