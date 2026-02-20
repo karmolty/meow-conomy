@@ -36,7 +36,8 @@ export const JOB_CAPS = {
 /** @type {Cat[]} */
 export const STARTER_CATS = [
   { id: "miso", name: "Miso", job: null },
-  { id: "beans", name: "Beans", job: null }
+  { id: "beans", name: "Beans", job: null },
+  { id: "toast", name: "Toast", job: null }
 ];
 
 /**

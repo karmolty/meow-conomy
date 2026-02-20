@@ -118,7 +118,8 @@ export const DEFAULT_STATE = {
   // Cats / jobs (v0.2)
   cats: [
     { id: "miso", name: "Miso", job: null },
-    { id: "beans", name: "Beans", job: null }
+    { id: "beans", name: "Beans", job: null },
+    { id: "toast", name: "Toast", job: null }
   ],
 
   // Schemes (v0.3 runtime)
