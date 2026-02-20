@@ -52,6 +52,7 @@ const els = {
   coins: document.getElementById("statCoins"),
   coinsSpark: document.getElementById("coinsSpark"),
   netWorth: document.getElementById("statNetWorth"),
+  nwRate: document.getElementById("statNwRate"),
   nwSpark: document.getElementById("nwSpark"),
   heat: document.getElementById("statHeat"),
   heatLine: document.getElementById("heatLine"),
@@ -666,6 +667,17 @@ function render() {
     const spark = sparkline(state.history?.netWorth ?? [], 14);
     els.nwSpark.textContent = spark;
     els.nwSpark.style.display = spark ? "inline-block" : "none";
+  }
+  if (els.nwRate) {
+    const arr = state.history?.netWorth || [];
+    if (arr.length >= 2) {
+      const seconds = arr.length - 1; // 1Hz sampling
+      const diff = arr[arr.length - 1] - arr[0];
+      const perMin = seconds > 0 ? (diff / (seconds / 60)) : 0;
+      els.nwRate.textContent = perMin.toFixed(2);
+    } else {
+      els.nwRate.textContent = "0.00";
+    }
   }
 
   // Hide Heat until it’s a real mechanic.

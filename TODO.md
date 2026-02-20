@@ -114,6 +114,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [ ] Opt-in challenge modes (explicit fail states)
 - [ ] Simple charts (income over time, heat over time, price history)
   - [x] Coins sparkline in Core panel
-  - [x] Net worth sparkline in Core panel
+  - [x] Net worth sparkline + /min rate in Core panel
   - [x] Heat sparkline in Core panel
 - [ ] More cats, jobs, and scheme cards
