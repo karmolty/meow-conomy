@@ -658,7 +658,8 @@ function render() {
   }
   if (els.netWorth) {
     // net worth is tracked by tick() history; display the latest if present.
-    const nw = (state.history?.netWorth || []).at?.(-1);
+    const arr = state.history?.netWorth || [];
+    const nw = arr.length ? arr[arr.length - 1] : NaN;
     els.netWorth.textContent = fmt(Number.isFinite(nw) ? nw : coins);
   }
   if (els.nwSpark) {
