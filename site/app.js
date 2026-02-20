@@ -51,6 +51,8 @@ const els = {
   app: document.getElementById("app"),
   coins: document.getElementById("statCoins"),
   heat: document.getElementById("statHeat"),
+  heatLine: document.getElementById("heatLine"),
+  heatSpark: document.getElementById("heatSpark"),
   whiskers: document.getElementById("statWhiskers"),
   seasons: document.getElementById("statSeasons"),
   districtRow: document.getElementById("districtRow"),
@@ -648,10 +650,14 @@ function render() {
   els.coins.textContent = fmt(coins);
 
   // Hide Heat until it’s a real mechanic.
-  // NOTE: els.heat is the <strong> inside the heat line; its parent is the line container.
-  const heatLine = els.heat?.parentElement; // <div class="muted">Heat: <strong .../></div>
+  const heatLine = els.heatLine || els.heat?.parentElement; // back-compat if markup changes
   if (heatLine) heatLine.style.display = state.unlocked?.heat ? "" : "none";
   if (els.heat) els.heat.textContent = Math.round(state.heat ?? 0);
+  if (els.heatSpark) {
+    const spark = state.unlocked?.heat ? sparkline(state.history?.heat ?? [], 14) : "";
+    els.heatSpark.textContent = spark;
+    els.heatSpark.style.display = spark ? "inline-block" : "none";
+  }
 
   // Meta (prestige)
   state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1, district: "alley", districtsUnlocked: ["alley"] };

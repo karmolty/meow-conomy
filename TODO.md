@@ -113,4 +113,5 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## Nice-to-have (after v1.0)
 - [ ] Opt-in challenge modes (explicit fail states)
 - [ ] Simple charts (income over time, heat over time, price history)
+  - [x] Heat sparkline in Core panel
 - [ ] More cats, jobs, and scheme cards
