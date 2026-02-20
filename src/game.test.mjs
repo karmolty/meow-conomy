@@ -225,12 +225,17 @@ function clone(x) {
   assert.ok((s.history?.heat ?? []).length > 0);
 }
 
-// Coins history: always records (once price engine has done at least one 1Hz update).
+// Coins/net worth history: always records (once price engine has done at least one 1Hz update).
 {
   const s = clone(DEFAULT_STATE);
   s.seed = 123;
   for (let i = 0; i < 20; i++) tick(s, 1);
   assert.ok((s.history?.coins ?? []).length > 0);
+  assert.ok((s.history?.netWorth ?? []).length > 0);
+
+  // With empty inventory, net worth equals coins.
+  assert.equal(s.inventory.kibble, 0);
+  assert.equal((s.history.netWorth.at(-1)), s.history.coins.at(-1));
 }
 
 // Price engine: no runaway drift in a 10-minute idle sim.

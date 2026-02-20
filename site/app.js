@@ -51,6 +51,8 @@ const els = {
   app: document.getElementById("app"),
   coins: document.getElementById("statCoins"),
   coinsSpark: document.getElementById("coinsSpark"),
+  netWorth: document.getElementById("statNetWorth"),
+  nwSpark: document.getElementById("nwSpark"),
   heat: document.getElementById("statHeat"),
   heatLine: document.getElementById("heatLine"),
   heatSpark: document.getElementById("heatSpark"),
@@ -653,6 +655,16 @@ function render() {
     const spark = sparkline(state.history?.coins ?? [], 14);
     els.coinsSpark.textContent = spark;
     els.coinsSpark.style.display = spark ? "inline-block" : "none";
+  }
+  if (els.netWorth) {
+    // net worth is tracked by tick() history; display the latest if present.
+    const nw = (state.history?.netWorth || []).at?.(-1);
+    els.netWorth.textContent = fmt(Number.isFinite(nw) ? nw : coins);
+  }
+  if (els.nwSpark) {
+    const spark = sparkline(state.history?.netWorth ?? [], 14);
+    els.nwSpark.textContent = spark;
+    els.nwSpark.style.display = spark ? "inline-block" : "none";
   }
 
   // Hide Heat until it’s a real mechanic.

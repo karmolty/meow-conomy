@@ -111,7 +111,8 @@ export const DEFAULT_STATE = {
   history: {
     // goodKey: number[] (recent prices)
     heat: [],
-    coins: []
+    coins: [],
+    netWorth: []
   },
 
   // Cats / jobs (v0.2)
@@ -438,7 +439,7 @@ export function tick(state, dt) {
   recomputeMarket(state, { doUpdate, dtStep: 1 });
 
   // Record history for UI sparklines.
-  state.history ||= { heat: [], coins: [] };
+  state.history ||= { heat: [], coins: [], netWorth: [] };
   const maxPoints = 30;
   for (const g of GOODS) {
     state.history[g.key] ||= [];
@@ -460,6 +461,20 @@ export function tick(state, dt) {
   if (doUpdate) {
     state.history.coins.push(Number(state.coins ?? 0));
     if (state.history.coins.length > maxPoints) state.history.coins.splice(0, state.history.coins.length - maxPoints);
+  }
+
+  // Net worth history (coins + inventory at current prices).
+  state.history.netWorth ||= [];
+  if (doUpdate) {
+    let nw = Number(state.coins ?? 0);
+    for (const g of GOODS) {
+      const qty = Number(state.inventory?.[g.key] ?? 0);
+      if (qty > 0) nw += qty * (state.market?.[g.key]?.price ?? 0);
+    }
+    state.history.netWorth.push(round2(nw));
+    if (state.history.netWorth.length > maxPoints) {
+      state.history.netWorth.splice(0, state.history.netWorth.length - maxPoints);
+    }
   }
 
   // Traders (assistive automation).
