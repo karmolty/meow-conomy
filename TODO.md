@@ -91,8 +91,8 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v0.4 — Season Prestige
 - [x] Implement “End Season” action
 - [x] Implement Whisker Points (meta currency) award formula
-- [ ] Implement carryover/unlocks:
-  - [ ] unlock new district/market
+- [x] Implement carryover/unlocks:
+  - [x] unlock new district/market
   - [x] unlock new contract type (prestige-gated contract after Season 1)
   - [x] unlock new scheme slot (meta.schemeSlots; +1 slot after Season 1)
 - [x] UI: prestige explainer (what resets, what carries, why)

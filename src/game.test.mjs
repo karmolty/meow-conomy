@@ -421,6 +421,7 @@ function clone(x) {
   assert.equal(whiskersAwarded, whiskersForCoins(450));
   assert.equal(s.meta.whiskers, w0 + whiskersAwarded);
   assert.ok((s.meta.schemeSlots ?? 1) >= 2, "prestige unlock: second scheme slot after first season");
+  assert.ok((s.meta.districtsUnlocked || []).includes("uptown"), "prestige unlock: uptown district after first season");
 
   // Run reset.
   assert.equal(s.coins, 50);

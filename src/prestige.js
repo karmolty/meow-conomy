@@ -28,17 +28,26 @@ export function whiskersForCoins(runCoins) {
  * @returns {{whiskersAwarded:number}}
  */
 export function endSeason(state) {
-  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1 };
+  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1, district: "alley", districtsUnlocked: ["alley"] };
 
   const coins = clamp0(Number(state.coins) || 0);
   const whiskersAwarded = whiskersForCoins(coins);
   state.meta.whiskers = clamp0((Number(state.meta.whiskers) || 0) + whiskersAwarded);
   state.meta.seasons = clamp0((Number(state.meta.seasons) || 0) + 1);
 
-  // Carryover unlock: additional scheme slot after the first completed Season.
-  // (This is a small-but-real new lever immediately after prestige.)
+  // Carryover unlocks after the first completed Season.
+  // (Small-but-real new levers immediately after prestige.)
   state.meta.schemeSlots = clamp0(Number(state.meta.schemeSlots) || 1);
   if (state.meta.seasons >= 1) state.meta.schemeSlots = Math.max(state.meta.schemeSlots, 2);
+
+  // New district/market unlock.
+  state.meta.districtsUnlocked = Array.isArray(state.meta.districtsUnlocked) ? state.meta.districtsUnlocked : ["alley"];
+  if (!state.meta.districtsUnlocked.includes("alley")) state.meta.districtsUnlocked.unshift("alley");
+  if (state.meta.seasons >= 1 && !state.meta.districtsUnlocked.includes("uptown")) {
+    state.meta.districtsUnlocked.push("uptown");
+  }
+  // Keep district selection valid.
+  if (!state.meta.districtsUnlocked.includes(state.meta.district)) state.meta.district = "alley";
 
   // Reset run resources.
   state.coins = 50;

@@ -13,6 +13,7 @@ import { JOB_DEFS, JOB_CAPS, assignCatJob, jobCounts } from "./cats.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
 import { GOALS } from "./goals.js";
 import { endSeason, whiskersForCoins } from "./prestige.js";
+import { DISTRICTS, normalizeDistrictKey } from "./districts.js";
 
 const STORAGE_KEY = "meowconomy.save.v0.2.1";
 
@@ -52,6 +53,8 @@ const els = {
   heat: document.getElementById("statHeat"),
   whiskers: document.getElementById("statWhiskers"),
   seasons: document.getElementById("statSeasons"),
+  districtRow: document.getElementById("districtRow"),
+  districtSelect: document.getElementById("districtSelect"),
   progressFill: document.getElementById("progressFill"),
   progressLabel: document.getElementById("progressLabel"),
   goalText: document.getElementById("goalText"),
@@ -78,6 +81,19 @@ if (!state.seed) {
   save(state);
 }
 state._lastTickMs ??= nowMs();
+
+// District selector: swap market behavior (prestige unlock).
+if (els.districtSelect) {
+  els.districtSelect.addEventListener("change", () => {
+    state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1, district: "alley", districtsUnlocked: ["alley"] };
+    state.meta.district = normalizeDistrictKey(els.districtSelect.value);
+    // Nuke latent so the new district "feels" immediate and deterministic.
+    state.marketLatent = {};
+    tick(state, 0);
+    save(state);
+    render();
+  });
+}
 
 function setSaveStatus(text) {
   els.saveStatus.textContent = text;
@@ -638,12 +654,35 @@ function render() {
   if (els.heat) els.heat.textContent = Math.round(state.heat ?? 0);
 
   // Meta (prestige)
-  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1 };
+  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1, district: "alley", districtsUnlocked: ["alley"] };
   if (els.whiskers) els.whiskers.textContent = Math.round(state.meta.whiskers ?? 0);
   if (els.seasons) els.seasons.textContent = Math.round(state.meta.seasons ?? 0);
   if (els.prestigeExplainer) {
     const award = whiskersForCoins(state.coins ?? 0);
     els.prestigeExplainer.textContent = `End Season resets coins, inventory, contracts, Heat, and market pressure. You keep Whiskers + Seasons. (You'd gain ${award} Whiskers right now.)`;
+  }
+
+  // District selector (unlocked via prestige).
+  state.meta.districtsUnlocked = Array.isArray(state.meta.districtsUnlocked) ? state.meta.districtsUnlocked : ["alley"];
+  state.meta.district = normalizeDistrictKey(state.meta.district);
+  const unlocked = state.meta.districtsUnlocked.filter(k => DISTRICTS.some(d => d.key === k));
+  if (els.districtRow && els.districtSelect) {
+    els.districtRow.style.display = unlocked.length > 1 ? "" : "none";
+
+    // Populate options (idempotent).
+    const cur = state.meta.district;
+    if (els.districtSelect._lastKeys !== unlocked.join(",")) {
+      els.districtSelect.innerHTML = "";
+      for (const k of unlocked) {
+        const d = DISTRICTS.find(x => x.key === k);
+        const opt = document.createElement("option");
+        opt.value = k;
+        opt.textContent = d?.label ?? k;
+        els.districtSelect.appendChild(opt);
+      }
+      els.districtSelect._lastKeys = unlocked.join(",");
+    }
+    els.districtSelect.value = cur;
   }
 
   // Level goals (manual “Level Up” button).

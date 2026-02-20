@@ -4,6 +4,7 @@
 import { runTraders } from "./traders.js";
 import { tickSchemes } from "./schemes.js";
 import { failExpiredActiveContract } from "./contracts.js";
+import { DISTRICTS, normalizeDistrictKey } from "./districts.js";
 
 /**
  * @typedef {Object} GoodDef
@@ -102,7 +103,9 @@ export const DEFAULT_STATE = {
   meta: {
     whiskers: 0,
     seasons: 0,
-    schemeSlots: 1
+    schemeSlots: 1,
+    district: "alley",
+    districtsUnlocked: ["alley"]
   },
 
   history: {
@@ -232,21 +235,53 @@ function prngNormish(state, streamKey) {
   return (t / 6 - 0.5) * 2; // roughly [-1,1]
 }
 
-function goodParams(goodKey) {
-  // Keep kibble calmer; shiny wild.
+function districtMult(state) {
+  const key = normalizeDistrictKey(state?.meta?.district);
+  const d = DISTRICTS.find(x => x.key === key) || DISTRICTS[0];
+  return d?.mult || { base: 1, volSlow: 1, volFast: 1, drift: 1, meanRev: 1 };
+}
+
+function goodParams(state, goodKey) {
+  // Keep kibble calmer; shiny wild. Districts nudge these knobs.
+  const m = districtMult(state);
+
   if (goodKey === "kibble") {
-    return { base: 10, volSlow: 0.55, volFast: 1.35, drift: 0.02, meanRev: 0.20, regimeMin: 26, regimeMax: 70 };
+    return {
+      base: 10 * m.base,
+      volSlow: 0.55 * m.volSlow,
+      volFast: 1.35 * m.volFast,
+      drift: 0.02 * m.drift,
+      meanRev: 0.20 * m.meanRev,
+      regimeMin: 26,
+      regimeMax: 70
+    };
   }
   if (goodKey === "catnip") {
-    return { base: 18, volSlow: 0.75, volFast: 1.45, drift: 0.04, meanRev: 0.14, regimeMin: 20, regimeMax: 55 };
+    return {
+      base: 18 * m.base,
+      volSlow: 0.75 * m.volSlow,
+      volFast: 1.45 * m.volFast,
+      drift: 0.04 * m.drift,
+      meanRev: 0.14 * m.meanRev,
+      regimeMin: 20,
+      regimeMax: 55
+    };
   }
-  return { base: 40, volSlow: 1.45, volFast: 2.95, drift: 0.06, meanRev: 0.09, regimeMin: 16, regimeMax: 50 };
+  return {
+    base: 40 * m.base,
+    volSlow: 1.45 * m.volSlow,
+    volFast: 2.95 * m.volFast,
+    drift: 0.06 * m.drift,
+    meanRev: 0.09 * m.meanRev,
+    regimeMin: 16,
+    regimeMax: 50
+  };
 }
 
 function initLatentForGood(state, goodKey) {
   state.marketLatent ||= {};
   if (state.marketLatent[goodKey]) return;
-  const p = goodParams(goodKey);
+  const p = goodParams(state, goodKey);
 
   // Deterministic per-save initial anchor.
   const jitter = prngNormish(state, `init:${goodKey}`) * 0.8;
@@ -263,7 +298,7 @@ function initLatentForGood(state, goodKey) {
 
 function maybeSwitchRegime(state, goodKey, dt) {
   const l = state.marketLatent[goodKey];
-  const p = goodParams(goodKey);
+  const p = goodParams(state, goodKey);
   l.regimeT -= dt;
   if (l.regimeT > 0) return;
 
@@ -277,7 +312,7 @@ function maybeSwitchRegime(state, goodKey, dt) {
 function updateLatent(state, goodKey, dt) {
   initLatentForGood(state, goodKey);
   const l = state.marketLatent[goodKey];
-  const p = goodParams(goodKey);
+  const p = goodParams(state, goodKey);
 
   maybeSwitchRegime(state, goodKey, dt);
 
