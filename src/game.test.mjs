@@ -19,6 +19,7 @@ import { EVENT_DEFS, maybeTriggerEvent, eventProb } from "./events.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
 import { endSeason, whiskersForCoins } from "./prestige.js";
 import { createRng } from "./rng.js";
+import { normalizeDistrictKey } from "./districts.js";
 
 function clone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -171,6 +172,42 @@ function clone(x) {
 
   assert.ok(vol.kibble < vol.catnip, `volatility ordering: kibble < catnip (${vol.kibble} < ${vol.catnip})`);
   assert.ok(vol.catnip < vol.shiny, `volatility ordering: catnip < shiny (${vol.catnip} < ${vol.shiny})`);
+}
+
+// Districts: normalize + market behavior changes.
+{
+  assert.equal(normalizeDistrictKey("__nope__"), "alley");
+  assert.equal(normalizeDistrictKey("uptown"), "uptown");
+
+  const dt = 0.25;
+  const steps = Math.round(120 / dt); // 2 minutes
+
+  function avg(arr) {
+    return arr.reduce((a, b) => a + b, 0) / arr.length;
+  }
+
+  const alley = clone(DEFAULT_STATE);
+  alley.seed = 123;
+  alley.meta.district = "alley";
+  alley.marketLatent = {};
+
+  const uptown = clone(DEFAULT_STATE);
+  uptown.seed = 123;
+  uptown.meta.district = "uptown";
+  uptown.marketLatent = {};
+
+  const aK = [];
+  const uK = [];
+
+  for (let i = 0; i < steps; i++) {
+    tick(alley, dt);
+    tick(uptown, dt);
+    aK.push(alley.market.kibble.price);
+    uK.push(uptown.market.kibble.price);
+  }
+
+  // Uptown has a slightly higher base multiplier, so average kibble price should be higher.
+  assert.ok(avg(uK) > avg(aK));
 }
 
 // Price engine: no runaway drift in a 10-minute idle sim.
