@@ -225,6 +225,14 @@ function clone(x) {
   assert.ok((s.history?.heat ?? []).length > 0);
 }
 
+// Coins history: always records (once price engine has done at least one 1Hz update).
+{
+  const s = clone(DEFAULT_STATE);
+  s.seed = 123;
+  for (let i = 0; i < 20; i++) tick(s, 1);
+  assert.ok((s.history?.coins ?? []).length > 0);
+}
+
 // Price engine: no runaway drift in a 10-minute idle sim.
 {
   const dt = 0.25;

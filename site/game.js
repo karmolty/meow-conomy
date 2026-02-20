@@ -110,7 +110,8 @@ export const DEFAULT_STATE = {
 
   history: {
     // goodKey: number[] (recent prices)
-    heat: []
+    heat: [],
+    coins: []
   },
 
   // Cats / jobs (v0.2)
@@ -437,7 +438,7 @@ export function tick(state, dt) {
   recomputeMarket(state, { doUpdate, dtStep: 1 });
 
   // Record history for UI sparklines.
-  state.history ||= { heat: [] };
+  state.history ||= { heat: [], coins: [] };
   const maxPoints = 30;
   for (const g of GOODS) {
     state.history[g.key] ||= [];
@@ -452,6 +453,13 @@ export function tick(state, dt) {
   if (doUpdate && (state.unlocked?.heat ?? false)) {
     state.history.heat.push(Number(state.heat ?? 0));
     if (state.history.heat.length > maxPoints) state.history.heat.splice(0, state.history.heat.length - maxPoints);
+  }
+
+  // Coins history (always; small quality-of-life trend indicator).
+  state.history.coins ||= [];
+  if (doUpdate) {
+    state.history.coins.push(Number(state.coins ?? 0));
+    if (state.history.coins.length > maxPoints) state.history.coins.splice(0, state.history.coins.length - maxPoints);
   }
 
   // Traders (assistive automation).

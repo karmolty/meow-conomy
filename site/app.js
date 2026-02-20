@@ -50,6 +50,7 @@ function fmt(n) {
 const els = {
   app: document.getElementById("app"),
   coins: document.getElementById("statCoins"),
+  coinsSpark: document.getElementById("coinsSpark"),
   heat: document.getElementById("statHeat"),
   heatLine: document.getElementById("heatLine"),
   heatSpark: document.getElementById("heatSpark"),
@@ -648,6 +649,11 @@ function setPanelVisible(listEl, visible) {
 function render() {
   const coins = state.coins ?? 0;
   els.coins.textContent = fmt(coins);
+  if (els.coinsSpark) {
+    const spark = sparkline(state.history?.coins ?? [], 14);
+    els.coinsSpark.textContent = spark;
+    els.coinsSpark.style.display = spark ? "inline-block" : "none";
+  }
 
   // Hide Heat until it’s a real mechanic.
   const heatLine = els.heatLine || els.heat?.parentElement; // back-compat if markup changes
