@@ -153,6 +153,24 @@ function clone(x) {
       );
     }
   }
+
+  // Distinct feel: kibble < catnip < shiny volatility.
+  // We measure stdev of the price series over the window (simple but stable).
+  function stdev(xs) {
+    const n = xs.length;
+    const mean = xs.reduce((a, b) => a + b, 0) / n;
+    const v = xs.reduce((a, b) => a + (b - mean) ** 2, 0) / n;
+    return Math.sqrt(v);
+  }
+
+  const vol = {
+    kibble: stdev(series.kibble),
+    catnip: stdev(series.catnip),
+    shiny: stdev(series.shiny)
+  };
+
+  assert.ok(vol.kibble < vol.catnip, `volatility ordering: kibble < catnip (${vol.kibble} < ${vol.catnip})`);
+  assert.ok(vol.catnip < vol.shiny, `volatility ordering: catnip < shiny (${vol.catnip} < ${vol.shiny})`);
 }
 
 // Price engine: no runaway drift in a 10-minute idle sim.
