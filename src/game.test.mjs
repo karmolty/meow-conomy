@@ -210,6 +210,21 @@ function clone(x) {
   assert.ok(avg(uK) > avg(aK));
 }
 
+// Heat history: only records after Heat is unlocked.
+{
+  const s = clone(DEFAULT_STATE);
+  s.seed = 123;
+  s.unlocked.heat = false;
+  for (let i = 0; i < 20; i++) tick(s, 1);
+  assert.equal((s.history?.heat ?? []).length, 0);
+
+  s.unlocked.heat = true;
+  // Force some heat so the series isn't just zeros.
+  s.heat = 50;
+  for (let i = 0; i < 20; i++) tick(s, 1);
+  assert.ok((s.history?.heat ?? []).length > 0);
+}
+
 // Price engine: no runaway drift in a 10-minute idle sim.
 {
   const dt = 0.25;
