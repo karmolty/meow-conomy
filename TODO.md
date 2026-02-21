@@ -112,10 +112,11 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## Nice-to-have (after v1.0)
 - [ ] Opt-in challenge modes (explicit fail states)
-- [ ] Simple charts (income over time, heat over time, price history)
+- [x] Simple charts (income over time, heat over time, price history)
   - [x] Coins sparkline in Core panel
   - [x] Net worth sparkline + /min rate in Core panel
   - [x] Heat sparkline in Core panel
+  - [x] Income (/min) + delta sparkline in Core panel
 - [ ] More cats, jobs, and scheme cards
   - [x] Add a 3rd starter cat (Toast)
   - [x] Add a 4th starter cat (Pixel)

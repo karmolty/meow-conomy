@@ -54,6 +54,8 @@ const els = {
   netWorth: document.getElementById("statNetWorth"),
   nwRate: document.getElementById("statNwRate"),
   nwSpark: document.getElementById("nwSpark"),
+  incomeRate: document.getElementById("statIncomeRate"),
+  incomeSpark: document.getElementById("incomeSpark"),
   heat: document.getElementById("statHeat"),
   heatLine: document.getElementById("heatLine"),
   heatSpark: document.getElementById("heatSpark"),
@@ -677,6 +679,31 @@ function render() {
       els.nwRate.textContent = perMin.toFixed(2);
     } else {
       els.nwRate.textContent = "0.00";
+    }
+  }
+
+  // Income is coin delta over the last ~60s (1Hz sampling). This intentionally ignores inventory valuation.
+  if (els.incomeRate) {
+    const arr = state.history?.coins || [];
+    if (arr.length >= 2) {
+      const window = Math.min(60, arr.length - 1);
+      const diff = arr[arr.length - 1] - arr[arr.length - 1 - window];
+      const perMin = diff / (window / 60);
+      els.incomeRate.textContent = perMin.toFixed(2);
+
+      if (els.incomeSpark) {
+        const deltas = [];
+        for (let i = Math.max(1, arr.length - 14); i < arr.length; i++) deltas.push(arr[i] - arr[i - 1]);
+        const spark = sparkline(deltas, 14);
+        els.incomeSpark.textContent = spark;
+        els.incomeSpark.style.display = spark ? "inline-block" : "none";
+      }
+    } else {
+      els.incomeRate.textContent = "0.00";
+      if (els.incomeSpark) {
+        els.incomeSpark.textContent = "";
+        els.incomeSpark.style.display = "none";
+      }
     }
   }
 
