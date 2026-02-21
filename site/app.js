@@ -79,7 +79,9 @@ const els = {
   btnEndSeason: document.getElementById("btnEndSeason"),
   prestigeExplainer: document.getElementById("prestigeExplainer"),
   challengeRow: document.getElementById("challengeRow"),
+  ironChallenge: document.getElementById("ironChallenge"),
   chkIronContracts: document.getElementById("chkIronContracts"),
+  heatChallenge: document.getElementById("heatChallenge"),
   chkHeatDeath: document.getElementById("chkHeatDeath"),
   repoLink: document.getElementById("repoLink"),
   gameTitle: document.getElementById("gameTitle")
@@ -737,12 +739,24 @@ function render() {
     els.challengeRow.style.display = show ? "" : "none";
   }
   if (els.chkIronContracts) {
+    const enabled = Boolean(state.unlocked?.contract);
     els.chkIronContracts.checked = state.meta.challenge === "ironContracts";
-    els.chkIronContracts.disabled = !(state.unlocked?.contract);
+    els.chkIronContracts.disabled = !enabled;
+    els.chkIronContracts.title = enabled ? "" : "Unlock Contracts to enable this challenge.";
+    if (els.ironChallenge) {
+      els.ironChallenge.style.opacity = enabled ? "" : "0.55";
+      els.ironChallenge.style.cursor = enabled ? "" : "not-allowed";
+    }
   }
   if (els.chkHeatDeath) {
+    const enabled = Boolean(state.unlocked?.heat);
     els.chkHeatDeath.checked = state.meta.challenge === "heatDeath";
-    els.chkHeatDeath.disabled = !(state.unlocked?.heat);
+    els.chkHeatDeath.disabled = !enabled;
+    els.chkHeatDeath.title = enabled ? "" : "Unlock Heat to enable this challenge.";
+    if (els.heatChallenge) {
+      els.heatChallenge.style.opacity = enabled ? "" : "0.55";
+      els.heatChallenge.style.cursor = enabled ? "" : "not-allowed";
+    }
   }
 
   // District selector (unlocked via prestige).
