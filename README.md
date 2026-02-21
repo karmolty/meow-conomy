@@ -48,6 +48,13 @@ Manual “viable strategy” smoke tests (v0.2 AC1 support):
 - You gain **Whiskers** based on your current coins, then your run state resets (coins/inventory/contracts/Heat/market pressure).
 - You keep **Whiskers** and **Seasons**.
 
+## Challenges (opt-in)
+Challenges add explicit fail states. They are optional and intended for players who want stakes.
+
+Enable them in the Core panel:
+- **Iron Contracts**: if a contract expires, your run is busted (instant run reset, 0 Whiskers)
+- **Hot Paws**: if Heat reaches 100, your run is busted (instant run reset, 0 Whiskers)
+
 ## Tuning knobs (balance)
 Quick pointers for pacing/balance tweaks:
 - **Goods feel / volatility**: `goodParams()` in `src/game.js` (`volSlow`, `volFast`, `drift`, `meanRev`, regime durations).
