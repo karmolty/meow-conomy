@@ -731,8 +731,19 @@ function render() {
   }
 
   // Challenge modes (opt-in).
-  if (els.chkIronContracts) els.chkIronContracts.checked = state.meta.challenge === "ironContracts";
-  if (els.chkHeatDeath) els.chkHeatDeath.checked = state.meta.challenge === "heatDeath";
+  // Hide until relevant systems are unlocked to avoid early clutter.
+  if (els.challengeRow) {
+    const show = Boolean(state.unlocked?.contract || state.unlocked?.heat);
+    els.challengeRow.style.display = show ? "" : "none";
+  }
+  if (els.chkIronContracts) {
+    els.chkIronContracts.checked = state.meta.challenge === "ironContracts";
+    els.chkIronContracts.disabled = !(state.unlocked?.contract);
+  }
+  if (els.chkHeatDeath) {
+    els.chkHeatDeath.checked = state.meta.challenge === "heatDeath";
+    els.chkHeatDeath.disabled = !(state.unlocked?.heat);
+  }
 
   // District selector (unlocked via prestige).
   state.meta.districtsUnlocked = Array.isArray(state.meta.districtsUnlocked) ? state.meta.districtsUnlocked : ["alley"];
