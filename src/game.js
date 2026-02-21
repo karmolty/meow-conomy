@@ -498,6 +498,11 @@ export function tick(state, dt) {
     bustRun(state);
   }
 
+  // Challenge: Heat reaching 100 busts your run.
+  if (state?.meta?.challenge === "heatDeath" && (state.heat ?? 0) >= 100) {
+    bustRun(state);
+  }
+
   return state;
 }
 

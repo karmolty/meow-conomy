@@ -351,6 +351,17 @@ function clone(x) {
   assert.equal(ch.meta.whiskers, 10, "bust does not award whiskers");
   assert.equal(ch.meta.seasons, 2, "bust does not advance seasons");
 
+  // Challenge mode: Hot Paws => heat reaching 100 busts your run.
+  const hot = clone(DEFAULT_STATE);
+  tick(hot, 0);
+  hot.meta.challenge = "heatDeath";
+  hot.meta.whiskers = 7;
+  hot.coins = 123;
+  hot.heat = 100;
+  tick(hot, 0);
+  assert.equal(hot.coins, 50, "heat bust resets run coins");
+  assert.equal(hot.meta.whiskers, 7, "heat bust does not award whiskers");
+
   // Completion and redemption.
   s.time = 0;
   s.inventory.kibble = 8;

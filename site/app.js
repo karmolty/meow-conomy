@@ -80,6 +80,7 @@ const els = {
   prestigeExplainer: document.getElementById("prestigeExplainer"),
   challengeRow: document.getElementById("challengeRow"),
   chkIronContracts: document.getElementById("chkIronContracts"),
+  chkHeatDeath: document.getElementById("chkHeatDeath"),
   repoLink: document.getElementById("repoLink"),
   gameTitle: document.getElementById("gameTitle")
 };
@@ -730,9 +731,8 @@ function render() {
   }
 
   // Challenge modes (opt-in).
-  if (els.chkIronContracts) {
-    els.chkIronContracts.checked = state.meta.challenge === "ironContracts";
-  }
+  if (els.chkIronContracts) els.chkIronContracts.checked = state.meta.challenge === "ironContracts";
+  if (els.chkHeatDeath) els.chkHeatDeath.checked = state.meta.challenge === "heatDeath";
 
   // District selector (unlocked via prestige).
   state.meta.districtsUnlocked = Array.isArray(state.meta.districtsUnlocked) ? state.meta.districtsUnlocked : ["alley"];
@@ -830,11 +830,29 @@ els.btnEndSeason?.addEventListener("click", () => {
   render();
 });
 
-els.chkIronContracts?.addEventListener("change", () => {
-  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1, district: "alley", districtsUnlocked: ["alley"] };
-  state.meta.challenge = els.chkIronContracts.checked ? "ironContracts" : "none";
+function setChallengeMode(mode) {
+  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1, district: "alley", districtsUnlocked: ["alley"], challenge: "none" };
+  state.meta.challenge = mode || "none";
   save(state);
   render();
+}
+
+els.chkIronContracts?.addEventListener("change", () => {
+  if (els.chkIronContracts.checked) {
+    if (els.chkHeatDeath) els.chkHeatDeath.checked = false;
+    setChallengeMode("ironContracts");
+  } else {
+    setChallengeMode("none");
+  }
+});
+
+els.chkHeatDeath?.addEventListener("change", () => {
+  if (els.chkHeatDeath.checked) {
+    if (els.chkIronContracts) els.chkIronContracts.checked = false;
+    setChallengeMode("heatDeath");
+  } else {
+    setChallengeMode("none");
+  }
 });
 
 els.btnLevelUp?.addEventListener("click", () => {

@@ -261,11 +261,18 @@ button.primary {
             </div>
 
             <div class="muted" id="challengeRow" style="margin-top:8px;">
+              <div class="muted" style="margin-bottom:4px;"><strong>Challenges</strong> (opt-in):</div>
               <label style="display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none;">
                 <input id="chkIronContracts" type="checkbox" />
-                <span><strong>Challenge:</strong> Iron Contracts</span>
+                <span>Iron Contracts</span>
               </label>
-              <div class="muted" style="margin-top:4px;">If a contract expires, your run is busted (instant run reset, 0 Whiskers).</div>
+              <div class="muted" style="margin:4px 0 10px 24px;">If a contract expires, your run is busted (instant run reset, 0 Whiskers).</div>
+
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none;">
+                <input id="chkHeatDeath" type="checkbox" />
+                <span>Hot Paws</span>
+              </label>
+              <div class="muted" style="margin-top:4px; margin-left:24px;">If Heat reaches 100, your run is busted (instant run reset, 0 Whiskers).</div>
             </div>
           </div>
         </div>
