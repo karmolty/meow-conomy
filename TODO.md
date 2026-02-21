@@ -118,4 +118,5 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Heat sparkline in Core panel
 - [ ] More cats, jobs, and scheme cards
   - [x] Add a 3rd starter cat (Toast)
+  - [x] Add a 4th starter cat (Pixel)
   - [x] Add a 4th scheme card (Cool Whiskers)
