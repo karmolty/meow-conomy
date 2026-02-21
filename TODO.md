@@ -111,7 +111,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Deployment instructions (GitHub Pages if applicable)
 
 ## Nice-to-have (after v1.0)
-- [ ] Opt-in challenge modes (explicit fail states)
+- [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)
   - [x] Hot Paws: if Heat hits 100, your run is busted (run reset, 0 Whiskers)
 - [x] Simple charts (income over time, heat over time, price history)
