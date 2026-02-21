@@ -112,6 +112,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## Nice-to-have (after v1.0)
 - [ ] Opt-in challenge modes (explicit fail states)
+  - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)
 - [x] Simple charts (income over time, heat over time, price history)
   - [x] Coins sparkline in Core panel
   - [x] Net worth sparkline + /min rate in Core panel

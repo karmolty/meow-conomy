@@ -78,6 +78,8 @@ const els = {
   btnHardReset: document.getElementById("btnHardReset"),
   btnEndSeason: document.getElementById("btnEndSeason"),
   prestigeExplainer: document.getElementById("prestigeExplainer"),
+  challengeRow: document.getElementById("challengeRow"),
+  chkIronContracts: document.getElementById("chkIronContracts"),
   repoLink: document.getElementById("repoLink"),
   gameTitle: document.getElementById("gameTitle")
 };
@@ -718,12 +720,18 @@ function render() {
   }
 
   // Meta (prestige)
-  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1, district: "alley", districtsUnlocked: ["alley"] };
+  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1, district: "alley", districtsUnlocked: ["alley"], challenge: "none" };
+  if (!state.meta.challenge) state.meta.challenge = "none";
   if (els.whiskers) els.whiskers.textContent = Math.round(state.meta.whiskers ?? 0);
   if (els.seasons) els.seasons.textContent = Math.round(state.meta.seasons ?? 0);
   if (els.prestigeExplainer) {
     const award = whiskersForCoins(state.coins ?? 0);
     els.prestigeExplainer.textContent = `End Season resets coins, inventory, contracts, Heat, and market pressure. You keep Whiskers + Seasons. (You'd gain ${award} Whiskers right now.)`;
+  }
+
+  // Challenge modes (opt-in).
+  if (els.chkIronContracts) {
+    els.chkIronContracts.checked = state.meta.challenge === "ironContracts";
   }
 
   // District selector (unlocked via prestige).
@@ -818,6 +826,13 @@ els.btnEndSeason?.addEventListener("click", () => {
   );
   if (!ok) return;
   endSeason(state);
+  save(state);
+  render();
+});
+
+els.chkIronContracts?.addEventListener("change", () => {
+  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1, district: "alley", districtsUnlocked: ["alley"] };
+  state.meta.challenge = els.chkIronContracts.checked ? "ironContracts" : "none";
   save(state);
   render();
 });

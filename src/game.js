@@ -491,9 +491,51 @@ export function tick(state, dt) {
   state.heat = clamp((state.heat ?? 0) - decay * safeDt, 0, 100);
 
   // Contracts: if the deadline passes, fail it and apply penalty.
-  failExpiredActiveContract(state);
+  const failed = failExpiredActiveContract(state);
+  if (failed && state?.meta?.challenge === "ironContracts") {
+    // Opt-in fail state: in this challenge, letting a contract expire busts your run.
+    // (No Whiskers awarded; meta progression stays.)
+    bustRun(state);
+  }
 
   return state;
+}
+
+function bustRun(state) {
+  // Reset run resources (similar to End Season, but without awarding meta currency).
+  state.coins = 50;
+  state.inventory = Object.fromEntries(GOODS.map(g => [g.key, 0]));
+  state.lots = Object.fromEntries(GOODS.map(g => [g.key, []]));
+  state.lastTrade = null;
+  state.heat = 0;
+
+  // Clear contracts.
+  state.contracts ||= { activeId: null, startedAtSec: null, startCoins: null };
+  state.contracts.activeId = null;
+  state.contracts.startedAtSec = null;
+  state.contracts.startCoins = null;
+
+  // Reset schemes runtime.
+  if (state.schemes) {
+    for (const k of Object.keys(state.schemes)) {
+      if (!state.schemes[k]) continue;
+      state.schemes[k].cooldownLeft = 0;
+      state.schemes[k].activeLeft = 0;
+    }
+  }
+
+  // Reset cat allocations.
+  if (Array.isArray(state.cats)) {
+    for (const c of state.cats) c.job = null;
+  }
+
+  // Reset trader runtime budgets.
+  state.traderRuntime = {};
+
+  // Reset market pressure/latent; keep seed so it stays deterministic per save.
+  state.market = {};
+  state.marketLatent = {};
+  recomputeMarket(state);
 }
 
 function hasJob(state, jobKey) {

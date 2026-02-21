@@ -336,6 +336,21 @@ function clone(x) {
   assert.equal(getActiveContract(s), null);
   assert.equal(s.coins, 100 - delivery.penalty.coins);
 
+  // Challenge mode: Iron Contracts => expiry busts your run (reset, no whiskers awarded).
+  const ch = clone(DEFAULT_STATE);
+  tick(ch, 0);
+  ch.meta.challenge = "ironContracts";
+  ch.meta.whiskers = 10;
+  ch.meta.seasons = 2;
+  assert.ok(acceptContract(ch, delivery));
+  ch.time = ch.contracts.startedAtSec + delivery.deadlineSec + 0.01;
+  ch.coins = 999;
+  tick(ch, 0);
+  assert.equal(getActiveContract(ch), null);
+  assert.equal(ch.coins, 50, "bust resets run coins");
+  assert.equal(ch.meta.whiskers, 10, "bust does not award whiskers");
+  assert.equal(ch.meta.seasons, 2, "bust does not advance seasons");
+
   // Completion and redemption.
   s.time = 0;
   s.inventory.kibble = 8;
