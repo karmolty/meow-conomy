@@ -120,6 +120,8 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Heat sparkline in Core panel
   - [x] Income (/min) + delta sparkline in Core panel
 - [x] More cats, jobs, and scheme cards (starter set)
+- [x] UI polish
+  - [x] Keyboard shortcuts: number keys 1–5 activate schemes (when available)
   - [x] Hook up Price Pounce to improve trade prices
   - [x] Hook up Production cat job (generates Kibble)
   - [x] Hook up Hustle scheme (boosts production)

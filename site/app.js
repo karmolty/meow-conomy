@@ -925,6 +925,30 @@ els.app?.addEventListener(
   { passive: false }
 );
 
+// Keyboard shortcuts: 1–5 activates schemes (if unlocked + available).
+window.addEventListener("keydown", (e) => {
+  if (e.repeat) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const tag = String(document.activeElement?.tagName || "").toLowerCase();
+  if (tag === "input" || tag === "textarea" || tag === "select") return;
+
+  const n = Number(e.key);
+  if (!Number.isFinite(n) || n < 1 || n > 5) return;
+
+  if (!(state.unlocked?.schemes ?? false)) return;
+
+  state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1 };
+  const slots = Math.max(1, Math.floor(Number(state.meta.schemeSlots) || 1));
+  if (n > slots) return;
+
+  const scheme = SCHEMES[n - 1];
+  if (!scheme) return;
+
+  if (!activateScheme(state, scheme.id)) return;
+  save(state);
+  render();
+});
+
 // Init
 tick(state, 0);
 render();
