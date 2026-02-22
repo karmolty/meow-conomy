@@ -128,6 +128,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] UI: show Nine Lives shield charges
   - [x] Prevent using Cool Whiskers before Heat unlock
   - [x] UI: disable Cool Whiskers until Heat unlock
+  - [x] Make Guarding reduce Heat event impact
   - [x] Add a 3rd starter cat (Toast)
   - [x] Add a 4th starter cat (Pixel)
   - [x] Add a 4th scheme card (Cool Whiskers)

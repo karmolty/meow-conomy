@@ -83,16 +83,20 @@ export function rand01(state) {
 export function applyEvent(state, kind) {
   const def = EVENT_DEFS[kind];
 
+  const guarding = hasJob(state, "guarding");
+
   if (kind === "tax") {
     // Take a small % of coins; scale gently with heat.
     const pct = clamp(0.04 + (state.heat ?? 0) / 2000, 0.04, 0.10);
-    const loss = Math.floor((state.coins ?? 0) * pct);
+    const guardMult = guarding ? 0.7 : 1;
+    const loss = Math.floor((state.coins ?? 0) * pct * guardMult);
     state.coins = Math.max(0, (state.coins ?? 0) - loss);
-    state.heat = clamp((state.heat ?? 0) - 6, 0, 100); // cools off a bit after attention
+    state.heat = clamp((state.heat ?? 0) - (guarding ? 8 : 6), 0, 100); // cools off a bit after attention
   }
 
   if (kind === "rival") {
     // Remove up to 1 unit of the highest-price good you have.
+    // Guarding prevents the theft (still generates some Heat).
     const inv = state.inventory || {};
     let best = null;
     let bestPrice = -Infinity;
@@ -104,19 +108,20 @@ export function applyEvent(state, kind) {
         best = k;
       }
     }
-    if (best) inv[best] = Math.max(0, (inv[best] ?? 0) - 1);
-    state.heat = clamp((state.heat ?? 0) + 3, 0, 100);
+    if (best && !guarding) inv[best] = Math.max(0, (inv[best] ?? 0) - 1);
+    state.heat = clamp((state.heat ?? 0) + (guarding ? 1 : 3), 0, 100);
   }
 
   if (kind === "confiscation") {
-    // Lose a couple random units (bounded).
+    // Lose a couple random units (bounded). Guarding reduces the loss.
     const inv = state.inventory || {};
     const keys = Object.keys(inv);
     if (keys.length) {
       const k = keys[Math.floor(rand01(state) * keys.length)];
-      inv[k] = Math.max(0, (inv[k] ?? 0) - 2);
+      const loss = guarding ? 1 : 2;
+      inv[k] = Math.max(0, (inv[k] ?? 0) - loss);
     }
-    state.heat = clamp((state.heat ?? 0) - 10, 0, 100);
+    state.heat = clamp((state.heat ?? 0) - (guarding ? 14 : 10), 0, 100);
   }
 
   return { kind, title: def.title, desc: def.desc };

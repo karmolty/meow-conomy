@@ -15,7 +15,7 @@ import {
 } from "./contracts.js";
 import { JOB_DEFS, JOB_CAPS, STARTER_CATS, isValidCat, assignCatJob } from "./cats.js";
 import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
-import { EVENT_DEFS, maybeTriggerEvent, eventProb } from "./events.js";
+import { EVENT_DEFS, maybeTriggerEvent, eventProb, applyEvent } from "./events.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
 import { endSeason, whiskersForCoins } from "./prestige.js";
 import { createRng } from "./rng.js";
@@ -509,6 +509,23 @@ function clone(x) {
 
   // Guarding reduces event probability.
   assert.ok(eventProb(100, true) < eventProb(100, false));
+
+  // Guarding reduces event impact.
+  const g0 = clone(DEFAULT_STATE);
+  tick(g0, 1);
+  g0.heat = 100;
+  g0.coins = 1000;
+  applyEvent(g0, "tax");
+
+  const g1 = clone(DEFAULT_STATE);
+  tick(g1, 1);
+  g1.heat = 100;
+  g1.coins = 1000;
+  g1.unlocked.cats = true;
+  assert.ok(assignCatJob(g1, g1.cats[0].id, "guarding"));
+  applyEvent(g1, "tax");
+
+  assert.ok(g1.coins >= g0.coins, "guarding should reduce tax loss");
 
   const s = clone(DEFAULT_STATE);
   tick(s, 1);
