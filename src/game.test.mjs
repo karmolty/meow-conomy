@@ -499,6 +499,15 @@ function clone(x) {
   h.heat = 60;
   assert.ok(activateScheme(h, "coolWhiskers"));
   assert.equal(h.heat, 35);
+
+  // Market Nap reduces market pressure across goods.
+  const m = clone(DEFAULT_STATE);
+  tick(m, 1);
+  m.market.kibble.pressure = 10;
+  m.market.catnip.pressure = -20;
+  assert.ok(activateScheme(m, "marketNap"));
+  assert.equal(m.market.kibble.pressure, 5);
+  assert.equal(m.market.catnip.pressure, -10);
 }
 
 // Prestige: end season awards whiskers and resets run state.

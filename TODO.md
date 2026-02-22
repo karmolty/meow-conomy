@@ -123,3 +123,4 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Add a 3rd starter cat (Toast)
   - [x] Add a 4th starter cat (Pixel)
   - [x] Add a 4th scheme card (Cool Whiskers)
+  - [x] Add a 5th scheme card (Market Nap)
