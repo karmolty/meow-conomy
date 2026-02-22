@@ -503,6 +503,28 @@ function clone(x) {
   const ea = maybeTriggerEvent(a);
   const eb = maybeTriggerEvent(b);
   assert.deepEqual(ea, eb);
+
+  // Nine Lives negates an event when it would trigger.
+  // Find an rng seed that triggers an event on this exact state.
+  let foundRng = null;
+  for (let r = 1; r < 50000; r++) {
+    const t = clone(s);
+    t.rng = r;
+    if (maybeTriggerEvent(t)) {
+      foundRng = r;
+      break;
+    }
+  }
+  assert.ok(foundRng !== null, "should find an rng seed that triggers an event");
+
+  const n = clone(s);
+  n.rng = foundRng;
+  n.schemes ||= {};
+  n.schemes.nineLives = { cooldownLeft: 0, activeLeft: 0, charges: 1 };
+  const ev = maybeTriggerEvent(n);
+  assert.equal(ev, null, "event should be negated");
+  assert.equal(n.schemes.nineLives.charges, 0, "charge should be consumed");
+  assert.ok(n.events?.[0]?.mitigated, "should log a mitigated event entry");
 }
 
 // Schemes: can activate and cooldown starts.

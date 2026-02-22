@@ -138,6 +138,16 @@ export function maybeTriggerEvent(state) {
 
   if (rand01(state) >= p) return null;
 
+  // Mitigation: Nine Lives scheme can negate one bad event.
+  if ((state?.schemes?.nineLives?.charges ?? 0) > 0) {
+    state.schemes.nineLives.charges -= 1;
+    // Record a lightweight log entry (UI can render this as “saved”).
+    state.events ||= [];
+    state.events.unshift({ kind: "tax", title: "Nine Lives", desc: "You dodged trouble this time.", atSec: sec, mitigated: true });
+    state.events = state.events.slice(0, 10);
+    return null;
+  }
+
   const roll = rand01(state);
   const kind = roll < 0.5 ? "tax" : roll < 0.8 ? "rival" : "confiscation";
   state.events ||= [];

@@ -39,7 +39,7 @@ export const SCHEMES = [
   {
     id: "nineLives",
     name: "Nine Lives",
-    desc: "Negate one bad event (hooked up later).",
+    desc: "Negate the next Heat event.",
     cooldownSec: 60,
     durationSec: 0
   },
