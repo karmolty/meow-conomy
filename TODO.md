@@ -124,6 +124,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Hook up Production cat job (generates Kibble)
   - [x] Hook up Hustle scheme (boosts production)
   - [x] Hook up Nine Lives scheme (negates next Heat event)
+  - [x] Make Scouting increase market intel (retain more price history)
   - [x] Add a 3rd starter cat (Toast)
   - [x] Add a 4th starter cat (Pixel)
   - [x] Add a 4th scheme card (Cool Whiskers)

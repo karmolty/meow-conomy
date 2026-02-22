@@ -443,7 +443,8 @@ export function tick(state, dt) {
 
   // Record history for UI sparklines.
   state.history ||= { heat: [], coins: [], netWorth: [] };
-  const maxPoints = 30;
+  // Scouting gives better market intel: keep more history points.
+  const maxPoints = hasJob(state, "scouting") ? 60 : 30;
   for (const g of GOODS) {
     state.history[g.key] ||= [];
     const arr = state.history[g.key];

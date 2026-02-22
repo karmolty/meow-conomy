@@ -416,6 +416,23 @@ function clone(x) {
   assert.ok(assignCatJob(s, c1.id, "production"));
 }
 
+// Scouting increases market intel (more history retained).
+{
+  const a = clone(DEFAULT_STATE);
+  tick(a, 1);
+  // Fill enough points; history is recorded at ~1Hz.
+  for (let i = 0; i < 80; i++) tick(a, 1);
+  assert.ok((a.history?.kibble?.length ?? 0) <= 30);
+
+  const b = clone(DEFAULT_STATE);
+  tick(b, 1);
+  b.unlocked.cats = true;
+  assert.ok(assignCatJob(b, b.cats[0].id, "scouting"));
+  for (let i = 0; i < 80; i++) tick(b, 1);
+  assert.ok((b.history?.kibble?.length ?? 0) > 30);
+  assert.ok((b.history?.kibble?.length ?? 0) <= 60);
+}
+
 // Trader schema sanity + execution.
 {
   assert.ok(STARTER_TRADERS.length >= 1);
