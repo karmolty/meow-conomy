@@ -8,7 +8,7 @@
  */
 
 /**
- * @typedef {"hustle"|"pricePounce"|"nineLives"|"coolWhiskers"} SchemeId
+ * @typedef {"hustle"|"pricePounce"|"nineLives"|"coolWhiskers"|"marketNap"} SchemeId
  */
 
 /**
@@ -25,21 +25,21 @@ export const SCHEMES = [
   {
     id: "hustle",
     name: "Hustle",
-    desc: "Short burst: extra income / output (hooked up later).",
+    desc: "Short burst: doubles production output while active.",
     cooldownSec: 30,
     durationSec: 10
   },
   {
     id: "pricePounce",
     name: "Price Pounce",
-    desc: "Lock a favorable price briefly (hooked up later).",
+    desc: "Briefly improves your buy/sell prices.",
     cooldownSec: 45,
     durationSec: 8
   },
   {
     id: "nineLives",
     name: "Nine Lives",
-    desc: "Negate one bad event (hooked up later).",
+    desc: "Negate the next Heat event.",
     cooldownSec: 60,
     durationSec: 0
   },
@@ -48,6 +48,13 @@ export const SCHEMES = [
     name: "Cool Whiskers",
     desc: "Shed attention fast: reduce Heat immediately.",
     cooldownSec: 40,
+    durationSec: 0
+  },
+  {
+    id: "marketNap",
+    name: "Market Nap",
+    desc: "Let the market breathe: immediately reduces saturation (pressure) across all goods.",
+    cooldownSec: 55,
     durationSec: 0
   }
 ];
@@ -103,6 +110,15 @@ export function activateScheme(state, schemeId) {
   if (schemeId === "coolWhiskers" && (state?.unlocked?.heat ?? false)) {
     const cur = Number(state.heat) || 0;
     state.heat = Math.max(0, cur - 25);
+  }
+
+  // Market Nap: reduce pressure (saturation) on all goods immediately.
+  if (schemeId === "marketNap") {
+    state.market ||= {};
+    for (const k of Object.keys(state.market)) {
+      const p = Number(state.market[k]?.pressure) || 0;
+      state.market[k].pressure = Math.round(p * 0.5 * 100) / 100;
+    }
   }
 
   return true;
