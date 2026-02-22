@@ -8,7 +8,7 @@
  */
 
 /**
- * @typedef {"hustle"|"pricePounce"|"nineLives"|"coolWhiskers"|"marketNap"} SchemeId
+ * @typedef {"hustle"|"pricePounce"|"nineLives"|"coolWhiskers"|"marketNap"|"purrSuasion"} SchemeId
  */
 
 /**
@@ -56,6 +56,13 @@ export const SCHEMES = [
     desc: "Let the market breathe: immediately reduces saturation (pressure) across all goods.",
     cooldownSec: 55,
     durationSec: 0
+  },
+  {
+    id: "purrSuasion",
+    name: "Purr-suasion",
+    desc: "Lay low for a bit: reduces Heat gained from trading while active.",
+    cooldownSec: 50,
+    durationSec: 12
   }
 ];
 

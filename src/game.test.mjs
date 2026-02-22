@@ -578,6 +578,26 @@ function clone(x) {
   assert.ok(buy(ppBuy, "kibble", 1));
   assert.equal(ppBuy.coins, 91);
 
+  // Purr-suasion reduces Heat gained from trading while active.
+  const ph0 = clone(DEFAULT_STATE);
+  tick(ph0, 1);
+  ph0.unlocked.heat = true;
+  ph0.unlocked.catnip = true;
+  ph0.coins = 1000;
+  ph0.market.catnip.price = 10;
+  assert.ok(buy(ph0, "catnip", 1));
+  const heatNoScheme = ph0.heat;
+
+  const ph1 = clone(DEFAULT_STATE);
+  tick(ph1, 1);
+  ph1.unlocked.heat = true;
+  ph1.unlocked.catnip = true;
+  ph1.coins = 1000;
+  ph1.market.catnip.price = 10;
+  assert.ok(activateScheme(ph1, "purrSuasion"));
+  assert.ok(buy(ph1, "catnip", 1));
+  assert.ok(ph1.heat < heatNoScheme);
+
   const ppSell = clone(DEFAULT_STATE);
   tick(ppSell, 1);
   ppSell.coins = 0;

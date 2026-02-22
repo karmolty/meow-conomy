@@ -586,7 +586,14 @@ function buyPrice(state, goodKey) {
 
 function heatMult(state) {
   // Guarding reduces how much Heat you generate.
-  return hasJob(state, "guarding") ? 0.7 : 1;
+  let m = hasJob(state, "guarding") ? 0.7 : 1;
+
+  // Scheme: Purr-suasion reduces Heat gained from trading for a short duration.
+  if ((state?.schemes?.purrSuasion?.activeLeft ?? 0) > 0) {
+    m *= 0.5;
+  }
+
+  return m;
 }
 
 function heatForTrade(goodKey, qty) {
