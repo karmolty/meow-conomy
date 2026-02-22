@@ -121,6 +121,8 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Income (/min) + delta sparkline in Core panel
 - [ ] More cats, jobs, and scheme cards
   - [x] Hook up Price Pounce to improve trade prices
+  - [x] Hook up Production cat job (generates Kibble)
+  - [x] Hook up Hustle scheme (boosts production)
   - [x] Add a 3rd starter cat (Toast)
   - [x] Add a 4th starter cat (Pixel)
   - [x] Add a 4th scheme card (Cool Whiskers)

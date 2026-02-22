@@ -25,7 +25,7 @@ export const SCHEMES = [
   {
     id: "hustle",
     name: "Hustle",
-    desc: "Short burst: extra income / output (hooked up later).",
+    desc: "Short burst: doubles production output while active.",
     cooldownSec: 30,
     durationSec: 10
   },

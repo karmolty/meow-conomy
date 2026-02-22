@@ -483,6 +483,29 @@ export function tick(state, dt) {
   // Traders (assistive automation).
   runTraders(state, safeDt);
 
+  // Cats: production (simple passive generation).
+  // Only meaningful once Cats are unlocked.
+  if (state.unlocked?.cats ?? false) {
+    const prodCats = (state?.cats || []).filter(c => c?.job === "production").length;
+    if (prodCats > 0) {
+      state._prodAcc = (Number(state._prodAcc) || 0) + safeDt;
+      const hustleOn = (state?.schemes?.hustle?.activeLeft ?? 0) > 0;
+      const mult = hustleOn ? 2 : 1;
+
+      // Base rate: 0.12 kibble/sec per production cat.
+      const rate = 0.12 * prodCats * mult;
+      state._kibbleAcc = (Number(state._kibbleAcc) || 0) + rate * safeDt;
+      const make = Math.floor(state._kibbleAcc);
+      if (make > 0) {
+        state._kibbleAcc -= make;
+        state.inventory ||= {};
+        state.inventory.kibble = clamp0((state.inventory.kibble ?? 0) + make);
+        // Production has 0 cost basis (pure generation).
+        fifoAddLot(state, "kibble", make, 0);
+      }
+    }
+  }
+
   // Schemes (v0.3)
   tickSchemes(state, safeDt);
 

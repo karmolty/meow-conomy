@@ -375,6 +375,27 @@ function clone(x) {
 
 // Cats / jobs schema sanity + allocation caps.
 {
+  // Production actually generates kibble (and Hustle boosts it).
+  const p = clone(DEFAULT_STATE);
+  tick(p, 0);
+  p.unlocked.cats = true;
+  assert.ok(assignCatJob(p, p.cats[0].id, "production"));
+  const k0 = p.inventory.kibble;
+  tick(p, 5);
+  tick(p, 5);
+  const k1 = p.inventory.kibble;
+  assert.ok(k1 > k0);
+
+  const h = clone(DEFAULT_STATE);
+  tick(h, 0);
+  h.unlocked.cats = true;
+  assert.ok(assignCatJob(h, h.cats[0].id, "production"));
+  // Activate Hustle then tick through its full duration.
+  assert.ok(activateScheme(h, "hustle"));
+  tick(h, 5);
+  tick(h, 5);
+  assert.ok(h.inventory.kibble >= k1 + 1, "hustle should boost production");
+
   assert.ok(JOB_DEFS.length >= 1);
   assert.ok(STARTER_CATS.length >= 1);
   for (const c of STARTER_CATS) assert.ok(isValidCat(c));
