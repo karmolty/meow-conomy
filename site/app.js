@@ -375,7 +375,9 @@ function renderSchemes() {
     top.className = "row";
 
     const left = document.createElement("div");
-    left.innerHTML = `<strong>${s.name}</strong> <span class="muted">${locked ? "locked" : cd > 0 ? `CD ${cd}s` : "ready"}${!locked && active > 0 ? ` · active ${active}s` : ""}</span>`;
+    const charges = Math.max(0, Math.floor(rt.charges ?? 0));
+    const chargeLabel = (!locked && s.id === "nineLives" && charges > 0) ? ` · shield ${charges}x` : "";
+    left.innerHTML = `<strong>${s.name}</strong> <span class="muted">${locked ? "locked" : cd > 0 ? `CD ${cd}s` : "ready"}${!locked && active > 0 ? ` · active ${active}s` : ""}${chargeLabel}</span>`;
 
     const btn = document.createElement("button");
     btn.className = (!locked && cd <= 0) ? "primary" : "";
