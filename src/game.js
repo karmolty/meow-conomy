@@ -549,7 +549,13 @@ function hasJob(state, jobKey) {
 }
 
 function buyPrice(state, goodKey) {
-  const p = getPrice(state, goodKey);
+  let p = getPrice(state, goodKey);
+
+  // Scheme: Price Pounce gives a brief edge on trade prices.
+  if ((state?.schemes?.pricePounce?.activeLeft ?? 0) > 0) {
+    p = round2(p * 0.9);
+  }
+
   // Negotiating gives a tiny edge.
   return hasJob(state, "negotiating") ? round2(p * 0.98) : p;
 }
@@ -568,7 +574,13 @@ function heatForTrade(goodKey, qty) {
 }
 
 function sellPrice(state, goodKey) {
-  const p = getPrice(state, goodKey);
+  let p = getPrice(state, goodKey);
+
+  // Scheme: Price Pounce gives a brief edge on trade prices.
+  if ((state?.schemes?.pricePounce?.activeLeft ?? 0) > 0) {
+    p = round2(p * 1.1);
+  }
+
   return hasJob(state, "negotiating") ? round2(p * 1.02) : p;
 }
 

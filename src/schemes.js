@@ -32,7 +32,7 @@ export const SCHEMES = [
   {
     id: "pricePounce",
     name: "Price Pounce",
-    desc: "Lock a favorable price briefly (hooked up later).",
+    desc: "Briefly improves your buy/sell prices.",
     cooldownSec: 45,
     durationSec: 8
   },

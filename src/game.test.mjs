@@ -492,6 +492,24 @@ function clone(x) {
   assert.ok(activateScheme(s, SCHEMES[0].id));
   assert.ok((s.schemes?.[SCHEMES[0].id]?.cooldownLeft ?? 0) > 0);
 
+  // Price Pounce improves trade prices.
+  const ppBuy = clone(DEFAULT_STATE);
+  tick(ppBuy, 1);
+  ppBuy.coins = 100;
+  ppBuy.market.kibble.price = 10;
+  assert.ok(activateScheme(ppBuy, "pricePounce"));
+  assert.ok(buy(ppBuy, "kibble", 1));
+  assert.equal(ppBuy.coins, 91);
+
+  const ppSell = clone(DEFAULT_STATE);
+  tick(ppSell, 1);
+  ppSell.coins = 0;
+  ppSell.inventory.kibble = 1;
+  ppSell.market.kibble.price = 10;
+  assert.ok(activateScheme(ppSell, "pricePounce"));
+  assert.ok(sell(ppSell, "kibble", 1));
+  assert.equal(ppSell.coins, 11);
+
   // Cool Whiskers reduces Heat when Heat is unlocked.
   const h = clone(DEFAULT_STATE);
   tick(h, 1);
