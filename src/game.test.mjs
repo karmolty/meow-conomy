@@ -578,6 +578,13 @@ function clone(x) {
   assert.ok(activateScheme(h, "coolWhiskers"));
   assert.equal(h.heat, 35);
 
+  // Cool Whiskers can't be used before Heat unlock (avoid wasting cooldown).
+  const h0 = clone(DEFAULT_STATE);
+  tick(h0, 1);
+  h0.unlocked.heat = false;
+  h0.heat = 0;
+  assert.equal(activateScheme(h0, "coolWhiskers"), false);
+
   // Market Nap reduces market pressure across goods (and updates displayed prices immediately).
   const m = clone(DEFAULT_STATE);
   tick(m, 1);

@@ -107,7 +107,8 @@ export function activateScheme(state, schemeId) {
   }
 
   // Cool Whiskers: immediate Heat reduction (only once Heat exists as a mechanic).
-  if (schemeId === "coolWhiskers" && (state?.unlocked?.heat ?? false)) {
+  if (schemeId === "coolWhiskers") {
+    if (!(state?.unlocked?.heat ?? false)) return false;
     const cur = Number(state.heat) || 0;
     state.heat = Math.max(0, cur - 25);
   }
