@@ -380,10 +380,11 @@ function renderSchemes() {
     left.innerHTML = `<strong>${s.name}</strong> <span class="muted">${locked ? "locked" : cd > 0 ? `CD ${cd}s` : "ready"}${!locked && active > 0 ? ` · active ${active}s` : ""}${chargeLabel}</span>`;
 
     const btn = document.createElement("button");
-    btn.className = (!locked && cd <= 0) ? "primary" : "";
-    btn.disabled = locked || cd > 0;
-    btn.textContent = locked ? "Locked" : (cd > 0 ? "Cooling" : "Use");
-    btn.title = locked ? "Unlock more scheme slots by ending seasons." : "";
+    const needsHeat = s.id === "coolWhiskers" && !(state.unlocked?.heat ?? false);
+    btn.className = (!locked && cd <= 0 && !needsHeat) ? "primary" : "";
+    btn.disabled = locked || cd > 0 || needsHeat;
+    btn.textContent = locked ? "Locked" : needsHeat ? "Need Heat" : (cd > 0 ? "Cooling" : "Use");
+    btn.title = locked ? "Unlock more scheme slots by ending seasons." : needsHeat ? "Unlock Heat to use Cool Whiskers." : "";
     btn.addEventListener("click", () => {
       if (locked) return;
       if (!activateScheme(state, s.id)) {
