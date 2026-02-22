@@ -578,13 +578,16 @@ function clone(x) {
   assert.ok(activateScheme(h, "coolWhiskers"));
   assert.equal(h.heat, 35);
 
-  // Market Nap reduces market pressure across goods.
+  // Market Nap reduces market pressure across goods (and updates displayed prices immediately).
   const m = clone(DEFAULT_STATE);
   tick(m, 1);
+  // Set an explicit price consistent with pressure so we can assert the adjustment.
   m.market.kibble.pressure = 10;
+  m.market.kibble.price = 12; // base~10, mult(10)=1.2
   m.market.catnip.pressure = -20;
   assert.ok(activateScheme(m, "marketNap"));
   assert.equal(m.market.kibble.pressure, 5);
+  assert.equal(m.market.kibble.price, 11); // base~10, mult(5)=1.1
   assert.equal(m.market.catnip.pressure, -10);
 }
 

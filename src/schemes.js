@@ -117,8 +117,19 @@ export function activateScheme(state, schemeId) {
   if (schemeId === "marketNap") {
     state.market ||= {};
     for (const k of Object.keys(state.market)) {
-      const p = Number(state.market[k]?.pressure) || 0;
-      state.market[k].pressure = Math.round(p * 0.5 * 100) / 100;
+      const entry = state.market[k];
+      const p0 = Number(entry?.pressure) || 0;
+      const p1 = Math.round(p0 * 0.5 * 100) / 100;
+      entry.pressure = p1;
+
+      // Update displayed price immediately (approx) so the effect is visible without waiting a tick.
+      const price0 = Number(entry?.price);
+      if (Number.isFinite(price0) && price0 > 0) {
+        const mult0 = 1 + 0.02 * p0;
+        const mult1 = 1 + 0.02 * p1;
+        const baseApprox = price0 / (mult0 || 1);
+        entry.price = Math.max(1, Math.round(baseApprox * mult1 * 100) / 100);
+      }
     }
   }
 
