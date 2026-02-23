@@ -76,6 +76,8 @@ const els = {
   schemes: document.getElementById("schemes"),
   saveStatus: document.getElementById("saveStatus"),
   btnHardReset: document.getElementById("btnHardReset"),
+  btnExportSave: document.getElementById("btnExportSave"),
+  btnImportSave: document.getElementById("btnImportSave"),
   btnEndSeason: document.getElementById("btnEndSeason"),
   prestigeExplainer: document.getElementById("prestigeExplainer"),
   challengeRow: document.getElementById("challengeRow"),
@@ -845,6 +847,40 @@ els.btnHardReset.addEventListener("click", () => {
   if (!confirm("Hard reset? This deletes your save.")) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
+});
+
+els.btnExportSave?.addEventListener("click", async () => {
+  const copy = { ...clone(state) };
+  delete copy._lastTickMs;
+  const raw = JSON.stringify(copy);
+
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(raw);
+      alert("Save copied to clipboard.");
+      return;
+    }
+  } catch {
+    // fall through
+  }
+
+  // Fallback: show the JSON in a prompt so it can be manually copied.
+  prompt("Copy your save JSON:", raw);
+});
+
+els.btnImportSave?.addEventListener("click", () => {
+  const raw = prompt("Paste save JSON to import (this overwrites your current save):");
+  if (!raw) return;
+
+  try {
+    const parsed = JSON.parse(raw);
+    const next = { ...clone(DEFAULT_STATE), ...parsed };
+    next._lastTickMs = nowMs();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    location.reload();
+  } catch (e) {
+    alert("Invalid save JSON.");
+  }
 });
 
 els.btnEndSeason?.addEventListener("click", () => {
