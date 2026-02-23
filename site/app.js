@@ -864,7 +864,23 @@ els.btnExportSave?.addEventListener("click", async () => {
     // fall through
   }
 
-  // Fallback: show the JSON in a prompt so it can be manually copied.
+  // Fallback: trigger a file download so the user can save it even when clipboard is blocked.
+  try {
+    const blob = new Blob([raw], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "meowconomy-save.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    return;
+  } catch {
+    // final fallback
+  }
+
+  // Final fallback: show the JSON in a prompt so it can be manually copied.
   prompt("Copy your save JSON:", raw);
 });
 

@@ -137,3 +137,4 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Add a 5th scheme card (Market Nap)
   - [x] Add another scheme card (Purr-suasion)
   - [x] Add save **Export/Import** (copy/paste JSON) in the Core panel
+  - [x] Export save fallback: download `meowconomy-save.json` when clipboard blocked
