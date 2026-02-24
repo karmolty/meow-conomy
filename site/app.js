@@ -981,8 +981,13 @@ els.btnLevelUp?.addEventListener("click", () => {
   render();
 });
 
-// set repo link if we're on pages
-els.repoLink.href = "https://github.com/karmolty/" + location.pathname.split("/")[1].replaceAll("/", "");
+// Set repo link. On GitHub Pages, the repo name is usually the first path segment.
+// Locally ("/"), fall back to the known repo.
+{
+  const seg = (location.pathname.split("/")[1] || "").trim();
+  const repo = seg || "meow-conomy";
+  els.repoLink.href = "https://github.com/karmolty/" + repo;
+}
 
 // iOS Safari: prevent double-tap-to-zoom inside the game surface.
 // This is a common pattern for tap-heavy web games.
