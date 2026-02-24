@@ -144,6 +144,12 @@
       animation: tapPulseRed 220ms ease-out;
     }
 
+    /* Accessibility: honor reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+      button:active { transform: none; }
+    }
+
     /* iOS Safari: make the game surface fully gesture-owned by the game.
        This reduces double-tap zoom and other browser gestures inside the app.
        (We design the page to not require scrolling.) */
