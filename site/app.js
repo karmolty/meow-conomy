@@ -78,6 +78,8 @@ const els = {
   btnHardReset: document.getElementById("btnHardReset"),
   btnExportSave: document.getElementById("btnExportSave"),
   btnImportSave: document.getElementById("btnImportSave"),
+  btnImportFile: document.getElementById("btnImportFile"),
+  fileImport: document.getElementById("fileImport"),
   btnEndSeason: document.getElementById("btnEndSeason"),
   prestigeExplainer: document.getElementById("prestigeExplainer"),
   challengeRow: document.getElementById("challengeRow"),
@@ -884,18 +886,39 @@ els.btnExportSave?.addEventListener("click", async () => {
   prompt("Copy your save JSON:", raw);
 });
 
-els.btnImportSave?.addEventListener("click", () => {
-  const raw = prompt("Paste save JSON to import (this overwrites your current save):");
+function importSaveRaw(raw) {
   if (!raw) return;
-
   try {
     const parsed = JSON.parse(raw);
     const next = { ...clone(DEFAULT_STATE), ...parsed };
     next._lastTickMs = nowMs();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
     location.reload();
-  } catch (e) {
+  } catch {
     alert("Invalid save JSON.");
+  }
+}
+
+els.btnImportSave?.addEventListener("click", () => {
+  const raw = prompt("Paste save JSON to import (this overwrites your current save):");
+  importSaveRaw(raw);
+});
+
+els.btnImportFile?.addEventListener("click", () => {
+  els.fileImport?.click();
+});
+
+els.fileImport?.addEventListener("change", async () => {
+  const f = els.fileImport.files?.[0];
+  // allow re-selecting the same file later
+  els.fileImport.value = "";
+  if (!f) return;
+
+  try {
+    const raw = await f.text();
+    importSaveRaw(raw);
+  } catch {
+    alert("Could not read file.");
   }
 });
 
