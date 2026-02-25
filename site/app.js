@@ -32,6 +32,11 @@ function normalizeLoadedState(s) {
 
   s.unlocked = s.unlocked && typeof s.unlocked === "object" ? s.unlocked : {};
 
+  // Coerce seed to uint32 if present (but preserve null/undefined as "missing").
+  if (s.seed != null) s.seed = (Number(s.seed) >>> 0);
+
+  s.level = Math.max(0, Math.floor(Number(s.level) || 0));
+
   s.meta ||= {};
   s.meta.whiskers = Number(s.meta.whiskers) || 0;
   s.meta.seasons = Number(s.meta.seasons) || 0;
