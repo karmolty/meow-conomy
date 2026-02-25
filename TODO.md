@@ -110,6 +110,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Price engine: 10-min idle sim sanity bounds (no runaway drift)
 - [x] Deployment instructions (GitHub Pages if applicable)
 
+## Maintenance / compatibility
+- [x] Harden save loading with a `normalizeLoadedState()` so older saves don’t crash as fields are added.
+
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)
