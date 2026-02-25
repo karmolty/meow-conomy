@@ -41,9 +41,14 @@ function normalizeLoadedState(s) {
   s.meta.seasons = Number(s.meta.seasons) || 0;
   s.meta.schemeSlots = Math.max(1, Math.floor(Number(s.meta.schemeSlots) || 1));
   s.meta.district = normalizeDistrictKey(s.meta.district || "alley");
-  s.meta.districtsUnlocked = Array.isArray(s.meta.districtsUnlocked) && s.meta.districtsUnlocked.length
-    ? s.meta.districtsUnlocked.map(normalizeDistrictKey)
-    : ["alley"];
+  {
+    const arr = Array.isArray(s.meta.districtsUnlocked) ? s.meta.districtsUnlocked : [];
+    const norm = arr.map(normalizeDistrictKey).filter(Boolean);
+    const set = new Set(norm.length ? norm : ["alley"]);
+    // Ensure current district is always selectable (even if old saves missed it).
+    set.add(s.meta.district);
+    s.meta.districtsUnlocked = [...set];
+  }
   if (!s.meta.challenge) s.meta.challenge = "none";
 
   s.inventory = s.inventory && typeof s.inventory === "object" ? s.inventory : {};
