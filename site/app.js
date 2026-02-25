@@ -1,6 +1,5 @@
 import { DEFAULT_STATE, GOODS, tick, buy, sell, getPrice } from "./game.js";
 import {
-  CONTRACTS,
   getAvailableContracts,
   getActiveContract,
   acceptContractById,
