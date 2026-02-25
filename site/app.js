@@ -129,7 +129,8 @@ const els = {
 
 const state = load();
 // Seed should be initialized once per new save so price evolution can be deterministic per-save.
-if (!state.seed) {
+// Note: 0 is a valid uint32 seed; only treat null/undefined as missing.
+if (state.seed == null) {
   state.seed = (Math.random() * 2 ** 32) >>> 0;
   save(state);
 }
