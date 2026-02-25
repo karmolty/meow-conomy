@@ -64,6 +64,10 @@ function normalizeLoadedState(s) {
   if (!Array.isArray(s.history.coins)) s.history.coins = [];
   if (!Array.isArray(s.history.netWorth)) s.history.netWorth = [];
   if (!Array.isArray(s.history.heat)) s.history.heat = [];
+  // Per-good price history used by sparklines (older saves may not have it).
+  for (const g of GOODS) {
+    if (!Array.isArray(s.history[g.key])) s.history[g.key] = [];
+  }
 
   return s;
 }
