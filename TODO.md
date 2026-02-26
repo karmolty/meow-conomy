@@ -144,3 +144,4 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Import save from file upload (in addition to paste JSON)
   - [x] UI: add a small Help / shortcuts section (keyboard + progression tips)
   - [x] Accessibility: add aria-labels to Market buy/sell buttons and Scheme buttons
+  - [x] Accessibility: add aria-labels to Core buttons (reset/export/import/level up/end season)

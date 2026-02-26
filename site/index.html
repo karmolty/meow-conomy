@@ -220,7 +220,7 @@ button.primary {
       </div>
       <div class="row">
         <span class="pill" id="saveStatus">saved</span>
-        <button id="btnHardReset" title="Erase save">Hard reset</button>
+        <button id="btnHardReset" title="Erase save" aria-label="Hard reset (erase save)">Hard reset</button>
       </div>
     </header>
 
@@ -244,14 +244,14 @@ button.primary {
           <div class="list" style="min-width: 260px;">
             <div id="goalText"><strong>Goal:</strong> reach <strong>100 coins</strong> (unlocks Catnip).</div>
             <div class="row" style="gap:8px; flex-wrap:wrap;">
-              <button id="btnExportSave" title="Copy your save JSON to clipboard">Export save</button>
-              <button id="btnImportSave" title="Paste a save JSON to restore">Import save</button>
-              <button id="btnImportFile" title="Import from a meowconomy-save.json file">Import file</button>
-              <input id="fileImport" type="file" accept="application/json" style="display:none" />
+              <button id="btnExportSave" title="Copy your save JSON to clipboard" aria-label="Export save">Export save</button>
+              <button id="btnImportSave" title="Paste a save JSON to restore" aria-label="Import save from pasted JSON">Import save</button>
+              <button id="btnImportFile" title="Import from a meowconomy-save.json file" aria-label="Import save from file">Import file</button>
+              <input id="fileImport" type="file" accept="application/json" aria-label="Choose save file to import" style="display:none" />
             </div>
             <!-- core hint removed -->
             <div class="row" style="justify-content:flex-end; margin-top: 8px;">
-              <button id="btnLevelUp" class="primary" style="display:none;">Level Up</button>
+              <button id="btnLevelUp" class="primary" style="display:none;" aria-label="Level up">Level Up</button>
             </div>
 
             <div class="progress" aria-label="Progress to next level">
@@ -266,7 +266,7 @@ button.primary {
               </select>
             </div>
             <div class="row" style="justify-content:flex-end; margin-top: 8px;">
-              <button id="btnEndSeason" title="Prestige: reset run state for Whiskers">End Season</button>
+              <button id="btnEndSeason" title="Prestige: reset run state for Whiskers" aria-label="End Season (prestige)">End Season</button>
             </div>
             <div class="muted" id="prestigeExplainer" style="margin-top:6px;">
               End Season resets coins, inventory, contracts, Heat, and market pressure. You keep Whiskers + Seasons.
