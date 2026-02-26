@@ -652,6 +652,7 @@ function renderContract() {
       const redeem = document.createElement("button");
       redeem.className = "primary";
       redeem.textContent = "Redeem";
+      redeem.setAttribute("aria-label", `Redeem contract: ${active.title}`);
       redeem.addEventListener("click", () => {
         redeemActiveContract(state);
         save(state);
@@ -662,6 +663,7 @@ function renderContract() {
 
     const abandon = document.createElement("button");
     abandon.textContent = `Abandon (-${active.penalty.coins} coins)`;
+    abandon.setAttribute("aria-label", `Abandon contract: ${active.title}`);
     abandon.addEventListener("click", () => {
       abandonActiveContract(state);
       save(state);
@@ -704,6 +706,7 @@ function renderContract() {
     const accept = document.createElement("button");
     accept.className = "primary";
     accept.textContent = "Accept";
+    accept.setAttribute("aria-label", `Accept contract: ${c.title}`);
     accept.addEventListener("click", () => {
       acceptContractById(state, c.id);
       save(state);
