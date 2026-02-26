@@ -499,6 +499,7 @@ function renderTraders() {
     const toggle = document.createElement("button");
     toggle.className = t.enabled ? "primary" : "";
     toggle.textContent = t.enabled ? "Enabled" : "Disabled";
+    toggle.setAttribute("aria-label", `Toggle trader ${t.name}`);
     toggle.addEventListener("click", () => {
       t.enabled = !t.enabled;
       save(state);
@@ -523,6 +524,7 @@ function renderTraders() {
       price.type = "number";
       price.step = "0.1";
       price.value = String(r.price ?? 0);
+      price.setAttribute("aria-label", `Trader rule price for ${r.kind} ${r.goodKey}`);
       price.style.width = "90px";
       price.style.minHeight = "48px";
       price.style.border = "1px solid var(--line)";
@@ -539,6 +541,7 @@ function renderTraders() {
       qty.step = "1";
       qty.min = "1";
       qty.value = String(r.qty ?? 1);
+      qty.setAttribute("aria-label", `Trader rule quantity for ${r.kind} ${r.goodKey}`);
       qty.style.width = "70px";
       qty.style.minHeight = "48px";
       qty.style.border = "1px solid var(--line)";
