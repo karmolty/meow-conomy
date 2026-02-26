@@ -274,6 +274,7 @@ function renderMarket() {
     const buyBtn = document.createElement("button");
     buyBtn.className = "primary square";
     buyBtn.textContent = "Buy";
+    buyBtn.setAttribute("aria-label", `Buy 1 ${g.label}`);
     buyBtn.disabled = state.coins < price;
     function doBuyOne(e) {
       // iOS Safari: prevent touch gestures (double-tap zoom) from winning.
@@ -297,6 +298,7 @@ function renderMarket() {
     const sellBtn = document.createElement("button");
     sellBtn.className = "square";
     sellBtn.textContent = "Sell";
+    sellBtn.setAttribute("aria-label", `Sell 1 ${g.label}`);
     sellBtn.disabled = (state.inventory?.[g.key] ?? 0) < 1;
     function doSellOne(e) {
       if (e?.cancelable) e.preventDefault();
@@ -438,6 +440,10 @@ function renderSchemes() {
     btn.className = (!locked && cd <= 0 && !needsHeat) ? "primary" : "";
     btn.disabled = locked || cd > 0 || needsHeat;
     btn.textContent = locked ? "Locked" : needsHeat ? "Need Heat" : (cd > 0 ? "Cooling" : "Use");
+    btn.setAttribute(
+      "aria-label",
+      locked ? `${s.name} (locked)` : needsHeat ? `${s.name} (requires Heat unlock)` : `Use scheme: ${s.name}`
+    );
     btn.title = locked ? "Unlock more scheme slots by ending seasons." : needsHeat ? "Unlock Heat to use Cool Whiskers." : "";
     btn.addEventListener("click", () => {
       if (locked) return;

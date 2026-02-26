@@ -143,3 +143,4 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Export save fallback: download `meowconomy-save.json` when clipboard blocked
   - [x] Import save from file upload (in addition to paste JSON)
   - [x] UI: add a small Help / shortcuts section (keyboard + progression tips)
+  - [x] Accessibility: add aria-labels to Market buy/sell buttons and Scheme buttons
