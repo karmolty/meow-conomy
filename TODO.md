@@ -114,6 +114,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Harden save loading with a `normalizeLoadedState()` so older saves don’t crash as fields are added.
 - [x] Unlock Schemes whenever Heat unlocks (500-coin step) + add regression test.
 - [x] Defense-in-depth: block scheme activation when `unlocked.schemes` is false + add test.
+- [x] Docs: mention scheme unlock gating (Schemes unlock alongside Heat at 500 coins).
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)

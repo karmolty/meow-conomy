@@ -45,6 +45,10 @@ Manual “viable strategy” smoke tests (v0.2 AC1 support):
   - buy dips, sell spikes
 - If you get stuck, pivot back to Kibble to stabilize.
 
+## Schemes (active abilities)
+- Schemes unlock alongside **Heat** at **500 coins**.
+- Some schemes are Heat-gated too (e.g. **Cool Whiskers** can’t be used until Heat is unlocked).
+
 ## Prestige (End Season)
 - Click **End Season** in the Core panel.
 - You gain **Whiskers** based on your current coins, then your run state resets (coins/inventory/contracts/Heat/market pressure).
