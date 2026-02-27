@@ -105,6 +105,9 @@ export function activateScheme(state, schemeId) {
   const rt = state.schemes[schemeId];
   if ((rt.cooldownLeft ?? 0) > 0) return false;
 
+  // Preconditions (don’t consume cooldown on failure).
+  if (schemeId === "coolWhiskers" && !(state?.unlocked?.heat ?? false)) return false;
+
   rt.cooldownLeft = def.cooldownSec;
   rt.activeLeft = def.durationSec;
 
@@ -115,7 +118,6 @@ export function activateScheme(state, schemeId) {
 
   // Cool Whiskers: immediate Heat reduction (only once Heat exists as a mechanic).
   if (schemeId === "coolWhiskers") {
-    if (!(state?.unlocked?.heat ?? false)) return false;
     const cur = Number(state.heat) || 0;
     state.heat = Math.max(0, cur - 25);
   }

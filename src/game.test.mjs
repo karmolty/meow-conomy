@@ -638,6 +638,7 @@ function clone(x) {
   h0.unlocked.heat = false;
   h0.heat = 0;
   assert.equal(activateScheme(h0, "coolWhiskers"), false);
+  assert.equal(h0.schemes.coolWhiskers.cooldownLeft, 0, "failed activation should not consume cooldown");
 
   // Market Nap reduces market pressure across goods (and updates displayed prices immediately).
   const m = clone(DEFAULT_STATE);
