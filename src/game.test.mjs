@@ -406,6 +406,7 @@ function clone(x) {
   const h = clone(DEFAULT_STATE);
   tick(h, 0);
   h.unlocked.cats = true;
+  h.unlocked.schemes = true;
   assert.ok(assignCatJob(h, h.cats[0].id, "production"));
   // Activate Hustle then tick through its full duration.
   assert.ok(activateScheme(h, "hustle"));
@@ -581,14 +582,23 @@ function clone(x) {
 // Schemes: can activate and cooldown starts.
 {
   assert.ok(SCHEMES.length >= 3);
+
+  // Defense-in-depth: activation is blocked when schemes are locked.
+  const locked = clone(DEFAULT_STATE);
+  tick(locked, 0);
+  locked.unlocked.schemes = false;
+  assert.equal(activateScheme(locked, SCHEMES[0].id), false);
+
   const s = clone(DEFAULT_STATE);
   tick(s, 0);
+  s.unlocked.schemes = true;
   assert.ok(activateScheme(s, SCHEMES[0].id));
   assert.ok((s.schemes?.[SCHEMES[0].id]?.cooldownLeft ?? 0) > 0);
 
   // Price Pounce improves trade prices.
   const ppBuy = clone(DEFAULT_STATE);
   tick(ppBuy, 1);
+  ppBuy.unlocked.schemes = true;
   ppBuy.coins = 100;
   ppBuy.market.kibble.price = 10;
   assert.ok(activateScheme(ppBuy, "pricePounce"));
@@ -608,6 +618,7 @@ function clone(x) {
   const ph1 = clone(DEFAULT_STATE);
   tick(ph1, 1);
   ph1.unlocked.heat = true;
+  ph1.unlocked.schemes = true;
   ph1.unlocked.catnip = true;
   ph1.coins = 1000;
   ph1.market.catnip.price = 10;
@@ -617,6 +628,7 @@ function clone(x) {
 
   const ppSell = clone(DEFAULT_STATE);
   tick(ppSell, 1);
+  ppSell.unlocked.schemes = true;
   ppSell.coins = 0;
   ppSell.inventory.kibble = 1;
   ppSell.market.kibble.price = 10;
@@ -628,6 +640,7 @@ function clone(x) {
   const h = clone(DEFAULT_STATE);
   tick(h, 1);
   h.unlocked.heat = true;
+  h.unlocked.schemes = true;
   h.heat = 60;
   assert.ok(activateScheme(h, "coolWhiskers"));
   assert.equal(h.heat, 35);
@@ -643,6 +656,7 @@ function clone(x) {
   // Market Nap reduces market pressure across goods (and updates displayed prices immediately).
   const m = clone(DEFAULT_STATE);
   tick(m, 1);
+  m.unlocked.schemes = true;
   // Set an explicit price consistent with pressure so we can assert the adjustment.
   m.market.kibble.pressure = 10;
   m.market.kibble.price = 12; // base~10, mult(10)=1.2

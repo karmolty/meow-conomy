@@ -99,6 +99,9 @@ export function tickSchemes(state, dt) {
  * @returns {boolean}
  */
 export function activateScheme(state, schemeId) {
+  // Defense-in-depth: if schemes aren't unlocked, do nothing (even if UI bugs allow clicks).
+  if (!(state?.unlocked?.schemes ?? true)) return false;
+
   ensureSchemes(state);
   const def = SCHEMES.find(s => s.id === schemeId);
   if (!def) return false;
