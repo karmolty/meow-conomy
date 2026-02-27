@@ -210,6 +210,23 @@ function clone(x) {
   assert.ok(avg(uK) > avg(aK));
 }
 
+// Unlock gating: Heat and Schemes unlock together at the 500-coin step.
+{
+  const s0 = clone(DEFAULT_STATE);
+  tick(s0, 0);
+  s0.coins = 499;
+  tick(s0, 0);
+  assert.equal(s0.unlocked.heat, false);
+  assert.equal(s0.unlocked.schemes, false);
+
+  const s1 = clone(DEFAULT_STATE);
+  tick(s1, 0);
+  s1.coins = 500;
+  tick(s1, 0);
+  assert.equal(s1.unlocked.heat, true);
+  assert.equal(s1.unlocked.schemes, true);
+}
+
 // Heat history: only records after Heat is unlocked.
 {
   const s = clone(DEFAULT_STATE);

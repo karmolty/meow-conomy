@@ -428,6 +428,8 @@ export function tick(state, dt) {
   if (!state.unlocked.shiny && (state.coins ?? 0) >= 250) state.unlocked.shiny = true;
   if (!state.unlocked.contract && (state.coins ?? 0) >= 250) state.unlocked.contract = true;
   if (!state.unlocked.heat && (state.coins ?? 0) >= 500) state.unlocked.heat = true;
+  // Heat and Schemes unlock together (v0.2.2 goal ladder @ 500 coins).
+  if (state.unlocked.heat && !state.unlocked.schemes) state.unlocked.schemes = true;
   if (!state.unlocked.traders && (state.coins ?? 0) >= 800) state.unlocked.traders = true;
   if (!state.unlocked.cats && (state.coins ?? 0) >= 1200) state.unlocked.cats = true;
 
