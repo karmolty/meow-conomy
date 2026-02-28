@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# local env / secrets
+.env
+.env.*
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+
+# build / coverage artifacts (future-proof)
+dist/
+coverage/
