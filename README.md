@@ -1,5 +1,7 @@
 # meow-conomy
 
+![CI](https://github.com/karmolty/meow-conomy/actions/workflows/ci.yml/badge.svg)
+
 Live site: https://karmolty.github.io/meow-conomy/
 
 A minimalist cat-themed incremental browser game (inspired by the genre, not a clone).

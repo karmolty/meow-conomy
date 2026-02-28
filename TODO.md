@@ -99,6 +99,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.0 — Stable Minimal Game
 - [x] Save/load (localStorage or JSON) for run + meta progression
+- [x] Add CI badge to README.
 - [x] Document tuning knobs (pacing, price volatility, heat scaling, contract rewards)
 - [x] Add tests for tick/pricing/contracts (core invariants)
   - [x] Trading respects unlock gating (buy/sell return false for locked goods)
