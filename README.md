@@ -29,7 +29,7 @@ Tip: open the in-game **Help / shortcuts** section (footer) for keyboard + progr
 Automated:
 
 ```bash
-node --test
+node src/game.test.mjs
 ```
 
 Manual “viable strategy” smoke tests (v0.2 AC1 support):
