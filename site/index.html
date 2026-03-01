@@ -242,7 +242,7 @@ button.primary {
             </div>
           </div>
           <div class="list" style="min-width: 260px;">
-            <div id="goalText"><strong>Goal:</strong> reach <strong>100 coins</strong> (unlocks Catnip).</div>
+            <div id="goalText" aria-live="polite" aria-atomic="true"><strong>Goal:</strong> reach <strong>100 coins</strong> (unlocks Catnip).</div>
             <div class="row" style="gap:8px; flex-wrap:wrap;">
               <button id="btnExportSave" title="Copy your save JSON to clipboard" aria-label="Export save">Export save</button>
               <button id="btnImportSave" title="Paste a save JSON to restore" aria-label="Import save from pasted JSON">Import save</button>
@@ -257,7 +257,7 @@ button.primary {
             <div class="progress" aria-label="Progress to next level">
               <div class="progressFill" id="progressFill" style="width:0%"></div>
             </div>
-            <div class="muted" id="progressLabel">0 / 100</div>
+            <div class="muted" id="progressLabel" aria-live="polite" aria-atomic="true">0 / 100</div>
             <div class="muted" id="heatLine">Heat: <strong id="statHeat" aria-live="polite" aria-atomic="true">0</strong> / 100 <span class="muted" id="heatSpark" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span></div>
             <div class="muted">Whiskers: <strong id="statWhiskers" aria-live="polite" aria-atomic="true">0</strong> <span class="muted">(Seasons: <strong id="statSeasons" aria-live="polite" aria-atomic="true">0</strong>)</span></div>
             <div class="muted" id="districtRow" style="display:none; margin-top: 4px;">
