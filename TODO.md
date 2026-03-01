@@ -152,3 +152,4 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Accessibility: add aria-labels to Market buy/sell buttons and Scheme buttons
   - [x] Accessibility: add aria-labels to Core buttons (reset/export/import/level up/end season)
   - [x] Accessibility: add aria-labels to Contract buttons (accept/redeem/abandon)
+  - [x] Accessibility: add aria-live to key stats (coins/Heat/Whiskers) for screen readers

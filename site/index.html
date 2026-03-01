@@ -229,7 +229,7 @@ button.primary {
         <h2>Core</h2>
         <div class="row">
           <div>
-            <div class="big" id="statCoins">0</div>
+            <div class="big" id="statCoins" aria-live="polite" aria-atomic="true">0</div>
             <div class="muted">coins <span class="muted" id="coinsSpark" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span></div>
             <div class="muted" id="nwLine" style="margin-top:2px;">
               net worth: <strong id="statNetWorth">0</strong>
@@ -258,8 +258,8 @@ button.primary {
               <div class="progressFill" id="progressFill" style="width:0%"></div>
             </div>
             <div class="muted" id="progressLabel">0 / 100</div>
-            <div class="muted" id="heatLine">Heat: <strong id="statHeat">0</strong> / 100 <span class="muted" id="heatSpark" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span></div>
-            <div class="muted">Whiskers: <strong id="statWhiskers">0</strong> <span class="muted">(Seasons: <strong id="statSeasons">0</strong>)</span></div>
+            <div class="muted" id="heatLine">Heat: <strong id="statHeat" aria-live="polite" aria-atomic="true">0</strong> / 100 <span class="muted" id="heatSpark" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span></div>
+            <div class="muted">Whiskers: <strong id="statWhiskers" aria-live="polite" aria-atomic="true">0</strong> <span class="muted">(Seasons: <strong id="statSeasons" aria-live="polite" aria-atomic="true">0</strong>)</span></div>
             <div class="muted" id="districtRow" style="display:none; margin-top: 4px;">
               District:
               <select id="districtSelect" style="margin-left:6px; padding:6px 8px; border-radius:10px; border:1px solid var(--line); background:#fff; font-weight:700;">
