@@ -118,6 +118,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Docs: mention scheme unlock gating (Schemes unlock alongside Heat at 500 coins).
 - [x] Add a simple CI workflow that runs `node src/game.test.mjs` on push/PR.
 - [x] Add a basic .gitignore.
+- [x] Add `package.json` with `npm test` + `npm run serve` convenience scripts.
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)

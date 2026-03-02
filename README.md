@@ -19,6 +19,20 @@ A minimalist cat-themed incremental browser game (inspired by the genre, not a c
 ## Local dev
 Open `site/index.html` in a browser.
 
+If you want a local server (recommended so module imports work reliably):
+
+```bash
+python3 -m http.server 5173 --directory site
+```
+
+Then open: http://localhost:5173
+
+Or via npm:
+
+```bash
+npm run serve
+```
+
 Tip: open the in-game **Help / shortcuts** section (footer) for keyboard + progression reminders.
 
 ## Saving
@@ -30,6 +44,8 @@ Automated:
 
 ```bash
 node src/game.test.mjs
+# or
+npm test
 ```
 
 Manual “viable strategy” smoke tests (v0.2 AC1 support):
