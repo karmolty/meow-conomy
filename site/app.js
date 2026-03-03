@@ -957,7 +957,7 @@ els.btnExportSave?.addEventListener("click", async () => {
   try {
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(raw);
-      alert("Save copied to clipboard.");
+      flashStatus("save copied");
       return;
     }
   } catch {
@@ -970,7 +970,8 @@ els.btnExportSave?.addEventListener("click", async () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "meowconomy-save.json";
+    const seed = copy.seed;
+    a.download = seed == null ? "meowconomy-save.json" : `meowconomy-save-${Number(seed) >>> 0}.json`;
     document.body.appendChild(a);
     a.click();
     a.remove();
