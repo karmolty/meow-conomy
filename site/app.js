@@ -957,6 +957,7 @@ els.btnExportSave?.addEventListener("click", async () => {
   try {
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(raw);
+      maybeHaptic();
       flashStatus("save copied");
       return;
     }
