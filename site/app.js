@@ -164,9 +164,16 @@ if (els.districtSelect) {
   });
 }
 
+let _statusTimer = null;
 function setSaveStatus(text) {
   els.saveStatus.textContent = text;
   els.saveStatus.style.borderColor = text === "saved" ? "var(--line)" : "rgba(43,122,120,.35)";
+}
+
+function flashStatus(text, ms = 1200) {
+  if (_statusTimer) clearTimeout(_statusTimer);
+  setSaveStatus(text);
+  _statusTimer = setTimeout(() => setSaveStatus("saved"), ms);
 }
 
 function maybeHaptic() {
@@ -930,7 +937,8 @@ els.seed?.addEventListener("click", async () => {
   try {
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(text);
-      alert("Seed copied to clipboard.");
+      maybeHaptic();
+      flashStatus("seed copied");
       return;
     }
   } catch {

@@ -116,6 +116,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] UI: show current save seed in the Core panel (debug/determinism helper).
 - [x] UI: hide seed line if save seed is missing (defensive/back-compat).
 - [x] UI: click seed to copy it to clipboard (tiny debug helper).
+- [x] UI: seed copy uses saveStatus pill instead of an alert (less annoying).
 - [x] Unlock Schemes whenever Heat unlocks (500-coin step) + add regression test.
 - [x] Defense-in-depth: block scheme activation when `unlocked.schemes` is false + add test.
 - [x] Docs: mention scheme unlock gating (Schemes unlock alongside Heat at 500 coins).
