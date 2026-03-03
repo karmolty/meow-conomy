@@ -922,6 +922,25 @@ els.btnHardReset.addEventListener("click", () => {
   location.reload();
 });
 
+els.seed?.addEventListener("click", async () => {
+  const seed = state.seed;
+  if (seed == null) return;
+  const text = String(Number(seed) >>> 0);
+
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      alert("Seed copied to clipboard.");
+      return;
+    }
+  } catch {
+    // fall through
+  }
+
+  // Fallback for older browsers / blocked clipboard.
+  prompt("Copy seed:", text);
+});
+
 els.btnExportSave?.addEventListener("click", async () => {
   const copy = { ...clone(state) };
   delete copy._lastTickMs;
