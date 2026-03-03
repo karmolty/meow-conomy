@@ -110,6 +110,7 @@ const els = {
   heatSpark: document.getElementById("heatSpark"),
   whiskers: document.getElementById("statWhiskers"),
   seasons: document.getElementById("statSeasons"),
+  seed: document.getElementById("statSeed"),
   districtRow: document.getElementById("districtRow"),
   districtSelect: document.getElementById("districtSelect"),
   progressFill: document.getElementById("progressFill"),
@@ -796,6 +797,10 @@ function render() {
   if (!state.meta.challenge) state.meta.challenge = "none";
   if (els.whiskers) els.whiskers.textContent = Math.round(state.meta.whiskers ?? 0);
   if (els.seasons) els.seasons.textContent = Math.round(state.meta.seasons ?? 0);
+  if (els.seed) {
+    const seed = state.seed;
+    els.seed.textContent = seed == null ? "" : `${seed} (0x${(Number(seed) >>> 0).toString(16).padStart(8, "0")})`;
+  }
   if (els.prestigeExplainer) {
     const award = whiskersForCoins(state.coins ?? 0);
     els.prestigeExplainer.textContent = `End Season resets coins, inventory, contracts, Heat, and market pressure. You keep Whiskers + Seasons. (You'd gain ${award} Whiskers right now.)`;
