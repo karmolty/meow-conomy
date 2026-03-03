@@ -111,6 +111,7 @@ const els = {
   whiskers: document.getElementById("statWhiskers"),
   seasons: document.getElementById("statSeasons"),
   seed: document.getElementById("statSeed"),
+  seedLine: document.getElementById("seedLine"),
   districtRow: document.getElementById("districtRow"),
   districtSelect: document.getElementById("districtSelect"),
   progressFill: document.getElementById("progressFill"),
@@ -797,6 +798,9 @@ function render() {
   if (!state.meta.challenge) state.meta.challenge = "none";
   if (els.whiskers) els.whiskers.textContent = Math.round(state.meta.whiskers ?? 0);
   if (els.seasons) els.seasons.textContent = Math.round(state.meta.seasons ?? 0);
+  if (els.seedLine) {
+    els.seedLine.style.display = state.seed == null ? "none" : "";
+  }
   if (els.seed) {
     const seed = state.seed;
     els.seed.textContent = seed == null ? "" : `${seed} (0x${(Number(seed) >>> 0).toString(16).padStart(8, "0")})`;
