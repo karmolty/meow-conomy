@@ -977,6 +977,8 @@ els.btnExportSave?.addEventListener("click", async () => {
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
+    maybeHaptic();
+    flashStatus("save downloaded");
     return;
   } catch {
     // final fallback
@@ -984,6 +986,7 @@ els.btnExportSave?.addEventListener("click", async () => {
 
   // Final fallback: show the JSON in a prompt so it can be manually copied.
   prompt("Copy your save JSON:", raw);
+  flashStatus("save shown");
 });
 
 function importSaveRaw(raw) {
