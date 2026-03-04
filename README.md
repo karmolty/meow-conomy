@@ -30,6 +30,8 @@ Then open: http://localhost:5173
 Or via npm:
 
 ```bash
+npm start
+# or
 npm run serve
 ```
 
