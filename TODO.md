@@ -126,6 +126,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add a simple CI workflow that runs `node src/game.test.mjs` on push/PR.
 - [x] Add a basic .gitignore.
 - [x] Add `package.json` with `npm test` + `npm run serve` convenience scripts.
+- [x] Add `npm start` as an alias for `npm run serve`.
 - [x] Add an `.editorconfig` to keep whitespace consistent across editors.
 
 ## Nice-to-have (after v1.0)
