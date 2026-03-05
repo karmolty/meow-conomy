@@ -113,6 +113,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## Maintenance / compatibility
 - [x] Add `.nvmrc` (Node 22) for a consistent local dev environment.
+- [x] Add an `npm run check` script alias (run tests) for CI/local parity.
 - [x] Harden save loading with a `normalizeLoadedState()` so older saves don’t crash as fields are added.
 - [x] UI: show current save seed in the Core panel (debug/determinism helper).
 - [x] UI: hide seed line if save seed is missing (defensive/back-compat).
