@@ -132,6 +132,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add `npm start` as an alias for `npm run serve`.
 - [x] Add an `.editorconfig` to keep whitespace consistent across editors.
 
+## v1.1 — Maintenance polish
+- [x] Add `CONTRIBUTING.md` (local dev, tests, release/deploy notes)
+
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)
