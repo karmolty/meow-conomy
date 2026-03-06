@@ -1,6 +1,9 @@
 {
+  "id": "https://karmolty.github.io/meow-conomy/",
   "name": "Meow-conomy",
   "short_name": "Meow-conomy",
+  "description": "A minimalist cat-themed incremental game.",
+  "lang": "en",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#faf8f4",
