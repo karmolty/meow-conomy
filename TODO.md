@@ -141,6 +141,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add `sitemap.xml` for GitHub Pages
 - [x] Add canonical URL meta to reduce duplicate indexing
 - [x] Add a simple `favicon` (SVG) + link it from the page
+- [x] Add icon entries to `manifest.webmanifest`
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
