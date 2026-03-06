@@ -138,6 +138,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add PWA-ish mobile meta tags (`apple-mobile-web-app-capable`, `mobile-web-app-capable`, `viewport-fit=cover`)
 - [x] Add minimal web app manifest + link it from the page
 - [x] Add `robots.txt` (allow indexing)
+- [x] Add `sitemap.xml` for GitHub Pages
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
