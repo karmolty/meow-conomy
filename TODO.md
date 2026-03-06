@@ -134,6 +134,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.1 — Maintenance polish
 - [x] Add `CONTRIBUTING.md` (local dev, tests, release/deploy notes)
+- [x] Add basic mobile theme meta tags (`theme-color`, Apple status bar styling)
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
