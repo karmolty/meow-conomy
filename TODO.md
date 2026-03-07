@@ -183,4 +183,5 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Accessibility: add aria-live to key stats (coins/Heat/Whiskers) for screen readers
   - [x] Accessibility: add aria-live to key rate stats (net worth + income) for screen readers
   - [x] Accessibility: add aria-live to goal + progress labels for screen readers
+  - [x] Keyboard shortcut: press ?/H to toggle the Help / shortcuts panel
   - [x] Accessibility: add aria-live to save status indicator for screen readers

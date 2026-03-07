@@ -139,7 +139,8 @@ const els = {
   heatChallenge: document.getElementById("heatChallenge"),
   chkHeatDeath: document.getElementById("chkHeatDeath"),
   repoLink: document.getElementById("repoLink"),
-  gameTitle: document.getElementById("gameTitle")
+  gameTitle: document.getElementById("gameTitle"),
+  helpDetails: document.getElementById("helpDetails")
 };
 
 const state = load();
@@ -1108,12 +1109,26 @@ els.app?.addEventListener(
   { passive: false }
 );
 
-// Keyboard shortcuts: 1–5 activates schemes (if unlocked + available).
+// Keyboard shortcuts:
+// - 1–5 activates schemes (if unlocked + available)
+// - ? / H toggles the Help / shortcuts panel
 window.addEventListener("keydown", (e) => {
   if (e.repeat) return;
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   const tag = String(document.activeElement?.tagName || "").toLowerCase();
   if (tag === "input" || tag === "textarea" || tag === "select") return;
+
+  if (e.key === "?" || e.key === "h" || e.key === "H") {
+    if (els.helpDetails) {
+      e.preventDefault();
+      els.helpDetails.open = !els.helpDetails.open;
+      if (els.helpDetails.open) {
+        // Ensure it's visible when opened from the keyboard.
+        try { els.helpDetails.scrollIntoView({ block: "end", behavior: "smooth" }); } catch {}
+      }
+    }
+    return;
+  }
 
   const n = Number(e.key);
   if (!Number.isFinite(n) || n < 1 || n > 5) return;
