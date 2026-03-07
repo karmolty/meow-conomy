@@ -1154,6 +1154,14 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "p" || e.key === "P") {
+    if (els.btnEndSeason && !els.btnEndSeason.disabled) {
+      e.preventDefault();
+      els.btnEndSeason.click();
+    }
+    return;
+  }
+
   const n = Number(e.key);
   if (!Number.isFinite(n) || n < 1 || n > 5) return;
 
