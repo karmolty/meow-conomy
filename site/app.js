@@ -1146,6 +1146,14 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "l" || e.key === "L") {
+    if (els.btnLevelUp && !els.btnLevelUp.disabled) {
+      e.preventDefault();
+      els.btnLevelUp.click();
+    }
+    return;
+  }
+
   const n = Number(e.key);
   if (!Number.isFinite(n) || n < 1 || n > 5) return;
 

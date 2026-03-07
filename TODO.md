@@ -186,4 +186,5 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Keyboard shortcut: press ?/H to toggle the Help / shortcuts panel
   - [x] Keyboard shortcut: press E to Export save
   - [x] Keyboard shortcut: press I to Import save
+  - [x] Keyboard shortcut: press L to Level Up (when available)
   - [x] Accessibility: add aria-live to save status indicator for screen readers
