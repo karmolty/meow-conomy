@@ -145,6 +145,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add OpenGraph/Twitter meta tags for nicer link previews
 - [x] Add `og:image` / `twitter:image` tags (basic icon fallback)
 - [x] Flesh out `manifest.webmanifest` basics (`id`, `description`, `lang`)
+- [x] Add `color-scheme` meta tag (reduce UA theming weirdness)
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
