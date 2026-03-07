@@ -1118,6 +1118,14 @@ window.addEventListener("keydown", (e) => {
   const tag = String(document.activeElement?.tagName || "").toLowerCase();
   if (tag === "input" || tag === "textarea" || tag === "select") return;
 
+  if (e.key === "Escape") {
+    if (els.helpDetails?.open) {
+      e.preventDefault();
+      els.helpDetails.open = false;
+    }
+    return;
+  }
+
   if (e.key === "?" || e.key === "h" || e.key === "H") {
     if (els.helpDetails) {
       e.preventDefault();

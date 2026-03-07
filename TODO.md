@@ -188,4 +188,5 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Keyboard shortcut: press I to Import save
   - [x] Keyboard shortcut: press L to Level Up (when available)
   - [x] Keyboard shortcut: press P to End Season (Prestige) (when available)
+  - [x] Keyboard shortcut: press Esc to close the Help panel (when open)
   - [x] Accessibility: add aria-live to save status indicator for screen readers
