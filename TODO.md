@@ -185,4 +185,5 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Accessibility: add aria-live to goal + progress labels for screen readers
   - [x] Keyboard shortcut: press ?/H to toggle the Help / shortcuts panel
   - [x] Keyboard shortcut: press E to Export save
+  - [x] Keyboard shortcut: press I to Import save
   - [x] Accessibility: add aria-live to save status indicator for screen readers

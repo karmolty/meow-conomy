@@ -1138,6 +1138,14 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "i" || e.key === "I") {
+    if (els.btnImportSave) {
+      e.preventDefault();
+      els.btnImportSave.click();
+    }
+    return;
+  }
+
   const n = Number(e.key);
   if (!Number.isFinite(n) || n < 1 || n > 5) return;
 
