@@ -1130,6 +1130,14 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "e" || e.key === "E") {
+    if (els.btnExportSave) {
+      e.preventDefault();
+      els.btnExportSave.click();
+    }
+    return;
+  }
+
   const n = Number(e.key);
   if (!Number.isFinite(n) || n < 1 || n > 5) return;
 
