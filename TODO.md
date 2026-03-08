@@ -135,6 +135,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add an `.editorconfig` to keep whitespace consistent across editors.
 
 ## v1.1 — Maintenance polish
+- [x] Back-compat: pick newest `meowconomy.save.*` localStorage key by numeric version (not lexicographic).
 - [x] README: document localStorage save key migration/back-compat behavior.
 - [x] README: clarify that npm serve is a good default for local dev
 - [x] Add `CONTRIBUTING.md` (local dev, tests, release/deploy notes)

@@ -95,7 +95,29 @@ function load() {
         const k = localStorage.key(i);
         if (k && k.startsWith(STORAGE_PREFIX)) keys.push(k);
       }
-      keys.sort();
+      // Sort by numeric version segments if present, else fallback to lexicographic.
+      function verParts(k) {
+        const rest = k.slice(STORAGE_PREFIX.length);
+        const nums = rest.match(/\d+/g);
+        if (!nums) return null;
+        return nums.map(n => Number(n) || 0);
+      }
+      function cmpVer(a, b) {
+        const av = verParts(a);
+        const bv = verParts(b);
+        if (!av && !bv) return a < b ? -1 : a > b ? 1 : 0;
+        if (!av) return -1;
+        if (!bv) return 1;
+        const n = Math.max(av.length, bv.length);
+        for (let i = 0; i < n; i++) {
+          const ai = av[i] ?? 0;
+          const bi = bv[i] ?? 0;
+          if (ai !== bi) return ai - bi;
+        }
+        return a < b ? -1 : a > b ? 1 : 0;
+      }
+
+      keys.sort(cmpVer);
       const legacyKey = keys.length ? keys[keys.length - 1] : null;
       if (legacyKey && legacyKey !== STORAGE_KEY) {
         raw = localStorage.getItem(legacyKey);
