@@ -85,6 +85,7 @@ function load() {
     const base = clone(DEFAULT_STATE);
 
     // Prefer current key.
+    let loadedKey = STORAGE_KEY;
     let raw = localStorage.getItem(STORAGE_KEY);
 
     // Back-compat: if we ever bump STORAGE_KEY, try to find the newest legacy save
@@ -122,6 +123,7 @@ function load() {
       if (legacyKey && legacyKey !== STORAGE_KEY) {
         raw = localStorage.getItem(legacyKey);
         if (raw) {
+          loadedKey = legacyKey;
           // Migrate on successful parse below.
         }
       }
@@ -135,7 +137,10 @@ function load() {
 
     // If we loaded something other than the current key, persist it forward.
     // (Best-effort; ignore quota errors.)
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(norm)); } catch {}
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(norm));
+      if (loadedKey !== STORAGE_KEY) localStorage.removeItem(loadedKey);
+    } catch {}
 
     return norm;
   } catch {
