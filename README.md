@@ -27,7 +27,7 @@ python3 -m http.server 5173 --directory site
 
 Then open: http://localhost:5173
 
-Or via npm:
+Or via npm (recommended if you already have Node):
 
 ```bash
 npm start
