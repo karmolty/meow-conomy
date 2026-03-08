@@ -51,6 +51,13 @@ function normalizeLoadedState(s) {
   }
   if (!s.meta.challenge) s.meta.challenge = "none";
 
+  // Back-compat: older saves may have stored challenge flags as booleans.
+  // Prefer an explicit mode if present.
+  if (s.meta.challenge === "none") {
+    if (s.meta.ironContracts === true) s.meta.challenge = "ironContracts";
+    else if (s.meta.heatDeath === true) s.meta.challenge = "heatDeath";
+  }
+
   s.inventory = s.inventory && typeof s.inventory === "object" ? s.inventory : {};
   s.market = s.market && typeof s.market === "object" ? s.market : {};
   s.marketLatent = s.marketLatent && typeof s.marketLatent === "object" ? s.marketLatent : {};
@@ -804,6 +811,11 @@ function render() {
   // Meta (prestige)
   state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1, district: "alley", districtsUnlocked: ["alley"], challenge: "none" };
   if (!state.meta.challenge) state.meta.challenge = "none";
+  // Back-compat: older saves may have stored challenge flags as booleans.
+  if (state.meta.challenge === "none") {
+    if (state.meta.ironContracts === true) state.meta.challenge = "ironContracts";
+    else if (state.meta.heatDeath === true) state.meta.challenge = "heatDeath";
+  }
   if (els.whiskers) els.whiskers.textContent = Math.round(state.meta.whiskers ?? 0);
   if (els.seasons) els.seasons.textContent = Math.round(state.meta.seasons ?? 0);
   if (els.seedLine) {
