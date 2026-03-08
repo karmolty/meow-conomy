@@ -137,10 +137,12 @@ function load() {
 
     // If we loaded something other than the current key, persist it forward.
     // (Best-effort; ignore quota errors.)
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(norm));
-      if (loadedKey !== STORAGE_KEY) localStorage.removeItem(loadedKey);
-    } catch {}
+    if (loadedKey !== STORAGE_KEY) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(norm));
+        localStorage.removeItem(loadedKey);
+      } catch {}
+    }
 
     return norm;
   } catch {
