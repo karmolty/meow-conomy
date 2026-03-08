@@ -113,6 +113,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## Maintenance / compatibility
 - [x] Back-compat: normalize legacy challenge flags (`meta.ironContracts` / `meta.heatDeath`) into `meta.challenge` on load.
+- [x] Back-compat: if STORAGE_KEY changes, try to load + migrate the newest `meowconomy.save.*` localStorage entry.
 - [x] Add `.nvmrc` (Node 22) for a consistent local dev environment.
 - [x] Add an `npm run check` script alias (run tests) for CI/local parity.
 - [x] Docs: mention `npm run check` in README smoke test instructions.

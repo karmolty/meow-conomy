@@ -15,6 +15,7 @@ import { endSeason, whiskersForCoins } from "./prestige.js";
 import { DISTRICTS, normalizeDistrictKey } from "./districts.js";
 
 const STORAGE_KEY = "meowconomy.save.v0.2.1";
+const STORAGE_PREFIX = "meowconomy.save.";
 
 function nowMs() { return Date.now(); }
 
@@ -81,13 +82,40 @@ function normalizeLoadedState(s) {
 
 function load() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
     const base = clone(DEFAULT_STATE);
+
+    // Prefer current key.
+    let raw = localStorage.getItem(STORAGE_KEY);
+
+    // Back-compat: if we ever bump STORAGE_KEY, try to find the newest legacy save
+    // by prefix and migrate it forward.
+    if (!raw) {
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith(STORAGE_PREFIX)) keys.push(k);
+      }
+      keys.sort();
+      const legacyKey = keys.length ? keys[keys.length - 1] : null;
+      if (legacyKey && legacyKey !== STORAGE_KEY) {
+        raw = localStorage.getItem(legacyKey);
+        if (raw) {
+          // Migrate on successful parse below.
+        }
+      }
+    }
+
     if (!raw) return normalizeLoadedState(base);
 
     const parsed = JSON.parse(raw);
     const merged = { ...base, ...parsed };
-    return normalizeLoadedState(merged);
+    const norm = normalizeLoadedState(merged);
+
+    // If we loaded something other than the current key, persist it forward.
+    // (Best-effort; ignore quota errors.)
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(norm)); } catch {}
+
+    return norm;
   } catch {
     return normalizeLoadedState(clone(DEFAULT_STATE));
   }
