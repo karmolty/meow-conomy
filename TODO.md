@@ -154,6 +154,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Flesh out `manifest.webmanifest` basics (`id`, `description`, `lang`)
 - [x] Add `color-scheme` meta tag (reduce UA theming weirdness)
 
+## v1.2 — Tiny dev ergonomics
+- [x] Add `npm run test:watch` for faster local iteration.
+
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)

@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node src/game.test.mjs",
+    "test:watch": "node --watch src/game.test.mjs",
     "check": "npm test",
     "serve": "python3 -m http.server 5173 --directory site",
     "start": "npm run serve"
