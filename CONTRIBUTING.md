@@ -24,6 +24,12 @@ Then open: http://localhost:5173
 npm run check
 ```
 
+Watch mode:
+
+```bash
+npm run test:watch
+```
+
 ## Project layout
 - `src/` — game logic (prefer pure/deterministic functions where possible)
 - `site/` — static site UI

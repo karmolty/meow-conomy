@@ -51,6 +51,12 @@ node src/game.test.mjs
 npm test
 ```
 
+Watch mode (Node 18+):
+
+```bash
+npm run test:watch
+```
+
 Manual “viable strategy” smoke tests (v0.2 AC1 support):
 
 1) Trade-first (low stress)
