@@ -16,6 +16,7 @@ import { DISTRICTS, normalizeDistrictKey } from "./districts.js";
 
 const STORAGE_KEY = "meowconomy.save.v0.2.1";
 const STORAGE_PREFIX = "meowconomy.save.";
+const FLASH_KEY = "meowconomy.flash";
 
 function nowMs() { return Date.now(); }
 
@@ -239,6 +240,17 @@ function flashStatus(text, ms = 1200) {
   if (_statusTimer) clearTimeout(_statusTimer);
   setSaveStatus(text);
   _statusTimer = setTimeout(() => setSaveStatus("saved"), ms);
+}
+
+// Show a one-shot status message after a full page reload (e.g. after importing a save).
+try {
+  const msg = sessionStorage.getItem(FLASH_KEY);
+  if (msg) {
+    sessionStorage.removeItem(FLASH_KEY);
+    setTimeout(() => flashStatus(msg, 1600), 30);
+  }
+} catch {
+  // ignore
 }
 
 function maybeHaptic() {
@@ -1067,6 +1079,7 @@ function importSaveRaw(raw) {
     const next = { ...clone(DEFAULT_STATE), ...parsed };
     next._lastTickMs = nowMs();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    try { sessionStorage.setItem(FLASH_KEY, "save imported"); } catch {}
     location.reload();
   } catch {
     flashStatus("invalid save");

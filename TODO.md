@@ -162,6 +162,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] UI: file import input accepts `.json` explicitly (better picker filtering on some browsers).
 - [x] UI: confirm before importing pasted save JSON (overwrites current save).
 - [x] UI: keyboard shortcut: F opens Import file picker.
+- [x] UI: after importing a save (paste/file), show a one-shot status message after reload ("save imported").
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
