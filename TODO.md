@@ -158,6 +158,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add `npm run test:watch` for faster local iteration.
 - [x] Docs: mention `npm run test:watch` in README + CONTRIBUTING.
 - [x] UI: confirm before importing save from file (overwrites current save).
+- [x] UI: trim whitespace when importing save JSON (paste/file) so leading/trailing newlines don’t break import.
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)

@@ -1060,9 +1060,10 @@ els.btnExportSave?.addEventListener("click", async () => {
 });
 
 function importSaveRaw(raw) {
-  if (!raw) return;
+  const text = (raw ?? "").trim();
+  if (!text) return;
   try {
-    const parsed = JSON.parse(raw);
+    const parsed = JSON.parse(text);
     const next = { ...clone(DEFAULT_STATE), ...parsed };
     next._lastTickMs = nowMs();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
