@@ -1087,6 +1087,9 @@ els.fileImport?.addEventListener("change", async () => {
   els.fileImport.value = "";
   if (!f) return;
 
+  const ok = confirm("Import save from file? This overwrites your current save.");
+  if (!ok) return;
+
   try {
     const raw = await f.text();
     importSaveRaw(raw);
