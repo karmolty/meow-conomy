@@ -1069,6 +1069,7 @@ function importSaveRaw(raw) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
     location.reload();
   } catch {
+    flashStatus("invalid save");
     alert("Invalid save JSON.");
   }
 }
