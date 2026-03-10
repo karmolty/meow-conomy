@@ -1076,6 +1076,9 @@ function importSaveRaw(raw) {
 
 els.btnImportSave?.addEventListener("click", () => {
   const raw = prompt("Paste save JSON to import (this overwrites your current save):");
+  if (!raw || !raw.trim()) return;
+  const ok = confirm("Import pasted save JSON? This overwrites your current save.");
+  if (!ok) return;
   importSaveRaw(raw);
 });
 
