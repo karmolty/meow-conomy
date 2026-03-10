@@ -161,6 +161,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] UI: trim whitespace when importing save JSON (paste/file) so leading/trailing newlines don’t break import.
 - [x] UI: file import input accepts `.json` explicitly (better picker filtering on some browsers).
 - [x] UI: confirm before importing pasted save JSON (overwrites current save).
+- [x] UI: keyboard shortcut: F opens Import file picker.
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)

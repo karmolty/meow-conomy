@@ -1231,6 +1231,14 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "f" || e.key === "F") {
+    if (els.btnImportFile) {
+      e.preventDefault();
+      els.btnImportFile.click();
+    }
+    return;
+  }
+
   if (e.key === "l" || e.key === "L") {
     if (els.btnLevelUp && !els.btnLevelUp.disabled) {
       e.preventDefault();
