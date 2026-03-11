@@ -835,7 +835,7 @@ function render() {
       const perMin = seconds > 0 ? (diff / (seconds / 60)) : 0;
       els.nwRate.textContent = fmt(perMin);
     } else {
-      els.nwRate.textContent = "0";
+      els.nwRate.textContent = fmt(0);
     }
   }
 
@@ -856,7 +856,7 @@ function render() {
         els.incomeSpark.style.display = spark ? "inline-block" : "none";
       }
     } else {
-      els.incomeRate.textContent = "0";
+      els.incomeRate.textContent = fmt(0);
       if (els.incomeSpark) {
         els.incomeSpark.textContent = "";
         els.incomeSpark.style.display = "none";
