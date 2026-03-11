@@ -40,7 +40,7 @@ Tip: open the in-game **Help / shortcuts** section (footer) for keyboard + progr
 ## Saving
 - The game auto-saves to `localStorage`.
 - If the save format/key ever changes, the game will try to **auto-migrate** the newest prior `meowconomy.save.*` entry forward.
-- Use **Hard reset** to clear your save.
+- Use **Hard reset** to clear your save (it removes the current save key and any older `meowconomy.save.*` keys).
 
 ## Smoke test
 Automated:
