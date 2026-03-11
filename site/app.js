@@ -337,7 +337,7 @@ function renderMarket() {
     const sparkSpan = spark
       ? ` <span class="muted" title="recent trend" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;">${spark}</span>`
       : "";
-    right.innerHTML = `<strong class="num">${fmt(price)}</strong> <span class="muted">coins</span> <span class="muted">(sat ${pressure.toFixed(2)})</span>${sparkSpan}`;
+    right.innerHTML = `<strong class="num">${fmt(price)}</strong> <span class="muted">coins</span> <span class="muted">(sat ${fmt(pressure)})</span>${sparkSpan}`;
 
     top.append(left, right);
 
