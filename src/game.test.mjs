@@ -18,6 +18,7 @@ import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
 import { EVENT_DEFS, maybeTriggerEvent, eventProb, applyEvent } from "./events.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
 import { endSeason, whiskersForCoins } from "./prestige.js";
+import { fmt } from "../site/format.js";
 import { createRng } from "./rng.js";
 import { normalizeDistrictKey } from "./districts.js";
 
@@ -698,5 +699,12 @@ function clone(x) {
   assert.equal(s.schemes.hustle.activeLeft, 0);
   assert.deepEqual(s.traderRuntime, {});
 }
+
+assert.equal(fmt(10), "10");
+assert.equal(fmt(10.0), "10");
+assert.equal(fmt(10.001), "10");
+assert.equal(fmt(-0.000001), "0");
+assert.equal(fmt(1000), "1.00K");
+assert.equal(fmt(1000000), "1.00M");
 
 console.log("ok - game.test.mjs");
