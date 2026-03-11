@@ -1018,6 +1018,9 @@ els.btnHardReset.addEventListener("click", () => {
     try { localStorage.removeItem(STORAGE_KEY); } catch {}
   }
 
+  // Also clear any one-shot UI flash messages.
+  try { sessionStorage.removeItem(FLASH_KEY); } catch {}
+
   location.reload();
 });
 

@@ -204,6 +204,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] UI: avoid displaying "-0" in formatted numbers.
 - [x] UI: Hard reset clears all localStorage saves (current + legacy) to prevent "ghost" restores.
 - [x] UI: Hard reset confirm text warns it clears older versions + suggests exporting first.
+- [x] UI: Hard reset clears sessionStorage flash message (avoid stale "save imported" after reset).
 - [x] Tests: cover UI number formatter (fmt) for integer output, K/M suffixes, and -0.
   - [x] Accessibility: add aria-live to key rate stats (net worth + income) for screen readers
   - [x] Accessibility: add aria-live to goal + progress labels for screen readers
