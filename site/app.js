@@ -577,7 +577,7 @@ function renderTraders() {
     top.className = "row";
 
     const left = document.createElement("div");
-    left.innerHTML = `<strong>${t.name}</strong> <span class="muted">(fee ${(t.feeBps / 100).toFixed(2)}%)</span>`;
+    left.innerHTML = `<strong>${t.name}</strong> <span class="muted">(fee ${fmt(t.feeBps / 100)}%)</span>`;
 
     const toggle = document.createElement("button");
     toggle.className = t.enabled ? "primary" : "";

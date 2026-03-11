@@ -208,6 +208,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Tests: cover UI number formatter (fmt) for integer output, K/M suffixes, and -0.
 - [x] UI: use fmt() for /min rate displays (avoid trailing .00 spam).
 - [x] UI: use fmt() for saturation display in Market rows.
+- [x] UI: format trader fee % with fmt() (consistent number formatting).
   - [x] Accessibility: add aria-live to key rate stats (net worth + income) for screen readers
   - [x] Accessibility: add aria-live to goal + progress labels for screen readers
   - [x] Keyboard shortcut: press ?/H to toggle the Help / shortcuts panel
