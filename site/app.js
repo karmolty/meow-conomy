@@ -833,9 +833,9 @@ function render() {
       const seconds = arr.length - 1; // 1Hz sampling
       const diff = arr[arr.length - 1] - arr[0];
       const perMin = seconds > 0 ? (diff / (seconds / 60)) : 0;
-      els.nwRate.textContent = perMin.toFixed(2);
+      els.nwRate.textContent = fmt(perMin);
     } else {
-      els.nwRate.textContent = "0.00";
+      els.nwRate.textContent = "0";
     }
   }
 
@@ -846,7 +846,7 @@ function render() {
       const window = Math.min(60, arr.length - 1);
       const diff = arr[arr.length - 1] - arr[arr.length - 1 - window];
       const perMin = diff / (window / 60);
-      els.incomeRate.textContent = perMin.toFixed(2);
+      els.incomeRate.textContent = fmt(perMin);
 
       if (els.incomeSpark) {
         const deltas = [];
@@ -856,7 +856,7 @@ function render() {
         els.incomeSpark.style.display = spark ? "inline-block" : "none";
       }
     } else {
-      els.incomeRate.textContent = "0.00";
+      els.incomeRate.textContent = "0";
       if (els.incomeSpark) {
         els.incomeSpark.textContent = "";
         els.incomeSpark.style.display = "none";
