@@ -201,6 +201,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.3 — Tiny UX polish
 - [x] UI: number formatting shows integers without trailing ".00" for readability.
+- [x] UI: avoid displaying "-0" in formatted numbers.
   - [x] Accessibility: add aria-live to key rate stats (net worth + income) for screen readers
   - [x] Accessibility: add aria-live to goal + progress labels for screen readers
   - [x] Keyboard shortcut: press ?/H to toggle the Help / shortcuts panel
