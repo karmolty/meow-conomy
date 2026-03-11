@@ -203,6 +203,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] UI: number formatting shows integers without trailing ".00" for readability.
 - [x] UI: avoid displaying "-0" in formatted numbers.
 - [x] UI: Hard reset clears all localStorage saves (current + legacy) to prevent "ghost" restores.
+- [x] UI: Hard reset confirm text warns it clears older versions + suggests exporting first.
   - [x] Accessibility: add aria-live to key rate stats (net worth + income) for screen readers
   - [x] Accessibility: add aria-live to goal + progress labels for screen readers
   - [x] Keyboard shortcut: press ?/H to toggle the Help / shortcuts panel
