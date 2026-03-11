@@ -1017,7 +1017,20 @@ function frameTick() {
 
 els.btnHardReset.addEventListener("click", () => {
   if (!confirm("Hard reset? This deletes your save.")) return;
-  localStorage.removeItem(STORAGE_KEY);
+
+  // Remove current + any legacy saves to avoid confusing "ghost" restores after reload.
+  try {
+    const keys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(STORAGE_PREFIX)) keys.push(k);
+    }
+    for (const k of keys) localStorage.removeItem(k);
+  } catch {
+    // Best-effort only; still reload.
+    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+  }
+
   location.reload();
 });
 
