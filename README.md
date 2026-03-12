@@ -10,6 +10,7 @@ A minimalist cat-themed incremental browser game (inspired by the genre, not a c
 - Source lives in `src/`
 - Static site output lives in `site/`
 - Deployed to GitHub Pages via GitHub Actions on push to `main`
+- Optional: `npm run stamp` updates the in-game footer version to the current git SHA
 
 ## Deployment (GitHub Pages)
 - Push to `main` → GitHub Actions publishes `site/` to Pages.
