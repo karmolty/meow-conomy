@@ -166,6 +166,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.3 — Tiny UI polish
 - [x] UI: show a simple app version string in the footer (from a meta tag in `site/index.html`).
+- [x] Dev: add `npm run stamp` to update the version meta tag to the current git SHA.
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
