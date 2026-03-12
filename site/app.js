@@ -1054,6 +1054,24 @@ els.seed?.addEventListener("click", async () => {
   prompt("Copy seed:", text);
 });
 
+els.appVersion?.addEventListener("click", async () => {
+  const text = String(getAppVersion());
+  if (!text) return;
+
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      maybeHaptic();
+      flashStatus("version copied");
+      return;
+    }
+  } catch {
+    // fall through
+  }
+
+  prompt("Copy version:", text);
+});
+
 els.btnExportSave?.addEventListener("click", async () => {
   const copy = { ...clone(state) };
   delete copy._lastTickMs;
