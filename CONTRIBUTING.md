@@ -39,6 +39,12 @@ npm run test:watch
 GitHub Pages is published via GitHub Actions on push to `main`.
 If you change asset paths/imports, verify the site still works when served from `/meow-conomy/`.
 
+Optional: stamp the current git SHA into the UI footer before deploying:
+```bash
+npm run stamp
+```
+(This updates a version meta tag in `site/index.html`.)
+
 ## Style / architecture
 - Keep changes small and boring.
 - Avoid heavy deps.
