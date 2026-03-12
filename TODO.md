@@ -168,6 +168,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] UI: show a simple app version string in the footer (from a meta tag in `site/index.html`).
 - [x] UI: click the version string to copy it to clipboard (with saveStatus feedback).
 - [x] Dev: add `npm run stamp` to update the version meta tag to the current git SHA.
+- [x] Dev: run `npm run stamp` automatically in GitHub Pages deploy workflow so the live site shows the deployed SHA.
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
