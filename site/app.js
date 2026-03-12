@@ -202,8 +202,18 @@ const els = {
   chkHeatDeath: document.getElementById("chkHeatDeath"),
   repoLink: document.getElementById("repoLink"),
   gameTitle: document.getElementById("gameTitle"),
-  helpDetails: document.getElementById("helpDetails")
+  helpDetails: document.getElementById("helpDetails"),
+  appVersion: document.getElementById("appVersion")
 };
+
+function getAppVersion() {
+  const meta = document.querySelector('meta[name="meow-conomy-version"]');
+  return (meta?.getAttribute("content") || "dev").trim() || "dev";
+}
+
+if (els.appVersion) {
+  els.appVersion.textContent = getAppVersion();
+}
 
 const state = load();
 // Seed should be initialized once per new save so price evolution can be deterministic per-save.

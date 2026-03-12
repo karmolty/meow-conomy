@@ -164,6 +164,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] UI: keyboard shortcut: F opens Import file picker.
 - [x] UI: after importing a save (paste/file), show a one-shot status message after reload ("save imported").
 
+## v1.3 — Tiny UI polish
+- [x] UI: show a simple app version string in the footer (from a meta tag in `site/index.html`).
+
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)
