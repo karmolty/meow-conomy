@@ -208,7 +208,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Accessibility: add aria-labels to Contract buttons (accept/redeem/abandon)
   - [x] Accessibility: add aria-live to key stats (coins/Heat/Whiskers) for screen readers
 
-## v1.3 — Tiny UX polish
+## v1.3.1 — Tiny UX polish
 - [x] UI: number formatting shows integers without trailing ".00" for readability.
 - [x] UI: avoid displaying "-0" in formatted numbers.
 - [x] UI: Hard reset clears all localStorage saves (current + legacy) to prevent "ghost" restores.
