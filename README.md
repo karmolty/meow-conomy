@@ -18,9 +18,9 @@ A minimalist cat-themed incremental browser game (inspired by the genre, not a c
 - If you change paths/asset URLs, verify `site/index.html` still works when served from `/meow-conomy/`.
 
 ## Local dev
-Open `site/index.html` in a browser.
+Use a local server (recommended; `file://` can break ES module imports in some browsers).
 
-If you want a local server (recommended so module imports work reliably):
+Quick start (no Node required):
 
 ```bash
 python3 -m http.server 5173 --directory site
@@ -28,7 +28,7 @@ python3 -m http.server 5173 --directory site
 
 Then open: http://localhost:5173
 
-Or via npm (recommended if you already have Node):
+Or via npm (recommended if you already have Node installed):
 
 ```bash
 npm start
