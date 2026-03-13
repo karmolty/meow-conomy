@@ -170,6 +170,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Dev: add `npm run stamp` to update the version meta tag to the current git SHA.
 - [x] Dev: run `npm run stamp` automatically in GitHub Pages deploy workflow so the live site shows the deployed SHA.
 
+## v1.4 — Micro polish
+- [x] CSS: fix indentation/newline around `button.primary` styles (no behavioral change).
+
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)
