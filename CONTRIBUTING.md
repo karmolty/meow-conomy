@@ -21,6 +21,8 @@ Then open: http://localhost:5173
 ## Tests / checks
 
 ```bash
+npm test
+# or
 npm run check
 ```
 
