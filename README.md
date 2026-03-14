@@ -47,9 +47,15 @@ Tip: open the in-game **Help / shortcuts** section (footer) for keyboard + progr
 Automated:
 
 ```bash
-node src/game.test.mjs
-# or
 npm test
+# or (same thing)
+node src/game.test.mjs
+```
+
+CI/local parity:
+
+```bash
+npm run check
 ```
 
 Watch mode (Node 18+):
