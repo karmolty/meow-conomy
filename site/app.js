@@ -176,6 +176,7 @@ const els = {
   seedLine: document.getElementById("seedLine"),
   districtRow: document.getElementById("districtRow"),
   districtSelect: document.getElementById("districtSelect"),
+  progressBar: document.getElementById("progressBar"),
   progressFill: document.getElementById("progressFill"),
   progressLabel: document.getElementById("progressLabel"),
   goalText: document.getElementById("goalText"),
@@ -966,6 +967,12 @@ function render() {
     // No further goals defined yet.
     if (els.goalText) els.goalText.innerHTML = `<strong>Goal:</strong> (more goals soon)`;
     if (els.progressFill) els.progressFill.style.width = `0%`;
+    if (els.progressBar) {
+      els.progressBar.setAttribute("aria-valuemin", "0");
+      els.progressBar.setAttribute("aria-valuemax", "0");
+      els.progressBar.setAttribute("aria-valuenow", "0");
+      els.progressBar.setAttribute("aria-valuetext", "");
+    }
     if (els.progressLabel) els.progressLabel.textContent = ``;
     if (els.btnLevelUp) els.btnLevelUp.style.display = "none";
   } else {
@@ -978,6 +985,12 @@ function render() {
 
     const p = Math.max(0, Math.min(1, coins / goalCoins));
     if (els.progressFill) els.progressFill.style.width = `${Math.round(p * 100)}%`;
+    if (els.progressBar) {
+      els.progressBar.setAttribute("aria-valuemin", "0");
+      els.progressBar.setAttribute("aria-valuemax", String(goalCoins));
+      els.progressBar.setAttribute("aria-valuenow", String(Math.min(goalCoins, Math.max(0, coins))));
+      els.progressBar.setAttribute("aria-valuetext", `${Math.round(p * 100)}%`);
+    }
     // No extra text under the progress bar (coins + goal text already cover it).
     if (els.progressLabel) els.progressLabel.textContent = ``;
 

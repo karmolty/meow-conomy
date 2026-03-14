@@ -173,6 +173,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.4 — Micro polish
 - [x] CSS: fix indentation/newline around `button.primary` styles (no behavioral change).
 
+## v1.5 — Tiny accessibility
+- [x] A11y: give the level progress bar proper `role="progressbar"` + `aria-valuenow/max` updates.
+
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)
