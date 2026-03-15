@@ -1138,7 +1138,15 @@ function importSaveRaw(raw) {
     const parsed = JSON.parse(text);
     const next = { ...clone(DEFAULT_STATE), ...parsed };
     next._lastTickMs = nowMs();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      flashStatus("save failed", 2200);
+      alert("Could not write save (storage may be full or blocked). Try exporting your current save first.");
+      return;
+    }
+
     try { sessionStorage.setItem(FLASH_KEY, "save imported"); } catch {}
     location.reload();
   } catch {
