@@ -175,6 +175,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.5 — Tiny accessibility
 - [x] A11y: give the level progress bar proper `role="progressbar"` + `aria-valuenow/max` updates.
+- [x] A11y: mark ASCII sparklines as `aria-hidden` so screen readers don’t read them.
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)

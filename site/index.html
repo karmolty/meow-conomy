@@ -251,15 +251,15 @@
         <div class="row">
           <div>
             <div class="big" id="statCoins" aria-live="polite" aria-atomic="true">0</div>
-            <div class="muted">coins <span class="muted" id="coinsSpark" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span></div>
+            <div class="muted">coins <span class="muted" id="coinsSpark" aria-hidden="true" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span></div>
             <div class="muted" id="nwLine" style="margin-top:2px;">
               net worth: <strong id="statNetWorth" aria-live="polite" aria-atomic="true">0</strong>
-              <span class="muted" id="nwSpark" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span>
+              <span class="muted" id="nwSpark" aria-hidden="true" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span>
               <span class="muted" style="margin-left:6px;">(<span id="statNwRate" aria-live="polite" aria-atomic="true">0.00</span>/min)</span>
             </div>
             <div class="muted" id="incomeLine" style="margin-top:2px;">
               income: <strong><span id="statIncomeRate" aria-live="polite" aria-atomic="true">0.00</span>/min</strong>
-              <span class="muted" id="incomeSpark" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span>
+              <span class="muted" id="incomeSpark" aria-hidden="true" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span>
             </div>
           </div>
           <div class="list" style="min-width: 260px;">
@@ -279,7 +279,7 @@
               <div class="progressFill" id="progressFill" style="width:0%"></div>
             </div>
             <div class="muted" id="progressLabel" aria-live="polite" aria-atomic="true">0 / 100</div>
-            <div class="muted" id="heatLine">Heat: <strong id="statHeat" aria-live="polite" aria-atomic="true">0</strong> / 100 <span class="muted" id="heatSpark" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span></div>
+            <div class="muted" id="heatLine">Heat: <strong id="statHeat" aria-live="polite" aria-atomic="true">0</strong> / 100 <span class="muted" id="heatSpark" aria-hidden="true" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span></div>
             <div class="muted">Whiskers: <strong id="statWhiskers" aria-live="polite" aria-atomic="true">0</strong> <span class="muted">(Seasons: <strong id="statSeasons" aria-live="polite" aria-atomic="true">0</strong>)</span></div>
             <div class="muted" id="seedLine" style="margin-top: 2px;">Seed: <span id="statSeed" aria-label="Save seed" title="Click to copy seed" style="cursor:pointer; text-decoration: underline dotted;">0</span></div>
             <div class="muted" id="districtRow" style="display:none; margin-top: 4px;">
