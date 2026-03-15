@@ -177,6 +177,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] A11y: give the level progress bar proper `role="progressbar"` + `aria-valuenow/max` updates.
 - [x] A11y: mark ASCII sparklines as `aria-hidden` so screen readers don’t read them.
 
+## v1.6 — Storage robustness
+- [x] UI: handle localStorage quota/blocked-storage errors during `save()` without crashing (show a small status message).
+
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)

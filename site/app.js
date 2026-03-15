@@ -153,7 +153,13 @@ function load() {
 }
 
 function save(state) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // Quota errors (or blocked storage) should not crash the game loop.
+    // Best-effort: surface a tiny status message if the UI is ready.
+    try { flashStatus?.("save failed", 2200); } catch {}
+  }
 }
 
 // (fmt moved to ./format.js)
