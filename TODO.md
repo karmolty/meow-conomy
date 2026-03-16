@@ -237,4 +237,5 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.7 — Tiny accessibility (skip link)
 - [x] UI: add a “Skip to game” link for keyboard/screen reader users
+- [x] UI: use a <main> landmark for the game container
 
