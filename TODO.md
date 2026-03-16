@@ -236,6 +236,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Accessibility: add aria-live to save status indicator for screen readers
 
 ## v1.7 — Tiny accessibility (skip link)
+- [x] UI: ensure skip link target is focusable (tabindex=-1)
 - [x] UI: add visible focus styles (focus-visible) for keyboard users
 - [x] UI: add a “Skip to game” link for keyboard/screen reader users
 - [x] UI: use a <main> landmark for the game container
