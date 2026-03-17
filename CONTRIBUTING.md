@@ -26,7 +26,7 @@ npm test
 npm run check
 ```
 
-Watch mode:
+Watch mode (Node 22+):
 
 ```bash
 npm run test:watch

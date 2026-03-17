@@ -243,4 +243,5 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.8 — Tiny docs consistency
 - [x] README: watch mode note says Node 22+ (matches package.json engines)
+- [x] CONTRIBUTING: watch mode note says Node 22+ too
 
