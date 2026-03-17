@@ -241,3 +241,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] UI: add a “Skip to game” link for keyboard/screen reader users
 - [x] UI: use a <main> landmark for the game container
 
+## v1.8 — Tiny docs consistency
+- [x] README: watch mode note says Node 22+ (matches package.json engines)
+

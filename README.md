@@ -58,7 +58,7 @@ CI/local parity:
 npm run check
 ```
 
-Watch mode (Node 18+):
+Watch mode (Node 22+):
 
 ```bash
 npm run test:watch
