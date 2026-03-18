@@ -21,6 +21,15 @@ const FLASH_KEY = "meowconomy.flash";
 
 function nowMs() { return Date.now(); }
 
+// Mobile browsers (notably iOS Safari) may fire a synthetic "click" after a touch.
+// We bind both for responsiveness, but ignore click events that arrive right after a touch.
+let lastTouchEndMs = 0;
+function ignoreGhostClick(e) {
+  if (e?.type === "touchend") lastTouchEndMs = nowMs();
+  if (e?.type === "click" && nowMs() - lastTouchEndMs < 650) return true;
+  return false;
+}
+
 // iOS Safari compatibility: structuredClone shipped relatively late.
 // If it doesn't exist, fall back to a JSON deep-clone (safe for our plain data state).
 function clone(obj) {
@@ -377,6 +386,7 @@ function renderMarket() {
     buyBtn.setAttribute("aria-label", `Buy 1 ${g.label}`);
     buyBtn.disabled = state.coins < price;
     function doBuyOne(e) {
+      if (ignoreGhostClick(e)) return;
       // iOS Safari: prevent touch gestures (double-tap zoom) from winning.
       if (e?.cancelable) e.preventDefault();
       const before = state.coins;
@@ -401,6 +411,7 @@ function renderMarket() {
     sellBtn.setAttribute("aria-label", `Sell 1 ${g.label}`);
     sellBtn.disabled = (state.inventory?.[g.key] ?? 0) < 1;
     function doSellOne(e) {
+      if (ignoreGhostClick(e)) return;
       if (e?.cancelable) e.preventDefault();
       const before = state.coins;
       if (!sell(state, g.key, 1)) {

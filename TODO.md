@@ -173,6 +173,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.4 — Micro polish
 - [x] CSS: fix indentation/newline around `button.primary` styles (no behavioral change).
+- [x] Mobile: ignore ghost clicks right after touchend on Buy/Sell buttons (prevents double-trades)
 
 ## v1.5 — Tiny accessibility
 - [x] A11y: give the level progress bar proper `role="progressbar"` + `aria-valuenow/max` updates.
