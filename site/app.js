@@ -413,7 +413,6 @@ function renderMarket() {
     function doSellOne(e) {
       if (ignoreGhostClick(e)) return;
       if (e?.cancelable) e.preventDefault();
-      const before = state.coins;
       if (!sell(state, g.key, 1)) {
         pulse(sellBtn, "red");
         return;
