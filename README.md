@@ -38,6 +38,10 @@ npm run serve
 
 Tip: open the in-game **Help / shortcuts** section (footer) for keyboard + progression reminders.
 
+Mobile notes:
+- iOS Safari: the game prevents double-tap-to-zoom inside the game surface.
+- Tap-heavy controls also guard against “ghost clicks” (a synthetic click firing after touch), to avoid accidental double-trades.
+
 ## Saving
 - The game auto-saves to `localStorage`.
 - If the save format/key ever changes, the game will try to **auto-migrate** the newest prior `meowconomy.save.*` entry forward.
