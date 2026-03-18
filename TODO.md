@@ -109,6 +109,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
   - [x] Contract expiry: auto-fail on tick (penalty + clear)
   - [x] Prestige reset: clears contract, cat jobs, scheme runtime, trader runtime
   - [x] Price engine: 10-min idle sim sanity bounds (no runaway drift)
+  - [x] Traders: Heat constraint meaningfully reduces action rate (tight unit test)
 - [x] Deployment instructions (GitHub Pages if applicable)
 
 ## Maintenance / compatibility

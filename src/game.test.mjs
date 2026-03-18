@@ -488,16 +488,31 @@ function clone(x) {
   assert.equal(locked.coins, coins1);
 
   // Heat constraint reduces trader action rate.
-  const hot = clone(DEFAULT_STATE);
-  tick(hot, 1);
-  hot.unlocked.heat = true;
-  hot.heat = 100;
-  hot.traders[0].enabled = true;
-  hot.market.kibble.price = 9;
-  runTraders(hot, 5);
-  // With heat=100 and clamp to 0.2, budget should accrue slower.
-  // (We just sanity-check the runtime budget is small.)
-  assert.ok((hot.traderRuntime?.tuna?.budget ?? 0) < 1);
+  // With a small dt, heat=0 should allow an action, but heat=100 (clamped to 0.2x) should not.
+  {
+    const cool = clone(DEFAULT_STATE);
+    tick(cool, 1);
+    cool.unlocked.heat = true;
+    cool.heat = 0;
+    cool.traders[0].enabled = true;
+    // Ensure the first rule matches immediately.
+    cool.traders[0].actionsPerMin = 60;
+    cool.traders[0].rules = [{ kind: "buyBelow", goodKey: "kibble", price: 999, qty: 1 }];
+    cool.market.kibble.price = 1;
+    runTraders(cool, 1);
+    assert.equal(cool.inventory.kibble, 1, "cool heat should allow 1 trader action in 1s at 60/min");
+
+    const hot = clone(DEFAULT_STATE);
+    tick(hot, 1);
+    hot.unlocked.heat = true;
+    hot.heat = 100;
+    hot.traders[0].enabled = true;
+    hot.traders[0].actionsPerMin = 60;
+    hot.traders[0].rules = [{ kind: "buyBelow", goodKey: "kibble", price: 999, qty: 1 }];
+    hot.market.kibble.price = 1;
+    runTraders(hot, 1);
+    assert.equal(hot.inventory.kibble, 0, "hot heat should block trader action due to reduced budget accrual");
+  }
 
   // Trader actions generate Heat once Heat is unlocked.
   const ht = clone(DEFAULT_STATE);
