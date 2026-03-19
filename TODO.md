@@ -248,3 +248,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] README: watch mode note says Node 22+ (matches package.json engines)
 - [x] CONTRIBUTING: watch mode note says Node 22+ too
 
+## v1.8.1 — Tiny UX consistency
+- [x] Goal ladder: 250-coin goal label mentions Contracts (matches actual unlock behavior)
+
