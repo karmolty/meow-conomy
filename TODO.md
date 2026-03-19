@@ -254,3 +254,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.8.2 — Tiny UX consistency
 - [x] Goal ladder: goal labels mention their key unlocks (Heat/Schemes, Traders, Cats)
 
+## v1.8.3 — Tiny UX polish
+- [x] UI: Level Up button tooltip hints what the next goal unlocks
+

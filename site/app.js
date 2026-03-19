@@ -1013,6 +1013,8 @@ function render() {
     if (els.btnLevelUp) {
       const canLevel = coins >= goalCoins;
       els.btnLevelUp.style.display = canLevel ? "" : "none";
+      // Tiny UX: hint what leveling up will do.
+      els.btnLevelUp.title = canLevel ? `Level up (${cur?.label ?? ""})` : "";
     }
   }
 
