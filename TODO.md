@@ -251,3 +251,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.8.1 — Tiny UX consistency
 - [x] Goal ladder: 250-coin goal label mentions Contracts (matches actual unlock behavior)
 
+## v1.8.2 — Tiny UX consistency
+- [x] Goal ladder: goal labels mention their key unlocks (Heat/Schemes, Traders, Cats)
+
