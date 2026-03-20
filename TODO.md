@@ -183,6 +183,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.6 — Storage robustness
 - [x] UI: handle localStorage quota/blocked-storage errors during `save()` without crashing (show a small status message).
 
+## v1.7 — Tiny accessibility follow-ups
+- [x] A11y: add an accessible label to the District selector.
+
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)
