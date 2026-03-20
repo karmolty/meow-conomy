@@ -324,18 +324,18 @@
               <div class="muted" style="margin-bottom:4px;"><strong>Challenges</strong> (opt-in):</div>
               <div id="ironChallenge" style="display:flex; flex-direction:column; gap:4px;">
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none;">
-                  <input id="chkIronContracts" type="checkbox" />
+                  <input id="chkIronContracts" type="checkbox" aria-describedby="descIronContracts" />
                   <span>Iron Contracts</span>
                 </label>
-                <div class="muted" style="margin-left:24px;">If a contract expires, your run is busted (instant run reset, 0 Whiskers).</div>
+                <div id="descIronContracts" class="muted" style="margin-left:24px;">If a contract expires, your run is busted (instant run reset, 0 Whiskers).</div>
               </div>
 
               <div id="heatChallenge" style="display:flex; flex-direction:column; gap:4px; margin-top:10px;">
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none;">
-                  <input id="chkHeatDeath" type="checkbox" />
+                  <input id="chkHeatDeath" type="checkbox" aria-describedby="descHotPaws" />
                   <span>Hot Paws</span>
                 </label>
-                <div class="muted" style="margin-left:24px;">If Heat reaches 100, your run is busted (instant run reset, 0 Whiskers).</div>
+                <div id="descHotPaws" class="muted" style="margin-left:24px;">If Heat reaches 100, your run is busted (instant run reset, 0 Whiskers).</div>
               </div>
             </div>
           </div>
