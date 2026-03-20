@@ -469,6 +469,7 @@ function renderCats() {
     name.innerHTML = `<strong>${c.name}</strong> <span class="muted">(${c.id})</span>`;
 
     const select = document.createElement("select");
+    select.setAttribute("aria-label", `Job for ${c.name}`);
     select.style.minHeight = "48px";
     select.style.border = "1px solid var(--line)";
     select.style.borderRadius = "12px";
