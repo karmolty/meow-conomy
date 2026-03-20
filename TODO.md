@@ -186,6 +186,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.7 — Tiny accessibility follow-ups
 - [x] A11y: add an accessible label to the District selector.
 - [x] A11y: add an accessible label to each cat job selector.
+- [x] A11y: add ARIA progressbar semantics to contract requirement progress bars.
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)

@@ -737,6 +737,11 @@ function renderContract() {
       bar.className = "progress";
       bar.style.height = "10px";
       bar.style.marginTop = "6px";
+      bar.setAttribute("role", "progressbar");
+      bar.setAttribute("aria-label", label);
+      bar.setAttribute("aria-valuemin", "0");
+      bar.setAttribute("aria-valuemax", String(goal));
+      bar.setAttribute("aria-valuenow", String(cur));
 
       const fill = document.createElement("div");
       fill.className = "progressFill";
