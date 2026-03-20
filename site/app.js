@@ -742,6 +742,7 @@ function renderContract() {
       bar.setAttribute("aria-valuemin", "0");
       bar.setAttribute("aria-valuemax", String(goal));
       bar.setAttribute("aria-valuenow", String(cur));
+      bar.setAttribute("aria-valuetext", `${fmt(cur)} / ${fmt(goal)}`);
 
       const fill = document.createElement("div");
       fill.className = "progressFill";
