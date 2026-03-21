@@ -190,6 +190,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] A11y: connect challenge checkboxes to their description text via aria-describedby.
 - [x] A11y: add aria-valuetext to contract requirement progress bars.
 
+## v1.8 — Micro UI polish
+- [x] Prevent "flash of locked panels" on initial load by hiding gated panels in HTML until JS render shows them.
+
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)
