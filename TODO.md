@@ -194,6 +194,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of locked panels" on initial load by hiding gated panels in HTML until JS render shows them.
 - [x] Prevent "flash of placeholder progress text" (remove initial "0 / 100" in HTML; render owns it).
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
+- [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
