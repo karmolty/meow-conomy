@@ -192,6 +192,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.8 — Micro UI polish
 - [x] Prevent "flash of locked panels" on initial load by hiding gated panels in HTML until JS render shows them.
+- [x] Prevent "flash of placeholder progress text" (remove initial "0 / 100" in HTML; render owns it).
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
