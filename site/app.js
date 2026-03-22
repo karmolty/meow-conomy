@@ -219,6 +219,7 @@ const els = {
   repoLink: document.getElementById("repoLink"),
   gameTitle: document.getElementById("gameTitle"),
   helpDetails: document.getElementById("helpDetails"),
+  versionLine: document.getElementById("versionLine"),
   appVersion: document.getElementById("appVersion")
 };
 
@@ -229,6 +230,10 @@ function getAppVersion() {
 
 if (els.appVersion) {
   els.appVersion.textContent = getAppVersion();
+}
+if (els.versionLine) {
+  // Avoid a brief "dev" flash before JS initializes the version label.
+  els.versionLine.style.display = "";
 }
 
 const state = load();
