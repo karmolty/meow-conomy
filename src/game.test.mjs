@@ -685,6 +685,12 @@ function clone(x) {
 
 // Prestige: end season awards whiskers and resets run state.
 {
+  // whiskersForCoins is monotonic and never negative.
+  assert.equal(whiskersForCoins(0), 0);
+  assert.equal(whiskersForCoins(-1), 0);
+  assert.ok(whiskersForCoins(199) <= whiskersForCoins(200));
+  assert.ok(whiskersForCoins(200) <= whiskersForCoins(400));
+
   const s = clone(DEFAULT_STATE);
   tick(s, 1);
   s.coins = 450;

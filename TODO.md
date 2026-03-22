@@ -199,6 +199,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.9 — Tiny UX
 - [x] Avoid repo link placeholder (set a sensible default href in HTML; JS may override).
 
+## v1.10 — Tiny test hardening
+- [x] Tests: `whiskersForCoins()` is monotonic and clamps non-positive coin inputs to 0.
+
 ## v1.10 — Micro UI polish
 - [x] Prevent "flash of dev version" by hiding the Version line until JS sets it.
 
