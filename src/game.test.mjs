@@ -696,6 +696,7 @@ function clone(x) {
   s.coins = 450;
   s.inventory.kibble = 3;
   s.heat = 80;
+  s.seed = 424242;
   s.contracts.activeId = CONTRACTS[0].id;
   s.cats[0].job = "production";
   s.schemes.hustle.cooldownLeft = 12;
@@ -714,6 +715,7 @@ function clone(x) {
   assert.equal(s.coins, 50);
   assert.equal(s.inventory.kibble, 0);
   assert.equal(s.heat, 0);
+  assert.ok(Number.isFinite(s.seed) && (s.seed >>> 0) !== 0, "endSeason retains a non-zero seed (determinism per save)");
   assert.equal(s.contracts.activeId, null);
   assert.equal(s.cats[0].job, null);
   assert.equal(s.schemes.hustle.cooldownLeft, 0);
