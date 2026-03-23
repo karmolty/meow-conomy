@@ -34,6 +34,9 @@ Or via npm (recommended if you already have Node installed):
 npm start
 # or
 npm run serve
+
+# optional: choose a different port
+PORT=3000 npm run serve
 ```
 
 Tip: open the in-game **Help / shortcuts** section (footer) for keyboard + progression reminders.
