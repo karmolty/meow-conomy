@@ -15,8 +15,10 @@ npm install
 Run the game:
 ```bash
 npm start
+# optional: choose a different port
+PORT=3000 npm run serve
 ```
-Then open: http://localhost:5173
+Then open: http://localhost:5173 (or the port you picked)
 
 ## Tests / checks
 
