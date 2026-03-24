@@ -24,6 +24,9 @@ Quick start (no Node required):
 
 ```bash
 python3 -m http.server 5173 --directory site
+
+# optional: bind to LAN for mobile testing
+python3 -m http.server 5173 --bind 0.0.0.0 --directory site
 ```
 
 Then open: http://localhost:5173
