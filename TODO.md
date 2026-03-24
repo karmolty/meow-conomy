@@ -211,6 +211,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.11 — Tiny dev quality
 - [x] Dev: allow `HOST=0.0.0.0 npm run serve` to bind the dev server (useful for LAN/mobile testing).
 - [x] Docs: mention how to bind the Python quick-start server for LAN/mobile testing.
+- [x] Docs: add a quick note on finding your LAN IP for mobile testing.
 
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
