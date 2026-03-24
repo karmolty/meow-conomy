@@ -33,6 +33,8 @@ Or via npm (recommended if you already have Node installed):
 ```bash
 npm start
 # or
+npm run dev
+# or
 npm run serve
 
 # optional: choose a different port

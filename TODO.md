@@ -157,6 +157,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.2 — Tiny dev ergonomics
 - [x] Add `npm run test:watch` for faster local iteration.
+- [x] Add `npm run dev` as an alias for `npm run serve` (common convention).
 - [x] Docs: mention `npm run test:watch` in README + CONTRIBUTING.
 - [x] UI: confirm before importing save from file (overwrites current save).
 - [x] UI: trim whitespace when importing save JSON (paste/file) so leading/trailing newlines don’t break import.
