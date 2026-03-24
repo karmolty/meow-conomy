@@ -15,6 +15,9 @@ npm install
 Run the game:
 ```bash
 npm start
+# or
+npm run dev
+
 # optional: choose a different port
 PORT=3000 npm run serve
 ```
