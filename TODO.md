@@ -208,6 +208,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.10 — Micro UI polish
 - [x] Prevent "flash of dev version" by hiding the Version line until JS sets it.
 
+## v1.11 — Tiny dev quality
+- [x] Dev: allow `HOST=0.0.0.0 npm run serve` to bind the dev server (useful for LAN/mobile testing).
+
 ## Nice-to-have (after v1.0)
 - [x] Opt-in challenge modes (explicit fail states)
   - [x] Iron Contracts: if a contract expires, your run is busted (run reset, 0 Whiskers)

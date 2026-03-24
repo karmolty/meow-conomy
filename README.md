@@ -39,6 +39,9 @@ npm run serve
 
 # optional: choose a different port
 PORT=3000 npm run serve
+
+# optional: bind to LAN for mobile testing
+HOST=0.0.0.0 npm run serve
 ```
 
 Tip: open the in-game **Help / shortcuts** section (footer) for keyboard + progression reminders.
