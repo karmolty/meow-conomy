@@ -1360,6 +1360,15 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "s" || e.key === "S") {
+    // Copy seed (when visible) — handy for sharing a deterministic save.
+    if (state.seed != null && els.seedLine && els.seedLine.style.display !== "none") {
+      e.preventDefault();
+      els.seed?.click();
+    }
+    return;
+  }
+
   const n = Number(e.key);
   if (!Number.isFinite(n) || n < 1 || n > 5) return;
 
