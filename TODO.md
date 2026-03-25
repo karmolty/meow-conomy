@@ -202,6 +202,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] A11y: add `aria-keyshortcuts` for main keyboard controls (Help, Export/Import, Level Up, End Season, Seed copy).
 - [x] A11y: add `aria-keyshortcuts` for Schemes (1–5).
 
+## v2.0 — Micro onboarding
+- [x] UX: show a one-shot status hint when **Level Up** becomes available (per level).
+
 ## v1.9 — Tiny UX
 - [x] Avoid repo link placeholder (set a sensible default href in HTML; JS may override).
 

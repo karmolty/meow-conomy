@@ -1029,6 +1029,17 @@ function render() {
       els.btnLevelUp.style.display = canLevel ? "" : "none";
       // Tiny UX: hint what leveling up will do.
       els.btnLevelUp.title = canLevel ? `Level up (${cur?.label ?? ""})` : "";
+
+      // Micro onboarding: when the button first becomes available, nudge once.
+      // (Per-level so it doesn't spam, and so future goals still get a hint.)
+      state.meta ||= { whiskers: 0, seasons: 0, schemeSlots: 1 };
+      const hintedAt = Number(state.meta.levelUpHintedLevel);
+      if (canLevel && hintedAt !== level) {
+        state.meta.levelUpHintedLevel = level;
+        // Save once so the hint doesn't repeat on refresh.
+        save(state);
+        flashStatus("level up ready", 1800);
+      }
     }
   }
 
