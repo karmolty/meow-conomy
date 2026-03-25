@@ -198,6 +198,10 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny accessibility shortcuts
+- [x] A11y: add `aria-keyshortcuts` for main keyboard controls (Help, Export/Import, Level Up, End Season, Seed copy).
+- [x] A11y: add `aria-keyshortcuts` for Schemes (1–5).
+
 ## v1.9 — Tiny UX
 - [x] Avoid repo link placeholder (set a sensible default href in HTML; JS may override).
 
