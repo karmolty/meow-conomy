@@ -200,6 +200,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9 — Tiny UX clarity
 - [x] UI: add a small Heat tooltip hint (what it affects) so the meter isn’t mysterious when it unlocks.
+- [x] UI: add a tooltip to the Market "sat" (saturation) indicator so players know it’s price pressure that decays.
 
 ## v1.9 — Tiny accessibility shortcuts
 - [x] A11y: add `aria-keyshortcuts` for main keyboard controls (Help, Export/Import, Level Up, End Season, Seed copy).
