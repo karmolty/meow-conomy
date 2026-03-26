@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny UX clarity
+- [x] UI: add a small Heat tooltip hint (what it affects) so the meter isn’t mysterious when it unlocks.
+
 ## v1.9 — Tiny accessibility shortcuts
 - [x] A11y: add `aria-keyshortcuts` for main keyboard controls (Help, Export/Import, Level Up, End Season, Seed copy).
 - [x] A11y: add `aria-keyshortcuts` for Schemes (1–5).
