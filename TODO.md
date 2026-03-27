@@ -201,7 +201,8 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.9 — Tiny accessibility polish
 - [x] A11y: make small help affordances (like Heat "(?)") keyboard-focusable buttons.
 - [x] A11y: mark the save status pill as a proper live "status" region.
-- [x] A11y: add a consistent keyboard focus ring for buttons.
+- [x] A11y: add a consistent keyboard focus ring for buttons.- [x] A11y: avoid duplicate focus styles for help icon buttons.
+
 
 ## v1.9 — Tiny UX clarity
 - [x] UI: add a small Heat tooltip hint (what it affects) so the meter isn’t mysterious when it unlocks.
