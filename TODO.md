@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny accessibility polish
+- [x] A11y: make small help affordances (like Heat "(?)") keyboard-focusable buttons.
+
 ## v1.9 — Tiny UX clarity
 - [x] UI: add a small Heat tooltip hint (what it affects) so the meter isn’t mysterious when it unlocks.
 - [x] UI: add a tooltip to the Market "sat" (saturation) indicator so players know it’s price pressure that decays.

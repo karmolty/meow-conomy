@@ -199,6 +199,27 @@
       background: rgba(43,122,120,.10);
     }
 
+    /* Tiny a11y: help affordances should be keyboard-focusable */
+    button.helpIcon {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 900;
+      padding: 0 6px;
+      border-radius: 10px;
+      min-height: auto;
+      line-height: 1.2;
+    }
+    button.helpIcon:hover {
+      border-color: var(--line);
+      background: rgba(0,0,0,.03);
+    }
+    button.helpIcon:focus {
+      outline: 3px solid rgba(43,122,120,.35);
+      outline-offset: 2px;
+    }
+
     /* Keyboard focus visibility (avoid noisy outlines for mouse users) */
     button:focus-visible,
     a:focus-visible {
@@ -305,7 +326,7 @@
               <div class="progressFill" id="progressFill" style="width:0%"></div>
             </div>
             <div class="muted" id="progressLabel" aria-live="polite" aria-atomic="true"></div>
-            <div class="muted" id="heatLine" style="display:none">Heat: <strong id="statHeat" aria-live="polite" aria-atomic="true">0</strong> / 100 <span class="muted" id="heatSpark" aria-hidden="true" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span> <span class="muted" title="Heat increases event chance and can restrict Contracts; it also reduces Trader automation when high." aria-label="Heat info">(?)</span></div>
+            <div class="muted" id="heatLine" style="display:none">Heat: <strong id="statHeat" aria-live="polite" aria-atomic="true">0</strong> / 100 <span class="muted" id="heatSpark" aria-hidden="true" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;"></span> <button type="button" class="helpIcon" title="Heat increases event chance and can restrict Contracts; it also reduces Trader automation when high." aria-label="Heat info">(?)</button></div>
             <div class="muted">Whiskers: <strong id="statWhiskers" aria-live="polite" aria-atomic="true">0</strong> <span class="muted">(Seasons: <strong id="statSeasons" aria-live="polite" aria-atomic="true">0</strong>)</span></div>
             <div class="muted" id="seedLine" style="margin-top: 2px; display:none;">Seed: <span id="statSeed" aria-label="Save seed" title="Click to copy seed (S)" aria-keyshortcuts="S" style="cursor:pointer; text-decoration: underline dotted;">0</span></div>
             <div class="muted" id="districtRow" style="display:none; margin-top: 4px;">
