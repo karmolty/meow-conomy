@@ -148,6 +148,12 @@
       min-height: 48px; /* iOS recommended tap target */
     }
 
+    /* A11y: visible focus ring for keyboard users */
+    button:focus-visible {
+      outline: 3px solid rgba(43,122,120,.35);
+      outline-offset: 2px;
+    }
+
     /* Square-ish tap targets for buy/sell */
     button.square {
       width: 56px;
