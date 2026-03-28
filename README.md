@@ -45,7 +45,8 @@ PORT=3000 npm run serve
 
 # optional: bind to LAN for mobile testing
 HOST=0.0.0.0 npm run serve
-# then open from your phone on the same Wi‑Fi: http://<your-lan-ip>:5173 (find it via `ip addr` on Linux)
+# then open from your phone on the same Wi‑Fi: http://<your-lan-ip>:5173
+# (if you set PORT=####, use that port instead; find your LAN IP via `ip addr` on Linux)
 ```
 
 Tip: open the in-game **Help / shortcuts** section (footer) for keyboard + progression reminders.

@@ -217,6 +217,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v2.0 — Micro onboarding
 - [x] UX: show a one-shot status hint when **Level Up** becomes available (per level).
 
+## v2.1 — Tiny docs
+- [x] Docs: README LAN URL example should reflect custom PORT (not always :5173).
+
 ## v1.9 — Tiny UX
 - [x] Avoid repo link placeholder (set a sensible default href in HTML; JS may override).
 
