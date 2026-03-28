@@ -58,6 +58,10 @@ Mobile notes:
 - iOS Safari: the game prevents double-tap-to-zoom inside the game surface.
 - Tap-heavy controls also guard against “ghost clicks” (a synthetic click firing after touch), to avoid accidental double-trades.
 
+Accessibility notes:
+- Small help affordances (like the Heat "(?)") are real buttons, so they’re keyboard-focusable.
+- Buttons show a visible focus ring when navigating by keyboard.
+
 ## Saving
 - The game auto-saves to `localStorage`.
 - If the save format/key ever changes, the game will try to **auto-migrate** the newest prior `meowconomy.save.*` entry forward.

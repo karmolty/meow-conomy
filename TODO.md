@@ -199,6 +199,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
 ## v1.9 — Tiny accessibility polish
+- [x] Docs: mention keyboard focus ring + keyboard-focusable help icons (Heat info) in README.
 - [x] A11y: make small help affordances (like Heat "(?)") keyboard-focusable buttons.
 - [x] A11y: mark the save status pill as a proper live "status" region.
 - [x] A11y: add a consistent keyboard focus ring for buttons.- [x] A11y: avoid duplicate focus styles for help icon buttons.
