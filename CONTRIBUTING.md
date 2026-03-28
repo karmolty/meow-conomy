@@ -23,6 +23,8 @@ PORT=3000 npm run serve
 
 # optional: bind to LAN for mobile testing
 HOST=0.0.0.0 npm run serve
+# or
+npm run serve:lan
 ```
 Then open: http://localhost:5173 (or the port you picked)
 
