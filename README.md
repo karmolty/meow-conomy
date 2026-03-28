@@ -45,6 +45,8 @@ PORT=3000 npm run serve
 
 # optional: bind to LAN for mobile testing
 HOST=0.0.0.0 npm run serve
+# or
+npm run serve:lan
 # then open from your phone on the same Wi‑Fi: http://<your-lan-ip>:5173
 # (if you set PORT=####, use that port instead; find your LAN IP via `ip addr` on Linux)
 ```

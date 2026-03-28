@@ -220,6 +220,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v2.1 — Tiny docs
 - [x] Docs: README LAN URL example should reflect custom PORT (not always :5173).
 
+## v2.2 — Tiny dev ergonomics
+- [x] Dev: add `npm run serve:lan` script (bind to 0.0.0.0) for easy mobile testing.
+
 ## v1.9 — Tiny UX
 - [x] Avoid repo link placeholder (set a sensible default href in HTML; JS may override).
 

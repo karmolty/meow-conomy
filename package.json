@@ -11,6 +11,7 @@
     "check": "npm test",
     "stamp": "node scripts/stamp-version.mjs",
     "serve": "sh -c 'python3 -m http.server ${PORT:-5173} --bind ${HOST:-127.0.0.1} --directory site'",
+    "serve:lan": "HOST=0.0.0.0 npm run serve",
     "start": "npm run serve",
     "dev": "npm run serve"
   }
