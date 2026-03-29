@@ -849,7 +849,8 @@ function renderContract() {
     tags.style.flexWrap = "wrap";
     tags.style.gap = "6px";
 
-    for (const t of (c.tags || [])) {
+    const tagList = (c.tags || []).filter(Boolean);
+    for (const t of tagList) {
       const chip = document.createElement("span");
       chip.textContent = t;
       chip.style.border = "1px solid var(--line)";
@@ -877,7 +878,9 @@ function renderContract() {
     });
 
     btnRow.append(accept);
-    div.append(top, desc, req, tags, btnRow);
+    div.append(top, desc, req);
+    if (tagList.length) div.append(tags);
+    div.append(btnRow);
     els.contract.appendChild(div);
   }
 }

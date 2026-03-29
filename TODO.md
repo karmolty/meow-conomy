@@ -331,3 +331,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9.5 — Micro contract UX
 - [x] Contracts list: show tags (safe/risky, trade/production) as small muted chips
+
+## v1.9.6 — Micro contract UX
+- [x] Contracts list: only render tags row when tags exist (avoid extra blank space)
