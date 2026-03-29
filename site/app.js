@@ -812,6 +812,18 @@ function renderContract() {
     return;
   }
 
+  function reqSummary(c) {
+    const r = c?.requirements?.[0];
+    if (!r) return "";
+    if (r.kind === "earnCoins") return `Earn ${fmt(r.coins ?? 0)} coins`;
+    if (r.kind === "deliverGood") {
+      const good = GOODS.find(g => g.key === r.goodKey);
+      const goodLabel = good?.label || r.goodKey;
+      return `Deliver ${r.qty ?? 0} ${goodLabel}`;
+    }
+    return String(r.kind || "");
+  }
+
   for (const c of available) {
     const div = document.createElement("div");
     div.className = "item";
@@ -824,6 +836,11 @@ function renderContract() {
     desc.className = "muted";
     desc.style.marginTop = "8px";
     desc.textContent = c.desc;
+
+    const req = document.createElement("div");
+    req.className = "muted";
+    req.style.marginTop = "8px";
+    req.textContent = reqSummary(c);
 
     const btnRow = document.createElement("div");
     btnRow.className = "row";
@@ -841,7 +858,7 @@ function renderContract() {
     });
 
     btnRow.append(accept);
-    div.append(top, desc, btnRow);
+    div.append(top, desc, req, btnRow);
     els.contract.appendChild(div);
   }
 }
