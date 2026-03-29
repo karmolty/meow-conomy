@@ -319,3 +319,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9.1 — Micro contract UX
 - [x] Contracts UI: show good labels ("Kibble") instead of internal keys ("kibble") in requirements
+
+## v1.9.2 — Micro contract UX
+- [x] Contracts list: show penalty + rough time limit on available contracts

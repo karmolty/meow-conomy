@@ -817,7 +817,7 @@ function renderContract() {
 
     const top = document.createElement("div");
     top.className = "row";
-    top.innerHTML = `<div><strong>${c.title}</strong></div><div class="muted">+${c.reward.coins} coins</div>`;
+    top.innerHTML = `<div><strong>${c.title}</strong></div><div class="muted">+${c.reward.coins} coins · -${c.penalty.coins} · ${Math.ceil(c.deadlineSec / 60)}m</div>`;
 
     const desc = document.createElement("div");
     desc.className = "muted";
