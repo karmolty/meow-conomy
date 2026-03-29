@@ -842,6 +842,25 @@ function renderContract() {
     req.style.marginTop = "8px";
     req.textContent = reqSummary(c);
 
+    const tags = document.createElement("div");
+    tags.className = "muted";
+    tags.style.marginTop = "8px";
+    tags.style.display = "flex";
+    tags.style.flexWrap = "wrap";
+    tags.style.gap = "6px";
+
+    for (const t of (c.tags || [])) {
+      const chip = document.createElement("span");
+      chip.textContent = t;
+      chip.style.border = "1px solid var(--line)";
+      chip.style.background = "rgba(43,122,120,.06)";
+      chip.style.padding = "3px 8px";
+      chip.style.borderRadius = "999px";
+      chip.style.fontWeight = "800";
+      chip.style.fontSize = "12px";
+      tags.appendChild(chip);
+    }
+
     const btnRow = document.createElement("div");
     btnRow.className = "row";
     btnRow.style.justifyContent = "flex-end";
@@ -858,7 +877,7 @@ function renderContract() {
     });
 
     btnRow.append(accept);
-    div.append(top, desc, req, btnRow);
+    div.append(top, desc, req, tags, btnRow);
     els.contract.appendChild(div);
   }
 }

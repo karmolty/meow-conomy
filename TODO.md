@@ -328,3 +328,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9.4 — Micro contract UX
 - [x] Contracts list: show a one-line requirement summary (earn coins / deliver good)
+
+## v1.9.5 — Micro contract UX
+- [x] Contracts list: show tags (safe/risky, trade/production) as small muted chips
