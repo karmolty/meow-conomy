@@ -400,7 +400,7 @@ function renderMarket() {
         return;
       }
       const spent = Math.max(0, (before ?? 0) - (state.coins ?? 0));
-      if (spent > 0) spawnFloater(`-$${fmt(spent)}`, { kind: "lose" });
+      if (spent > 0) spawnFloater(`-${fmt(spent)}`, { kind: "lose" });
       maybeHaptic();
       pulse(buyBtn, "green");
       save(state);
@@ -425,7 +425,7 @@ function renderMarket() {
       // Show realized P/L (FIFO), not gross proceeds.
       const pnl = Number(state.lastTrade?.kind === "sell" ? state.lastTrade?.pnl : NaN);
       if (Number.isFinite(pnl) && pnl !== 0) {
-        spawnFloater(`${pnl >= 0 ? "+" : "-"}$${fmt(Math.abs(pnl))}`, { kind: pnl >= 0 ? "gain" : "lose" });
+        spawnFloater(`${pnl >= 0 ? "+" : "-"}${fmt(Math.abs(pnl))}`, { kind: pnl >= 0 ? "gain" : "lose" });
       }
       maybeHaptic();
       pulse(sellBtn, "green");

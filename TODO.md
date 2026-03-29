@@ -313,3 +313,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.8.3 — Tiny UX polish
 - [x] UI: Level Up button tooltip hints what the next goal unlocks
 
+
+## v1.9 — Micro UI consistency
+- [x] UI: floaty coin deltas use coins formatting (no "$" prefix)
