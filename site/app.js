@@ -766,7 +766,7 @@ function renderContract() {
     const rewards = document.createElement("div");
     rewards.className = "muted";
     rewards.style.marginTop = "10px";
-    rewards.textContent = `Reward: +${active.reward.coins} coins · Penalty: -${active.penalty.coins} coins`;
+    rewards.textContent = `Reward: +${fmt(active.reward.coins)} coins · Penalty: -${fmt(active.penalty.coins)} coins`;
 
     const btnRow = document.createElement("div");
     btnRow.className = "row";
@@ -789,7 +789,7 @@ function renderContract() {
     }
 
     const abandon = document.createElement("button");
-    abandon.textContent = `Abandon (-${active.penalty.coins} coins)`;
+    abandon.textContent = `Abandon (-${fmt(active.penalty.coins)} coins)`;
     abandon.setAttribute("aria-label", `Abandon contract: ${active.title}`);
     abandon.addEventListener("click", () => {
       abandonActiveContract(state);

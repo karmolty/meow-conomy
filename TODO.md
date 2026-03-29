@@ -337,3 +337,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9.7 — Micro contract UX
 - [x] Contracts list: format reward/penalty amounts with fmt()
+
+## v1.9.8 — Micro contract UX
+- [x] Active contract UI: format reward/penalty amounts with fmt()
