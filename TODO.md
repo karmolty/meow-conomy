@@ -334,3 +334,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9.6 — Micro contract UX
 - [x] Contracts list: only render tags row when tags exist (avoid extra blank space)
+
+## v1.9.7 — Micro contract UX
+- [x] Contracts list: format reward/penalty amounts with fmt()
