@@ -686,6 +686,14 @@ function renderContract() {
   els.contract.innerHTML = "";
 
   const active = getActiveContract(state);
+  // tiny helper for deadlines and timers
+  function fmtTime(sec) {
+    const s = Math.max(0, Math.floor(sec));
+    const m = Math.floor(s / 60);
+    const r = s % 60;
+    return `${m}:${String(r).padStart(2, "0")}`;
+  }
+
   if (active) {
     const div = document.createElement("div");
     div.className = "item";
@@ -693,13 +701,6 @@ function renderContract() {
     const startedAt = state.contracts?.startedAtSec ?? state.time ?? 0;
     const elapsed = Math.max(0, (state.time ?? 0) - startedAt);
     const remaining = Math.max(0, Math.ceil(active.deadlineSec - elapsed));
-
-    function fmtTime(sec) {
-      const s = Math.max(0, Math.floor(sec));
-      const m = Math.floor(s / 60);
-      const r = s % 60;
-      return `${m}:${String(r).padStart(2, "0")}`;
-    }
 
     const top = document.createElement("div");
     top.className = "row";
@@ -817,7 +818,7 @@ function renderContract() {
 
     const top = document.createElement("div");
     top.className = "row";
-    top.innerHTML = `<div><strong>${c.title}</strong></div><div class="muted">+${c.reward.coins} coins · -${c.penalty.coins} · ${Math.ceil(c.deadlineSec / 60)}m</div>`;
+    top.innerHTML = `<div><strong>${c.title}</strong></div><div class="muted">+${c.reward.coins} coins · -${c.penalty.coins} · ${fmtTime(c.deadlineSec)}</div>`;
 
     const desc = document.createElement("div");
     desc.className = "muted";

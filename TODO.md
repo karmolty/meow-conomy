@@ -322,3 +322,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9.2 — Micro contract UX
 - [x] Contracts list: show penalty + rough time limit on available contracts
+
+## v1.9.3 — Micro contract UX
+- [x] Contracts list: show exact deadline as m:ss instead of rough "Nm"
