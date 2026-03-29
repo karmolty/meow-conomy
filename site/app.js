@@ -849,7 +849,8 @@ function renderContract() {
     tags.style.flexWrap = "wrap";
     tags.style.gap = "6px";
 
-    const tagList = (c.tags || []).filter(Boolean);
+    const playerTags = new Set(["safe", "risky", "trade", "production"]);
+    const tagList = (c.tags || []).filter(t => playerTags.has(String(t || "")));
     for (const t of tagList) {
       const chip = document.createElement("span");
       chip.textContent = t;

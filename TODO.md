@@ -340,3 +340,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9.8 — Micro contract UX
 - [x] Active contract UI: format reward/penalty amounts with fmt()
+
+## v1.9.9 — Micro contract UX
+- [x] Contracts list: only show player-relevant tags (hide internal ones like starter/prestige)
