@@ -731,7 +731,9 @@ function renderContract() {
       } else if (r.kind === "deliverGood") {
         cur = state.inventory?.[r.goodKey] ?? 0;
         goal = r.qty ?? 0;
-        label = `Deliver ${r.goodKey}: ${cur} / ${goal}`;
+        const good = GOODS.find(g => g.key === r.goodKey);
+        const goodLabel = good?.label || r.goodKey;
+        label = `Deliver ${goodLabel}: ${cur} / ${goal}`;
       } else {
         label = `${r.kind}`;
       }

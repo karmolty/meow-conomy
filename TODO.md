@@ -316,3 +316,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9 — Micro UI consistency
 - [x] UI: floaty coin deltas use coins formatting (no "$" prefix)
+
+## v1.9.1 — Micro contract UX
+- [x] Contracts UI: show good labels ("Kibble") instead of internal keys ("kibble") in requirements
