@@ -224,6 +224,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Dev: add `npm run serve:lan` script (bind to 0.0.0.0) for easy mobile testing.
 - [x] Docs: mention `npm run serve:lan` in CONTRIBUTING.
 
+## v2.3 — Tiny test hardening
+- [x] Tests: `fmt()` clamps non-finite inputs (NaN/Infinity) to "0".
+
 ## v1.9 — Tiny UX
 - [x] Avoid repo link placeholder (set a sensible default href in HTML; JS may override).
 

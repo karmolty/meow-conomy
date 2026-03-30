@@ -729,5 +729,8 @@ assert.equal(fmt(10.001), "10");
 assert.equal(fmt(-0.000001), "0");
 assert.equal(fmt(1000), "1.00K");
 assert.equal(fmt(1000000), "1.00M");
+assert.equal(fmt(NaN), "0");
+assert.equal(fmt(Infinity), "0");
+assert.equal(fmt(-Infinity), "0");
 
 console.log("ok - game.test.mjs");
