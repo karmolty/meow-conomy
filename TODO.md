@@ -228,6 +228,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Tests: `fmt()` clamps non-finite inputs (NaN/Infinity) to "0".
 - [x] Tests: `fmt()` behavior near the K suffix threshold (e.g. <1000 stays plain number; 1000 becomes "1.00K").
 
+## v2.4 — Tiny UI formatting
+- [x] UI: `fmt()` supports billions (e.g. 1,000,000,000 → "1.00B").
+
 ## v1.9 — Tiny UX
 - [x] Avoid repo link placeholder (set a sensible default href in HTML; JS may override).
 

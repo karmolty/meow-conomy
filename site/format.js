@@ -5,6 +5,7 @@ export function fmt(n) {
   if (!Number.isFinite(n)) return "0";
 
   const abs = Math.abs(n);
+  if (abs >= 1e9) return (n / 1e9).toFixed(2) + "B";
   if (abs >= 1e6) return (n / 1e6).toFixed(2) + "M";
   if (abs >= 1e3) return (n / 1e3).toFixed(2) + "K";
 
