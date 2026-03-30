@@ -727,6 +727,8 @@ assert.equal(fmt(10), "10");
 assert.equal(fmt(10.0), "10");
 assert.equal(fmt(10.001), "10");
 assert.equal(fmt(-0.000001), "0");
+assert.equal(fmt(999.49), "999.49");
+assert.equal(fmt(999.991), "999.99"); // stays < 1000 so no K suffix
 assert.equal(fmt(1000), "1.00K");
 assert.equal(fmt(1000000), "1.00M");
 assert.equal(fmt(NaN), "0");
