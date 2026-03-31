@@ -375,7 +375,7 @@ function renderMarket() {
         const pct = ((cur - prev) / prev) * 100;
         if (Math.abs(pct) >= 0.05) {
           const arrow = pct > 0 ? "▲" : "▼";
-          deltaSpan = ` <span class="muted" title="Change since last tick">(${arrow} ${fmtPct(Math.abs(pct), 1)})</span>`;
+          deltaSpan = ` <span class="muted" aria-hidden="true" title="Change since last tick">(${arrow} ${fmtPct(Math.abs(pct), 1)})</span>`;
         }
       }
     }

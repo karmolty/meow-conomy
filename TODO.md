@@ -200,6 +200,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.8.1 — Tiny market readability
 - [x] UI: show per-good Δ% (change since last tick) next to the price in the Market panel.
+- [x] A11y: mark Δ% indicator as aria-hidden (it’s redundant with the price + sparkline).
 
 ## v1.9 — Tiny accessibility polish
 - [x] Docs: mention keyboard focus ring + keyboard-focusable help icons (Heat info) in README.
