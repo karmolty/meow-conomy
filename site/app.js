@@ -1,5 +1,5 @@
 import { DEFAULT_STATE, GOODS, tick, buy, sell, getPrice } from "./game.js";
-import { fmt } from "./format.js";
+import { fmt, fmtPct } from "./format.js";
 import {
   getAvailableContracts,
   getActiveContract,
@@ -364,11 +364,27 @@ function renderMarket() {
     const right = document.createElement("div");
     const pressure = state.market?.[g.key]?.pressure ?? 0;
     const hist = state.history?.[g.key] ?? [];
+
+    // Tiny readability: show percent change since the previous tick.
+    // (We use history instead of recomputing so it's consistent with the sparkline.)
+    let deltaSpan = "";
+    if (hist.length >= 2) {
+      const prev = Number(hist[hist.length - 2]);
+      const cur = Number(hist[hist.length - 1]);
+      if (Number.isFinite(prev) && Number.isFinite(cur) && prev > 0) {
+        const pct = ((cur - prev) / prev) * 100;
+        if (Math.abs(pct) >= 0.05) {
+          const arrow = pct > 0 ? "▲" : "▼";
+          deltaSpan = ` <span class="muted" title="Change since last tick">(${arrow} ${fmtPct(Math.abs(pct), 1)})</span>`;
+        }
+      }
+    }
+
     const spark = sparkline(hist, 14);
     const sparkSpan = spark
       ? ` <span class="muted" aria-hidden="true" title="recent trend" style="display:inline-block;width:14ch;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:1;">${spark}</span>`
       : "";
-    right.innerHTML = `<strong class="num">${fmt(price)}</strong> <span class="muted">coins</span> <span class="muted" title="Saturation (price pressure): repeated buying raises it and makes future buys pricier; repeated selling lowers it; it decays back toward 0 over time.">(sat ${fmt(pressure)})</span>${sparkSpan}`;
+    right.innerHTML = `<strong class="num">${fmt(price)}</strong>${deltaSpan} <span class="muted">coins</span> <span class="muted" title="Saturation (price pressure): repeated buying raises it and makes future buys pricier; repeated selling lowers it; it decays back toward 0 over time.">(sat ${fmt(pressure)})</span>${sparkSpan}`;
 
     top.append(left, right);
 

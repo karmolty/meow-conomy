@@ -16,3 +16,13 @@ export function fmt(n) {
   if (Math.abs(rounded - Math.round(rounded)) < 1e-9) return String(Math.round(rounded));
   return rounded.toFixed(2);
 }
+
+export function fmtPct(pct, digits = 1) {
+  pct = Number(pct);
+  if (!Number.isFinite(pct)) return "0%";
+  const d = Math.max(0, Math.min(3, Math.floor(Number(digits) || 0)));
+  const rounded = Math.round(pct * Math.pow(10, d)) / Math.pow(10, d);
+  // Avoid "-0.0%".
+  const val = Math.abs(rounded) < 1e-9 ? 0 : rounded;
+  return `${val.toFixed(d)}%`;
+}

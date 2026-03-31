@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.8.1 — Tiny market readability
+- [x] UI: show per-good Δ% (change since last tick) next to the price in the Market panel.
+
 ## v1.9 — Tiny accessibility polish
 - [x] Docs: mention keyboard focus ring + keyboard-focusable help icons (Heat info) in README.
 - [x] A11y: make small help affordances (like Heat "(?)") keyboard-focusable buttons.
