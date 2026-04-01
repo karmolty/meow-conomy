@@ -1129,7 +1129,7 @@ function frameTick() {
 
 els.btnHardReset.addEventListener("click", () => {
   const resp = prompt(
-    "Hard reset? This deletes ALL local saves for this game (including older versions).\n\nType RESET to confirm.\n\nTip: Export save first if you might want it back.",
+    "Hard reset? This deletes ALL local saves for this game (including older versions).\n\nType RESET to confirm (case-insensitive).\n\nTip: Export save first if you might want it back.",
     ""
   );
   if (String(resp).trim().toUpperCase() !== "RESET") return;
