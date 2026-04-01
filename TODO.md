@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny safety/UX
+- [x] Hard reset requires typing `RESET` (instead of a single confirm click) to avoid accidental wipes.
+
 ## v1.8.1 — Tiny market readability
 - [x] UI: show per-good Δ% (change since last tick) next to the price in the Market panel.
 - [x] A11y: mark Δ% indicator as aria-hidden (it’s redundant with the price + sparkline).

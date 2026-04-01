@@ -1128,7 +1128,11 @@ function frameTick() {
 }
 
 els.btnHardReset.addEventListener("click", () => {
-  if (!confirm("Hard reset? This deletes ALL local saves for this game (including older versions).\n\nTip: Export save first if you might want it back.")) return;
+  const resp = prompt(
+    "Hard reset? This deletes ALL local saves for this game (including older versions).\n\nType RESET to confirm.\n\nTip: Export save first if you might want it back.",
+    ""
+  );
+  if (resp !== "RESET") return;
 
   // Remove current + any legacy saves to avoid confusing "ghost" restores after reload.
   try {
