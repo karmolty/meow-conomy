@@ -1132,7 +1132,7 @@ els.btnHardReset.addEventListener("click", () => {
     "Hard reset? This deletes ALL local saves for this game (including older versions).\n\nType RESET to confirm.\n\nTip: Export save first if you might want it back.",
     ""
   );
-  if (resp !== "RESET") return;
+  if (String(resp).trim().toUpperCase() !== "RESET") return;
 
   // Remove current + any legacy saves to avoid confusing "ghost" restores after reload.
   try {
