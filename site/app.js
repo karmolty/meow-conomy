@@ -1462,6 +1462,15 @@ window.addEventListener("keydown", (e) => {
   render();
 });
 
+// Help panel UX: clicking/tapping outside the <details> closes it.
+// (Nice on mobile where the summary toggle can be a small target.)
+document.addEventListener("pointerdown", (e) => {
+  if (!els.helpDetails?.open) return;
+  const t = e.target;
+  if (t && els.helpDetails.contains(t)) return;
+  els.helpDetails.open = false;
+});
+
 // Init
 tick(state, 0);
 render();

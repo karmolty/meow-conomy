@@ -357,3 +357,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9.9 — Micro contract UX
 - [x] Contracts list: only show player-relevant tags (hide internal ones like starter/prestige)
+
+## v1.10 — Tiny Help UX
+- [x] UX: clicking/tapping outside the Help panel closes it (when open)
