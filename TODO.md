@@ -360,3 +360,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.10 — Tiny Help UX
 - [x] UX: clicking/tapping outside the Help panel closes it (when open)
+
+## v1.10.1 — Tiny a11y UX
+- [x] A11y: when opening Help via keyboard, move focus to the Help summary
