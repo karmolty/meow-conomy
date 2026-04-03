@@ -366,3 +366,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.10.2 — Tiny Help hint polish
 - [x] A11y: Help summary advertises Esc as a close shortcut (title + aria-keyshortcuts)
+
+## v1.10.3 — Tiny Scheme UX
+- [x] UX: Scheme buttons show their 1–5 keyboard shortcut in the tooltip

@@ -578,7 +578,12 @@ function renderSchemes() {
     );
     // A11y: expose the keyboard shortcut (1–5) to assistive tech.
     btn.setAttribute("aria-keyshortcuts", String(i + 1));
-    btn.title = locked ? "Unlock more scheme slots by ending seasons." : needsHeat ? "Unlock Heat to use Cool Whiskers." : "";
+    const shortcutHint = `Shortcut: ${i + 1}`;
+    btn.title = locked
+      ? `Unlock more scheme slots by ending seasons. · ${shortcutHint}`
+      : needsHeat
+        ? `Unlock Heat to use Cool Whiskers. · ${shortcutHint}`
+        : shortcutHint;
     btn.addEventListener("click", () => {
       if (locked) return;
       if (!activateScheme(state, s.id)) {
