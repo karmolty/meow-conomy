@@ -363,3 +363,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.10.1 — Tiny a11y UX
 - [x] A11y: when opening Help via keyboard, move focus to the Help summary
+
+## v1.10.2 — Tiny Help hint polish
+- [x] A11y: Help summary advertises Esc as a close shortcut (title + aria-keyshortcuts)
