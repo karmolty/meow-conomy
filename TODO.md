@@ -372,3 +372,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.10.4 — Tiny Scheme UX
 - [x] UX: Schemes list shows the 1–5 hotkey next to each scheme
+
+## v1.10.5 — Tiny button hint polish
+- [x] UX: Level Up / End Season buttons include their keyboard shortcut in the tooltip
