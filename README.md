@@ -59,6 +59,7 @@ Handy shortcuts:
 - **1–5**: activate Schemes (when unlocked)
 - **E**: export save
 - **I**: import save
+- **F**: open Import file picker
 - **L**: Level Up (when available)
 - **P**: End Season (when available)
 - **S**: copy the current save seed (when visible)
