@@ -54,7 +54,13 @@ npm run serve:lan
 Tip: open the in-game **Help / shortcuts** section (footer) for keyboard + progression reminders.
 
 Handy shortcuts:
+- **?** / **H**: toggle Help / shortcuts
+- **Esc**: close Help (when open)
 - **1–5**: activate Schemes (when unlocked)
+- **E**: export save
+- **I**: import save
+- **L**: Level Up (when available)
+- **P**: End Season (when available)
 - **S**: copy the current save seed (when visible)
 
 Mobile notes:

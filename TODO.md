@@ -375,3 +375,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.10.5 — Tiny button hint polish
 - [x] UX: Level Up / End Season buttons include their keyboard shortcut in the tooltip
+
+## v1.10.6 — Tiny docs polish
+- [x] README: expand Handy shortcuts list to include Help, Export/Import, Level Up, End Season, and Esc
