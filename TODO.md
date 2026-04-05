@@ -201,6 +201,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.9 — Tiny test hardening
 - [x] Tests: tighten PRNG invariants (float/int/range bounds, avoid zero absorbing state).
 
+## v1.10 — Tiny dev ergonomics
+- [x] Dev: add `npm run search -- <pattern>` helper (grep-based) for environments without ripgrep.
+
 ## v1.9 — Tiny safety/UX
 - [x] Hard reset requires typing `RESET` (instead of a single confirm click) to avoid accidental wipes.
 

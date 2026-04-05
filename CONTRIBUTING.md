@@ -65,5 +65,10 @@ npm run stamp
 ## Handy commands
 Search the codebase (if you don’t have `rg` / ripgrep installed):
 ```bash
+npm run search -- "search term"
+# or specify folders
+npm run search -- "search term" src site
+
+# raw grep fallback
 grep -RIn "search term" src site
 ```
