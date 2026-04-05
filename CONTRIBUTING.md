@@ -61,3 +61,9 @@ npm run stamp
 - Keep changes small and boring.
 - Avoid heavy deps.
 - Preserve determinism (same seed + same actions => same outcomes).
+
+## Handy commands
+Search the codebase (if you don’t have `rg` / ripgrep installed):
+```bash
+grep -RIn "search term" src site
+```
