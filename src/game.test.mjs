@@ -28,13 +28,26 @@ function clone(x) {
 
 // Basic invariants + determinism smoke tests.
 {
-  // PRNG determinism (seeded).
+  // PRNG determinism + invariants.
   {
     const r1 = createRng(123);
     const r2 = createRng(123);
     for (let i = 0; i < 10; i++) {
       assert.equal(r1.nextU32(), r2.nextU32(), "rng: nextU32 deterministic");
     }
+
+    // float() is in [0,1) and never NaN.
+    for (let i = 0; i < 1000; i++) {
+      const f = r1.float();
+      assert.ok(Number.isFinite(f), "rng: float finite");
+      assert.ok(f >= 0 && f < 1, "rng: float in [0,1)");
+    }
+
+    // xorshift32 should not get stuck in the all-zero absorbing state.
+    const rz = createRng(0);
+    assert.notEqual(rz.getState(), 0, "rng: zero seed gets remapped");
+    rz.setState(0);
+    assert.notEqual(rz.getState(), 0, "rng: setState(0) remaps away from zero");
   }
 
   const a = clone(DEFAULT_STATE);
