@@ -43,6 +43,23 @@ function clone(x) {
       assert.ok(f >= 0 && f < 1, "rng: float in [0,1)");
     }
 
+    // int()/range() bounds.
+    for (let i = 0; i < 1000; i++) {
+      const k = r1.int(10);
+      assert.ok(Number.isInteger(k), "rng: int integer");
+      assert.ok(k >= 0 && k < 10, "rng: int in [0,max)");
+
+      const x = r1.range(-2, 3);
+      assert.ok(Number.isFinite(x), "rng: range finite");
+      assert.ok(x >= -2 && x < 3, "rng: range in [min,max)");
+
+      const g = r1.gaussianish();
+      assert.ok(Number.isFinite(g), "rng: gaussianish finite");
+    }
+
+    assert.equal(r1.int(0), 0, "rng: int(0) => 0");
+    assert.equal(r1.int(-1), 0, "rng: int(-1) => 0");
+
     // xorshift32 should not get stuck in the all-zero absorbing state.
     const rz = createRng(0);
     assert.notEqual(rz.getState(), 0, "rng: zero seed gets remapped");

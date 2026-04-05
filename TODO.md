@@ -199,7 +199,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
 ## v1.9 — Tiny test hardening
-- [x] Tests: tighten PRNG invariants (float bounds, avoid zero absorbing state).
+- [x] Tests: tighten PRNG invariants (float/int/range bounds, avoid zero absorbing state).
 
 ## v1.9 — Tiny safety/UX
 - [x] Hard reset requires typing `RESET` (instead of a single confirm click) to avoid accidental wipes.
