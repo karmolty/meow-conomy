@@ -164,14 +164,22 @@ function load() {
 let _lastSavedMs = null;
 
 function save(state) {
+  // Capture old value so we can roll back if the write fails.
+  const prev = state._lastSaveMs;
+  const t = nowMs();
+
   try {
-    // Tiny UX: remember last save time so the UI can show "saved · 12:34".
-    _lastSavedMs = nowMs();
-    // Persisting this is harmless and helps after reloads/back-compat.
-    state._lastSaveMs = _lastSavedMs;
+    // Persist last save time so it survives reloads/back-compat.
+    state._lastSaveMs = t;
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+
+    // Only treat it as the "last saved" time if the write succeeded.
+    _lastSavedMs = t;
   } catch {
+    // Roll back cosmetic timestamp if we didn't actually save.
+    state._lastSaveMs = prev;
+
     // Quota errors (or blocked storage) should not crash the game loop.
     // Best-effort: surface a tiny status message if the UI is ready.
     try { flashStatus?.("save failed", 2200); } catch {}
