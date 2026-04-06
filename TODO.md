@@ -204,6 +204,8 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.10 — Micro UI polish
 - [x] Save status pill: add a tooltip with the full last-save timestamp (for debugging / clarity).
 
+## v1.11 — Tiny dev ergonomics
+- [x] Add a script to print TODO checklist stats (total/checked/remaining/%).
 ## v1.9 — Tiny test hardening
 - [x] Tests: tighten PRNG invariants (float/int/range bounds, avoid zero absorbing state).
 
