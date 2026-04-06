@@ -279,14 +279,25 @@ if (els.districtSelect) {
 let _statusTimer = null;
 function setSaveStatus(text) {
   let label = text;
+  let title = "";
+
   if (text === "saved" && Number.isFinite(_lastSavedMs)) {
     // Use local time; keep it short to avoid layout jitter.
     const d = new Date(_lastSavedMs);
     const hh = String(d.getHours()).padStart(2, "0");
     const mm = String(d.getMinutes()).padStart(2, "0");
     label = `saved · ${hh}:${mm}`;
+
+    // Tooltip includes full timestamp (handy for debugging save issues).
+    const yyyy = String(d.getFullYear());
+    const mo = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    const ss = String(d.getSeconds()).padStart(2, "0");
+    title = `Last saved: ${yyyy}-${mo}-${dd} ${hh}:${mm}:${ss}`;
   }
+
   els.saveStatus.textContent = label;
+  if (els.saveStatus) els.saveStatus.title = title;
   els.saveStatus.style.borderColor = text === "saved" ? "var(--line)" : "rgba(43,122,120,.35)";
 }
 

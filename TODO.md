@@ -201,6 +201,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.9 — Tiny UX polish
 - [x] Save status pill: show last save time (e.g. "saved · 12:34") after successful writes (and keep it across reloads).
 
+## v1.10 — Micro UI polish
+- [x] Save status pill: add a tooltip with the full last-save timestamp (for debugging / clarity).
+
 ## v1.9 — Tiny test hardening
 - [x] Tests: tighten PRNG invariants (float/int/range bounds, avoid zero absorbing state).
 
