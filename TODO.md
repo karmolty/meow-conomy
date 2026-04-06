@@ -199,7 +199,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
 ## v1.9 — Tiny UX polish
-- [x] Save status pill: show last save time (e.g. "saved · 12:34") after successful writes.
+- [x] Save status pill: show last save time (e.g. "saved · 12:34") after successful writes (and keep it across reloads).
 
 ## v1.9 — Tiny test hardening
 - [x] Tests: tighten PRNG invariants (float/int/range bounds, avoid zero absorbing state).

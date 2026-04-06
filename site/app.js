@@ -165,11 +165,12 @@ let _lastSavedMs = null;
 
 function save(state) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     // Tiny UX: remember last save time so the UI can show "saved · 12:34".
     _lastSavedMs = nowMs();
     // Persisting this is harmless and helps after reloads/back-compat.
     state._lastSaveMs = _lastSavedMs;
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch {
     // Quota errors (or blocked storage) should not crash the game loop.
     // Best-effort: surface a tiny status message if the UI is ready.
