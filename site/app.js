@@ -161,9 +161,15 @@ function load() {
   }
 }
 
+let _lastSavedMs = null;
+
 function save(state) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    // Tiny UX: remember last save time so the UI can show "saved · 12:34".
+    _lastSavedMs = nowMs();
+    // Persisting this is harmless and helps after reloads/back-compat.
+    state._lastSaveMs = _lastSavedMs;
   } catch {
     // Quota errors (or blocked storage) should not crash the game loop.
     // Best-effort: surface a tiny status message if the UI is ready.
@@ -237,6 +243,9 @@ if (els.versionLine) {
 }
 
 const state = load();
+// Restore last-save time if present (purely cosmetic UI).
+if (Number.isFinite(state._lastSaveMs)) _lastSavedMs = state._lastSaveMs;
+
 // Seed should be initialized once per new save so price evolution can be deterministic per-save.
 // Note: 0 is a valid uint32 seed; only treat null/undefined as missing.
 if (state.seed == null) {
@@ -260,7 +269,15 @@ if (els.districtSelect) {
 
 let _statusTimer = null;
 function setSaveStatus(text) {
-  els.saveStatus.textContent = text;
+  let label = text;
+  if (text === "saved" && Number.isFinite(_lastSavedMs)) {
+    // Use local time; keep it short to avoid layout jitter.
+    const d = new Date(_lastSavedMs);
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mm = String(d.getMinutes()).padStart(2, "0");
+    label = `saved · ${hh}:${mm}`;
+  }
+  els.saveStatus.textContent = label;
   els.saveStatus.style.borderColor = text === "saved" ? "var(--line)" : "rgba(43,122,120,.35)";
 }
 
