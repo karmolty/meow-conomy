@@ -395,3 +395,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.10.7 — Tiny docs polish
 - [x] README: mention F shortcut for Import file picker
+
+## v1.10.8 — Tiny docs alignment
+- [x] DESIGN: clarify that **250 coins** unlocks **Shiny Things + Contracts**
