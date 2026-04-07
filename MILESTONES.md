@@ -53,7 +53,7 @@ These milestones are written as **deliverables with acceptance criteria** (AC). 
 - Unlocks gate both **mechanics** and **UI panels** (don’t show panels that aren’t unlocked).
 - At minimum, define and implement these unlock steps:
   1) **Level 0 → 100 coins:** unlock Catnip (already)
-  2) **Level 1 → 250 coins:** unlock Contracts (already)
+  2) **Level 1 → 250 coins:** unlock Shiny Things + Contracts (already)
   3) **Level 2 → 500 coins:** unlock Heat (meter becomes visible + has at least one gameplay consequence)
   4) **Level 3 → 800 coins:** unlock Traders (panel visible; traders have at least one meaningful constraint tied to Heat)
   5) **Level 4 → 1200 coins:** unlock Cats (panel visible; at least one job has a real effect)
