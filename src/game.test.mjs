@@ -132,6 +132,30 @@ function clone(x) {
   assert.equal(canSell(locked, "catnip", 1), false);
   assert.equal(sell(locked, "catnip", 1), false);
 
+  // Unlock thresholds (goal ladder gating):
+  // - 100 coins unlocks Catnip
+  // - 250 coins unlocks Shiny Things + Contracts
+  const u = clone(DEFAULT_STATE);
+  tick(u, 1);
+
+  u.coins = 99;
+  tick(u, 0);
+  assert.equal(u.unlocked.catnip, false);
+
+  u.coins = 100;
+  tick(u, 0);
+  assert.equal(u.unlocked.catnip, true);
+
+  u.coins = 249;
+  tick(u, 0);
+  assert.equal(u.unlocked.shiny, false);
+  assert.equal(u.unlocked.contract, false);
+
+  u.coins = 250;
+  tick(u, 0);
+  assert.equal(u.unlocked.shiny, true);
+  assert.equal(u.unlocked.contract, true);
+
   // Pressure/saturation responds to trading.
   assert.ok(Number.isFinite(a.market[g0].pressure));
 
