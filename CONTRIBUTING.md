@@ -69,6 +69,9 @@ npm run search -- "search term"
 # or specify folders
 npm run search -- "search term" src site
 
+# tip: use extended regex when needed
+SEARCH_RE=1 npm run search -- "Heat|Whiskers" site
+
 # raw grep fallback
 grep -RIn "search term" src site
 ```
