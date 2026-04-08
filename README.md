@@ -77,6 +77,15 @@ Accessibility notes:
 - If the save format/key ever changes, the game will try to **auto-migrate** the newest prior `meowconomy.save.*` entry forward.
 - Use **Hard reset** to clear your save (it removes the current save key and any older `meowconomy.save.*` keys).
 
+## Search
+If you don’t have `rg` / ripgrep installed:
+
+```bash
+npm run search -- "search term"
+# tip: extended regex
+SEARCH_RE=1 npm run search -- "Heat|Whiskers" site
+```
+
 ## Smoke test
 Automated:
 
