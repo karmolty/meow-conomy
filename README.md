@@ -82,8 +82,10 @@ If you don’t have `rg` / ripgrep installed:
 
 ```bash
 npm run search -- "search term"
-# tip: extended regex
-SEARCH_RE=1 npm run search -- "Heat|Whiskers" site
+
+# extended regex
+npm run search:re -- "Heat|Whiskers" site
+# (or: SEARCH_RE=1 npm run search -- "Heat|Whiskers" site)
 ```
 
 ## Smoke test

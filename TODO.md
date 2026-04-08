@@ -247,6 +247,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v2.5 — Tiny dev ergonomics
 - [x] Dev: `npm run search` supports extended regex when `SEARCH_RE=1` (reduces grep escaping pain).
+- [x] Dev: add `npm run search:re` convenience alias for extended-regex search.
 
 ## v2.3 — Tiny test hardening
 - [x] Tests: `fmt()` clamps non-finite inputs (NaN/Infinity) to "0".
