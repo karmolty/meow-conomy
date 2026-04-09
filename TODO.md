@@ -201,6 +201,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.9 — Tiny accessibility / comfort
 - [x] Respect `prefers-reduced-motion` (disable floaties animation; avoid smooth scrolling when toggling Help).
 
+## v1.10 — Docs
+- [x] README: document reduced-motion support.
+
 ## v1.9 — Tiny UX polish
 - [x] Save status pill: show last save time (e.g. "saved · 12:34") after successful writes (and keep it across reloads).
 

@@ -71,6 +71,7 @@ Mobile notes:
 Accessibility notes:
 - Small help affordances (like the Heat "(?)") are real buttons, so they’re keyboard-focusable.
 - Buttons show a visible focus ring when navigating by keyboard.
+- Respects `prefers-reduced-motion` (disables floaty animations and avoids smooth scrolling when reduced motion is requested).
 
 ## Saving
 - The game auto-saves to `localStorage`.
