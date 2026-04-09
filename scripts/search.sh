@@ -21,7 +21,9 @@ fi
 
 if [ "${SEARCH_RE:-}" = "1" ]; then
   # -E: extended regex
-  grep -RInIE "$pattern" "$@" || true
+  # -e + -- avoids patterns that start with '-' being treated as flags.
+  grep -RInIE -e "$pattern" -- "$@" || true
 else
-  grep -RInI "$pattern" "$@" || true
+  # -e + -- avoids patterns that start with '-' being treated as flags.
+  grep -RInI -e "$pattern" -- "$@" || true
 fi
