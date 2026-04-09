@@ -1433,7 +1433,8 @@ window.addEventListener("keydown", (e) => {
       els.helpDetails.open = !els.helpDetails.open;
       if (els.helpDetails.open) {
         // Ensure it's visible when opened from the keyboard.
-        try { els.helpDetails.scrollIntoView({ block: "end", behavior: "smooth" }); } catch {}
+        const reduceMotion = !!window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+        try { els.helpDetails.scrollIntoView({ block: "end", behavior: reduceMotion ? "auto" : "smooth" }); } catch {}
         // A11y: move focus into the opened region so keyboard users don't "lose" it.
         try { els.helpDetails.querySelector("summary")?.focus({ preventScroll: true }); } catch {}
       }

@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny accessibility / comfort
+- [x] Respect `prefers-reduced-motion` (disable floaties animation; avoid smooth scrolling when toggling Help).
+
 ## v1.9 — Tiny UX polish
 - [x] Save status pill: show last save time (e.g. "saved · 12:34") after successful writes (and keep it across reloads).
 

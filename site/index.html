@@ -278,6 +278,12 @@
       100% { opacity: 0; transform: translate(-50%, -120%) scale(1.03); }
     }
 
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      html:focus-within { scroll-behavior: auto; }
+      .floater { animation: none; opacity: 1; }
+    }
+
   </style>
 </head>
 <body>
