@@ -54,7 +54,7 @@ npm run serve:lan
 Tip: open the in-game **Help / shortcuts** section (footer) for keyboard + progression reminders.
 
 Handy shortcuts:
-- **?** / **H**: toggle Help / shortcuts
+- **?** / **H**: toggle Help / shortcuts (remembers if you left it open)
 - **Esc**: close Help (when open)
 - **1–5**: activate Schemes (when unlocked)
 - **E**: export save
