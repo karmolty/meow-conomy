@@ -18,6 +18,7 @@ import { DISTRICTS, normalizeDistrictKey } from "./districts.js";
 const STORAGE_KEY = "meowconomy.save.v0.2.1";
 const STORAGE_PREFIX = "meowconomy.save.";
 const FLASH_KEY = "meowconomy.flash";
+const HELP_OPEN_KEY = "meowconomy.ui.helpOpen";
 
 function nowMs() { return Date.now(); }
 
@@ -249,6 +250,18 @@ if (els.appVersion) {
 if (els.versionLine) {
   // Avoid a brief "dev" flash before JS initializes the version label.
   els.versionLine.style.display = "";
+}
+
+// Tiny UX: remember whether the Help panel was left open.
+if (els.helpDetails) {
+  try {
+    els.helpDetails.open = localStorage.getItem(HELP_OPEN_KEY) === "1";
+  } catch {
+    // ignore (blocked storage)
+  }
+  els.helpDetails.addEventListener("toggle", () => {
+    try { localStorage.setItem(HELP_OPEN_KEY, els.helpDetails.open ? "1" : "0"); } catch {}
+  });
 }
 
 const state = load();
@@ -1423,6 +1436,7 @@ window.addEventListener("keydown", (e) => {
     if (els.helpDetails?.open) {
       e.preventDefault();
       els.helpDetails.open = false;
+      // Persist via <details> toggle handler.
     }
     return;
   }
@@ -1431,6 +1445,7 @@ window.addEventListener("keydown", (e) => {
     if (els.helpDetails) {
       e.preventDefault();
       els.helpDetails.open = !els.helpDetails.open;
+      // Persist via <details> toggle handler.
       if (els.helpDetails.open) {
         // Ensure it's visible when opened from the keyboard.
         const reduceMotion = !!window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
@@ -1515,6 +1530,7 @@ document.addEventListener("pointerdown", (e) => {
   const t = e.target;
   if (t && els.helpDetails.contains(t)) return;
   els.helpDetails.open = false;
+  // Persist via <details> toggle handler.
 });
 
 // Init
