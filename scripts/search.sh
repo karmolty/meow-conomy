@@ -3,8 +3,8 @@ set -eu
 
 if [ "$#" -lt 1 ]; then
   echo "usage: npm run search -- <pattern> [path...]" >&2
-  echo "example: npm run search -- heat src site" >&2
-  echo "tip: set SEARCH_RE=1 to treat <pattern> as an extended regex" >&2
+  echo "example: npm run search -- \"heat\" src site" >&2
+  echo "tip: set SEARCH_RE=1 to treat <pattern> as an extended regex (grep -E)" >&2
   exit 2
 fi
 
