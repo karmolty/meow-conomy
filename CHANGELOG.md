@@ -3,6 +3,7 @@
 This project ships continuously; this file is a lightweight, human-readable summary (not an exhaustive list).
 
 ## Unreleased
+- Docs: clarify `npm run search` usage (quoting + regex note).
 - Docs: add a changelog + surface it from the README.
 
 ## 2026-04-10
