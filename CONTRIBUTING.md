@@ -65,6 +65,7 @@ npm run stamp
 ## Handy commands
 Search the codebase (if you don’t have `rg` / ripgrep installed):
 ```bash
+# Quote the pattern so your shell doesn’t eat special characters.
 npm run search -- "search term"
 # or specify folders
 npm run search -- "search term" src site
