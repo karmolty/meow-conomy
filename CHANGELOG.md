@@ -6,6 +6,7 @@ This project ships continuously; this file is a lightweight, human-readable summ
 - Dev: `npm run todo:stats` prints a short list of remaining unchecked items (when any exist).
 - Dev: `npm run todo:stats` prints an explicit "no remaining items" line when fully complete.
 - Dev: `npm run todo:stats` supports `TODO_STATS_MAX=0` to suppress listing remaining items.
+- Docs: document `npm run todo:stats` + `TODO_STATS_MAX` in the README.
 - Docs/TODO: note these tiny dev ergonomics updates in `TODO.md`.
 
 ## 2026-04-11

@@ -90,6 +90,17 @@ npm run search:re -- "Heat|Whiskers" site
 # (or: SEARCH_RE=1 npm run search -- "Heat|Whiskers" site)
 ```
 
+## Dev helpers
+
+TODO checklist stats:
+
+```bash
+npm run todo:stats
+
+# suppress listing remaining items (only show the counts)
+TODO_STATS_MAX=0 npm run todo:stats
+```
+
 ## Smoke test
 Automated:
 
