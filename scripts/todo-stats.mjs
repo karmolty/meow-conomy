@@ -22,4 +22,6 @@ if (unchecked.length) {
   for (const l of unchecked.slice(0, n)) {
     console.log("- " + l.replace(/^\s*- \[ \]\s*/, "").trim());
   }
+} else {
+  console.log("\nRemaining: none (all checklist items are checked)");
 }
