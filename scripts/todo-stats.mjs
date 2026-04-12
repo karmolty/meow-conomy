@@ -16,11 +16,15 @@ console.log(
 
 if (unchecked.length) {
   const max = Number.parseInt(process.env.TODO_STATS_MAX || "10", 10);
-  const n = Number.isFinite(max) && max > 0 ? max : 10;
+  const n = Number.isFinite(max) ? max : 10;
 
-  console.log(`\nRemaining (first ${Math.min(n, unchecked.length)}):`);
-  for (const l of unchecked.slice(0, n)) {
-    console.log("- " + l.replace(/^\s*- \[ \]\s*/, "").trim());
+  if (n <= 0) {
+    console.log(`\nRemaining: ${unchecked.length} (set TODO_STATS_MAX to a positive number to list items)`);
+  } else {
+    console.log(`\nRemaining (first ${Math.min(n, unchecked.length)}):`);
+    for (const l of unchecked.slice(0, n)) {
+      console.log("- " + l.replace(/^\s*- \[ \]\s*/, "").trim());
+    }
   }
 } else {
   console.log("\nRemaining: none (all checklist items are checked)");

@@ -267,6 +267,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v2.8 — Tiny dev ergonomics
 - [x] Dev: `npm run todo:stats` prints an explicit "no remaining items" line when the checklist is fully complete.
 
+## v2.9 — Tiny dev ergonomics
+- [x] Dev: `npm run todo:stats` supports `TODO_STATS_MAX=0` to suppress the remaining-items list.
+
 ## v2.3 — Tiny test hardening
 - [x] Tests: `fmt()` clamps non-finite inputs (NaN/Infinity) to "0".
 - [x] Tests: `fmt()` behavior near the K suffix threshold (e.g. <1000 stays plain number; 1000 becomes "1.00K").
