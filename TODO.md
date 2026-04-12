@@ -261,6 +261,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v2.6 — Tiny dev ergonomics
 - [x] Dev: harden `npm run search` so patterns beginning with `-` aren’t parsed as grep flags.
 
+## v2.7 — Tiny dev ergonomics
+- [x] Dev: `npm run todo:stats` prints a short list of remaining unchecked items.
+
 ## v2.3 — Tiny test hardening
 - [x] Tests: `fmt()` clamps non-finite inputs (NaN/Infinity) to "0".
 - [x] Tests: `fmt()` behavior near the K suffix threshold (e.g. <1000 stays plain number; 1000 becomes "1.00K").
