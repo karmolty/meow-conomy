@@ -3,8 +3,9 @@
 This project ships continuously; this file is a lightweight, human-readable summary (not an exhaustive list).
 
 ## Unreleased
-- Docs: clarify `npm run search` usage (quoting + regex note).
-- Docs: add a changelog + surface it from the README.
+- Dev: `npm run todo:stats` prints a short list of remaining unchecked items (when any exist).
+- Dev: `npm run todo:stats` prints an explicit "no remaining items" line when fully complete.
+- Docs/TODO: note these tiny dev ergonomics updates in `TODO.md`.
 
 ## 2026-04-11
 - Docs: clarify `npm run search` usage/help text.
