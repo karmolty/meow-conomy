@@ -99,6 +99,9 @@ npm run todo:stats
 
 # suppress listing remaining items (only show the counts)
 TODO_STATS_MAX=0 npm run todo:stats
+
+# JSON output (useful for scripts)
+TODO_STATS_JSON=1 npm run todo:stats
 ```
 
 ## Smoke test

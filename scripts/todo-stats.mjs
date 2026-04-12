@@ -10,6 +10,27 @@ const unchecked = items.filter((l) => /- \[ \]/.test(l));
 const remaining = items.length - checked.length;
 const pct = items.length ? Math.round((checked.length / items.length) * 1000) / 10 : 0;
 
+if (process.env.TODO_STATS_JSON === "1") {
+  const max = Number.parseInt(process.env.TODO_STATS_MAX || "10", 10);
+  const n = Number.isFinite(max) ? max : 10;
+  const sample = n > 0 ? unchecked.slice(0, n).map((l) => l.replace(/^\s*- \[ \]\s*/, "").trim()) : [];
+
+  console.log(
+    JSON.stringify(
+      {
+        total: items.length,
+        completed: checked.length,
+        remaining,
+        pct,
+        remainingSample: sample,
+      },
+      null,
+      2
+    )
+  );
+  process.exit(0);
+}
+
 console.log(
   `TODO checklist: ${items.length} total, ${checked.length} completed, ${remaining} remaining (${pct}%)`
 );

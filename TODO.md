@@ -426,3 +426,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v2.0 — Post-1.0 project hygiene
 - [x] Docs: add CHANGELOG.md and link it from README
+
+## v3.0 — Tiny dev ergonomics
+- [x] Dev: `npm run todo:stats` can output JSON (set `TODO_STATS_JSON=1`).
