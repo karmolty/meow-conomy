@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny keyboard ergonomics
+- [x] Keyboard: press **R** to redeem a completed active contract (when available).
+
 ## v1.9 — Tiny UI QoL
 - [x] UI: remember whether the Help / shortcuts panel was left open (persisted locally).
 

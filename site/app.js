@@ -852,6 +852,8 @@ function renderContract() {
       redeem.className = "primary";
       redeem.textContent = "Redeem";
       redeem.setAttribute("aria-label", `Redeem contract: ${active.title}`);
+      redeem.setAttribute("title", "Redeem (R)");
+      redeem.setAttribute("aria-keyshortcuts", "R");
       redeem.addEventListener("click", () => {
         redeemActiveContract(state);
         save(state);
@@ -1493,6 +1495,17 @@ window.addEventListener("keydown", (e) => {
     if (els.btnEndSeason && !els.btnEndSeason.disabled) {
       e.preventDefault();
       els.btnEndSeason.click();
+    }
+    return;
+  }
+
+  if (e.key === "r" || e.key === "R") {
+    // Redeem active contract (when complete).
+    if (getActiveContract(state) && isActiveContractComplete(state)) {
+      e.preventDefault();
+      redeemActiveContract(state);
+      save(state);
+      render();
     }
     return;
   }
