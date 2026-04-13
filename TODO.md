@@ -200,6 +200,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9 — Tiny keyboard ergonomics
 - [x] Keyboard: press **R** to redeem a completed active contract (when available).
+- [x] Help: include **R** in the Help panel summary tooltip text.
 
 ## v1.9 — Tiny UI QoL
 - [x] UI: remember whether the Help / shortcuts panel was left open (persisted locally).
