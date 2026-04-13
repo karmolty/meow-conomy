@@ -64,6 +64,7 @@ Handy shortcuts:
 - **L**: Level Up (when available)
 - **P**: End Season (when available)
 - **S**: copy the current save seed (when visible)
+- **R**: redeem a completed contract (when available)
 
 Mobile notes:
 - iOS Safari: the game prevents double-tap-to-zoom inside the game surface.
