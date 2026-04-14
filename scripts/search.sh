@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 set -eu
 
+# Speed: force a byte-wise locale for grep (much faster on large trees).
+# Respect any user-supplied LC_ALL.
+export LC_ALL="${LC_ALL:-C}"
+
 if [ "$#" -lt 1 ]; then
   echo "usage: npm run search -- <pattern> [path...]" >&2
   echo "example: npm run search -- \"heat\" src site" >&2

@@ -437,3 +437,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9 — Tiny keyboard UX
 - [x] A11y: when toggling Help via keyboard, restore focus to the previously focused element when Help closes (Esc / ? / outside click).
+
+
+## v3.1 — Tiny dev ergonomics
+- [x] Dev: speed up `npm run search` by forcing a C locale for grep (respects user LC_ALL).
