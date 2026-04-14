@@ -1425,6 +1425,15 @@ els.app?.addEventListener(
   { passive: false }
 );
 
+let _helpLastFocus = null;
+function restoreHelpLastFocus() {
+  const el = _helpLastFocus;
+  _helpLastFocus = null;
+  if (!el) return;
+  if (!document.contains(el)) return;
+  try { el.focus({ preventScroll: true }); } catch {}
+}
+
 // Keyboard shortcuts:
 // - 1–5 activates schemes (if unlocked + available)
 // - ? / H toggles the Help / shortcuts panel
@@ -1439,6 +1448,7 @@ window.addEventListener("keydown", (e) => {
       e.preventDefault();
       els.helpDetails.open = false;
       // Persist via <details> toggle handler.
+      setTimeout(restoreHelpLastFocus, 0);
     }
     return;
   }
@@ -1446,7 +1456,9 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "?" || e.key === "h" || e.key === "H") {
     if (els.helpDetails) {
       e.preventDefault();
-      els.helpDetails.open = !els.helpDetails.open;
+      const wasOpen = !!els.helpDetails.open;
+      if (!wasOpen) _helpLastFocus = document.activeElement;
+      els.helpDetails.open = !wasOpen;
       // Persist via <details> toggle handler.
       if (els.helpDetails.open) {
         // Ensure it's visible when opened from the keyboard.
@@ -1454,6 +1466,8 @@ window.addEventListener("keydown", (e) => {
         try { els.helpDetails.scrollIntoView({ block: "end", behavior: reduceMotion ? "auto" : "smooth" }); } catch {}
         // A11y: move focus into the opened region so keyboard users don't "lose" it.
         try { els.helpDetails.querySelector("summary")?.focus({ preventScroll: true }); } catch {}
+      } else {
+        setTimeout(restoreHelpLastFocus, 0);
       }
     }
     return;
@@ -1544,6 +1558,7 @@ document.addEventListener("pointerdown", (e) => {
   if (t && els.helpDetails.contains(t)) return;
   els.helpDetails.open = false;
   // Persist via <details> toggle handler.
+  setTimeout(restoreHelpLastFocus, 0);
 });
 
 // Init

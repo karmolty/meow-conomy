@@ -433,3 +433,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v3.0 — Tiny dev ergonomics
 - [x] Dev: `npm run todo:stats` can output JSON (set `TODO_STATS_JSON=1`).
+
+
+## v1.9 — Tiny keyboard UX
+- [x] A11y: when toggling Help via keyboard, restore focus to the previously focused element when Help closes (Esc / ? / outside click).
