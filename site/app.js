@@ -310,8 +310,9 @@ function setSaveStatus(text) {
     title = `Last saved: ${yyyy}-${mo}-${dd} ${hh}:${mm}:${ss}`;
   }
 
+  if (!els.saveStatus) return;
   els.saveStatus.textContent = label;
-  if (els.saveStatus) els.saveStatus.title = title;
+  els.saveStatus.title = title;
   els.saveStatus.style.borderColor = text === "saved" ? "var(--line)" : "rgba(43,122,120,.35)";
 }
 
