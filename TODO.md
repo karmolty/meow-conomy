@@ -204,6 +204,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.10 — Defensive UI
 - [x] UI: guard saveStatus updates if the element is missing (defensive/back-compat).
 
+## v1.11 — Run reset polish
+- [x] Restart run: clear sparklines/history so the new run starts visually clean.
+
 ## v1.9 — Tiny keyboard ergonomics
 - [x] Keyboard: press **R** to redeem a completed active contract (when available).
 - [x] Help: include **R** in the Help panel summary tooltip text.

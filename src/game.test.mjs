@@ -798,6 +798,7 @@ function clone(x) {
 
   assert.ok(Number.isFinite(s.seed) && (s.seed >>> 0) !== 0, "restartRun keeps a non-zero seed (determinism per save)");
   assert.equal(s.meta.whiskers, 7);
+  assert.ok(Array.isArray(s.history.kibble) && s.history.kibble.length === 0, "restartRun clears history arrays");
   assert.equal(s.meta.seasons, 2);
 
   assert.equal(s.coins, 50);

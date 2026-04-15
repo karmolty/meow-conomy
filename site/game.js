@@ -545,6 +545,10 @@ function bustRun(state) {
   // Reset trader runtime budgets.
   state.traderRuntime = {};
 
+  // Reset history so sparklines reflect the new run cleanly.
+  state.history = { heat: [], coins: [], netWorth: [] };
+  for (const g of GOODS) state.history[g.key] = [];
+
   // Reset market pressure/latent; keep seed so it stays deterministic per save.
   state.market = {};
   state.marketLatent = {};
