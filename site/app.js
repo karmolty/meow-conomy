@@ -1,4 +1,4 @@
-import { DEFAULT_STATE, GOODS, tick, buy, sell, getPrice } from "./game.js";
+import { DEFAULT_STATE, GOODS, tick, buy, sell, getPrice, restartRun } from "./game.js";
 import { fmt, fmtPct } from "./format.js";
 import {
   getAvailableContracts,
@@ -226,6 +226,7 @@ const els = {
   btnImportFile: document.getElementById("btnImportFile"),
   fileImport: document.getElementById("fileImport"),
   btnEndSeason: document.getElementById("btnEndSeason"),
+  btnRestartRun: document.getElementById("btnRestartRun"),
   prestigeExplainer: document.getElementById("prestigeExplainer"),
   challengeRow: document.getElementById("challengeRow"),
   ironChallenge: document.getElementById("ironChallenge"),
@@ -1342,6 +1343,16 @@ els.fileImport?.addEventListener("change", async () => {
   }
 });
 
+els.btnRestartRun?.addEventListener("click", () => {
+  const ok = confirm(
+    "Restart run?\n\nYou will RESET: coins, inventory, contracts, Heat, schemes runtime, cat jobs, trader runtime, and market pressure.\nYou will KEEP: Whiskers, Seasons, unlocks, and your seed (deterministic save).\n\nTip: Export save first if you might want to come back."
+  );
+  if (!ok) return;
+  restartRun(state);
+  save(state);
+  render();
+});
+
 els.btnEndSeason?.addEventListener("click", () => {
   const award = whiskersForCoins(state.coins ?? 0);
   const ok = confirm(
@@ -1509,6 +1520,14 @@ window.addEventListener("keydown", (e) => {
     if (els.btnEndSeason && !els.btnEndSeason.disabled) {
       e.preventDefault();
       els.btnEndSeason.click();
+    }
+    return;
+  }
+
+  if (e.key === "x" || e.key === "X") {
+    if (els.btnRestartRun) {
+      e.preventDefault();
+      els.btnRestartRun.click();
     }
     return;
   }

@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny run control
+- [x] UI: add a "Restart run" button (soft reset; keeps meta + seed) + keyboard shortcut (X).
+
 ## v1.9 — Tiny keyboard ergonomics
 - [x] Keyboard: press **R** to redeem a completed active contract (when available).
 - [x] Help: include **R** in the Help panel summary tooltip text.

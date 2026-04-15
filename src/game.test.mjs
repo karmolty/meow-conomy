@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { DEFAULT_STATE, tick, buy, sell, canBuy, canSell, GOODS } from "./game.js";
+import { DEFAULT_STATE, tick, buy, sell, canBuy, canSell, GOODS, restartRun } from "./game.js";
 import {
   CONTRACTS,
   isValidContract,
@@ -770,6 +770,39 @@ function clone(x) {
   assert.equal(s.inventory.kibble, 0);
   assert.equal(s.heat, 0);
   assert.ok(Number.isFinite(s.seed) && (s.seed >>> 0) !== 0, "endSeason retains a non-zero seed (determinism per save)");
+  assert.equal(s.contracts.activeId, null);
+  assert.equal(s.cats[0].job, null);
+  assert.equal(s.schemes.hustle.cooldownLeft, 0);
+  assert.equal(s.schemes.hustle.activeLeft, 0);
+  assert.deepEqual(s.traderRuntime, {});
+}
+
+// Restart run: should reset run resources but keep meta + seed.
+{
+  const s = clone(DEFAULT_STATE);
+  tick(s, 1);
+  s.seed = 123;
+  s.meta = { whiskers: 7, seasons: 2, schemeSlots: 3, district: "uptown", districtsUnlocked: ["alley", "uptown"], challenge: "none" };
+
+  // Dirty up run state.
+  s.coins = 777;
+  s.inventory.kibble = 9;
+  s.heat = 55;
+  s.contracts.activeId = CONTRACTS[0].id;
+  s.cats[0].job = "production";
+  s.schemes.hustle.cooldownLeft = 12;
+  s.schemes.hustle.activeLeft = 3;
+  s.traderRuntime = { tuna: { budget: 0.8 } };
+
+  restartRun(s);
+
+  assert.ok(Number.isFinite(s.seed) && (s.seed >>> 0) !== 0, "restartRun keeps a non-zero seed (determinism per save)");
+  assert.equal(s.meta.whiskers, 7);
+  assert.equal(s.meta.seasons, 2);
+
+  assert.equal(s.coins, 50);
+  assert.equal(s.inventory.kibble, 0);
+  assert.equal(s.heat, 0);
   assert.equal(s.contracts.activeId, null);
   assert.equal(s.cats[0].job, null);
   assert.equal(s.schemes.hustle.cooldownLeft, 0);

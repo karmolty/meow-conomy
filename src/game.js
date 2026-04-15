@@ -532,6 +532,11 @@ export function tick(state, dt) {
   return state;
 }
 
+export function restartRun(state) {
+  bustRun(state);
+  return state;
+}
+
 function bustRun(state) {
   // Reset run resources (similar to End Season, but without awarding meta currency).
   state.coins = 50;
