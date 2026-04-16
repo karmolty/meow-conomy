@@ -3,6 +3,7 @@
 This project ships continuously; this file is a lightweight, human-readable summary (not an exhaustive list).
 
 ## Unreleased
+- Docs: add a short Roadmap section in the README pointing to `MILESTONES.md`.
 - Dev: `npm run todo:stats` prints a short list of remaining unchecked items (when any exist).
 - Dev: `npm run todo:stats` prints an explicit "no remaining items" line when fully complete.
 - Dev: `npm run todo:stats` supports `TODO_STATS_MAX=0` to suppress listing remaining items.
