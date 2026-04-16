@@ -13,6 +13,10 @@ A minimalist cat-themed incremental browser game (inspired by the genre, not a c
 - Optional: `npm run stamp` updates the in-game footer version to the current git SHA
 - Changelog: see `CHANGELOG.md`
 
+## Roadmap
+The game is playable; planned changes (with acceptance criteria) live in:
+- `MILESTONES.md`
+
 ## Deployment (GitHub Pages)
 - Push to `main` → GitHub Actions publishes `site/` to Pages.
 - Live URL: https://karmolty.github.io/meow-conomy/

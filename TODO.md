@@ -450,3 +450,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v3.1 — Tiny dev ergonomics
 - [x] Dev: speed up `npm run search` by forcing a C locale for grep (respects user LC_ALL).
+
+## v3.2 — Tiny docs polish
+- [x] README: add a short Roadmap section pointing to `MILESTONES.md` (since TODO is now fully checked).
