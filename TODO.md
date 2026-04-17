@@ -459,3 +459,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v3.4 — Tiny in-game Help clarity
 - [x] UI: Help / shortcuts mentions that some browser modes block localStorage, and Export save can be used as a manual backup.
+
+## v3.5 — Storage UX
+- [x] UI: when saving fails, show a slightly more specific saveStatus message (blocked vs quota) to reduce confusion.

@@ -177,13 +177,20 @@ function save(state) {
 
     // Only treat it as the "last saved" time if the write succeeded.
     _lastSavedMs = t;
-  } catch {
+  } catch (err) {
     // Roll back cosmetic timestamp if we didn't actually save.
     state._lastSaveMs = prev;
 
     // Quota errors (or blocked storage) should not crash the game loop.
     // Best-effort: surface a tiny status message if the UI is ready.
-    try { flashStatus?.("save failed", 2200); } catch {}
+    const name = String(err?.name || "");
+    const msg = name === "SecurityError"
+      ? "saving blocked"
+      : (name === "QuotaExceededError" ? "storage full" : "save failed");
+    try {
+      flashStatus?.(msg, 2200);
+      if (els?.saveStatus) els.saveStatus.title = name ? `Save error: ${name}` : "Save error";
+    } catch {}
   }
 }
 
