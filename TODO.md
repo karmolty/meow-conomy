@@ -456,3 +456,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v3.3 — Tiny docs polish
 - [x] README: add a quick note about what happens if localStorage is blocked/unavailable (private browsing, strict settings) + suggest Export Save as fallback.
+
+## v3.4 — Tiny in-game Help clarity
+- [x] UI: Help / shortcuts mentions that some browser modes block localStorage, and Export save can be used as a manual backup.
