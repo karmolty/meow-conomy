@@ -453,3 +453,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v3.2 — Tiny docs polish
 - [x] README: add a short Roadmap section pointing to `MILESTONES.md` (since TODO is now fully checked).
+
+## v3.3 — Tiny docs polish
+- [x] README: add a quick note about what happens if localStorage is blocked/unavailable (private browsing, strict settings) + suggest Export Save as fallback.
