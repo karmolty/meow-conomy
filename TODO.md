@@ -283,6 +283,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v2.9 — Tiny dev ergonomics
 - [x] Dev: `npm run todo:stats` supports `TODO_STATS_MAX=0` to suppress the remaining-items list.
 
+## v2.10 — Tiny footer QoL
+- [x] UI: add a "Live: play" link in the footer (auto-targets the current GitHub Pages repo path).
+
 ## v2.3 — Tiny test hardening
 - [x] Tests: `fmt()` clamps non-finite inputs (NaN/Infinity) to "0".
 - [x] Tests: `fmt()` behavior near the K suffix threshold (e.g. <1000 stays plain number; 1000 becomes "1.00K").

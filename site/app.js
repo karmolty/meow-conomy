@@ -241,6 +241,7 @@ const els = {
   heatChallenge: document.getElementById("heatChallenge"),
   chkHeatDeath: document.getElementById("chkHeatDeath"),
   repoLink: document.getElementById("repoLink"),
+  liveLink: document.getElementById("liveLink"),
   gameTitle: document.getElementById("gameTitle"),
   helpDetails: document.getElementById("helpDetails"),
   versionLine: document.getElementById("versionLine"),
@@ -1426,6 +1427,7 @@ els.btnLevelUp?.addEventListener("click", () => {
   const seg = (location.pathname.split("/")[1] || "").trim();
   const repo = seg || "meow-conomy";
   els.repoLink.href = "https://github.com/karmolty/" + repo;
+  els.liveLink.href = "https://karmolty.github.io/" + repo + "/";
 }
 
 // iOS Safari: prevent double-tap-to-zoom inside the game surface.
