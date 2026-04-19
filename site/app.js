@@ -261,6 +261,15 @@ if (els.versionLine) {
   els.versionLine.style.display = "";
 }
 
+// A11y: expose keyboard shortcuts on the actual buttons too (not just in Help text).
+// Note: schemes are rendered dynamically and set their own `aria-keyshortcuts`.
+els.btnExportSave?.setAttribute("aria-keyshortcuts", "E");
+els.btnImportSave?.setAttribute("aria-keyshortcuts", "I");
+els.btnImportFile?.setAttribute("aria-keyshortcuts", "F");
+els.btnLevelUp?.setAttribute("aria-keyshortcuts", "L");
+els.btnEndSeason?.setAttribute("aria-keyshortcuts", "P");
+els.btnRestartRun?.setAttribute("aria-keyshortcuts", "X");
+
 // Tiny UX: remember whether the Help panel was left open.
 if (els.helpDetails) {
   try {

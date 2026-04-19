@@ -200,6 +200,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9 — Tiny accessibility / UX polish
 - [x] Help panel summary tooltip + `aria-keyshortcuts` reflect the full keyboard shortcut set.
+- [x] Add `aria-keyshortcuts` to core action buttons (export/import/level up/prestige/restart).
 
 ## v1.9 — Tiny run control
 - [x] UI: add a "Restart run" button (soft reset; keeps meta + seed) + keyboard shortcut (X).
