@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny accessibility / UX polish
+- [x] Help panel summary tooltip + `aria-keyshortcuts` reflect the full keyboard shortcut set.
+
 ## v1.9 — Tiny run control
 - [x] UI: add a "Restart run" button (soft reset; keeps meta + seed) + keyboard shortcut (X).
 
