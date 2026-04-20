@@ -877,6 +877,8 @@ function renderContract() {
     const abandon = document.createElement("button");
     abandon.textContent = `Abandon (-${fmt(active.penalty.coins)} coins)`;
     abandon.setAttribute("aria-label", `Abandon contract: ${active.title}`);
+    abandon.setAttribute("title", "Abandon (A)");
+    abandon.setAttribute("aria-keyshortcuts", "A");
     abandon.addEventListener("click", () => {
       abandonActiveContract(state);
       save(state);
@@ -1549,6 +1551,21 @@ window.addEventListener("keydown", (e) => {
     if (getActiveContract(state) && isActiveContractComplete(state)) {
       e.preventDefault();
       redeemActiveContract(state);
+      save(state);
+      render();
+    }
+    return;
+  }
+
+  if (e.key === "a" || e.key === "A") {
+    // Abandon active contract (with confirm).
+    const active = getActiveContract(state);
+    if (active) {
+      e.preventDefault();
+      const penalty = fmt(active.penalty?.coins ?? 0);
+      const ok = window.confirm(`Abandon this contract?\n\nPenalty: -${penalty} coins`);
+      if (!ok) return;
+      abandonActiveContract(state);
       save(state);
       render();
     }
