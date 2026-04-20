@@ -1621,6 +1621,22 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "k" || e.key === "K") {
+    // Jump to Cats panel (when unlocked).
+    if (state.unlocked?.cats && els.cats) {
+      e.preventDefault();
+      const reduceMotion = !!window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      try { els.cats.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); } catch {}
+      setTimeout(() => {
+        try {
+          const focusable = els.cats.querySelector("button, select, input, textarea, [tabindex]:not([tabindex='-1'])");
+          focusable?.focus?.({ preventScroll: true });
+        } catch {}
+      }, 0);
+    }
+    return;
+  }
+
   if (e.key === "s" || e.key === "S") {
     // Copy seed (when visible) — handy for sharing a deterministic save.
     if (state.seed != null && els.seedLine && els.seedLine.style.display !== "none") {

@@ -218,3 +218,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Keyboard shortcut: press **C** to jump to the Contracts panel (when unlocked).
 - [x] Keyboard shortcut: press **M** to jump to the Market panel.
 - [x] Keyboard shortcut: press **N** to jump to the Inventory panel.
+
+## v1.14 — Keyboard ergonomics
+- [x] Keyboard shortcut: press **K** to jump to the Cats panel (when unlocked).
