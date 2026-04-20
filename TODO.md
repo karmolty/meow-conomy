@@ -148,7 +148,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add `robots.txt` (allow indexing)
 - [x] Add `sitemap.xml` for GitHub Pages
 - [x] Add canonical URL meta to reduce duplicate indexing
-- [x] Add a simple `favicon` (SVG) + link it to the page
+- [x] Add a simple `favicon` (SVG) + link it from the page
 - [x] Add icon entries to `manifest.webmanifest`
 - [x] Add OpenGraph/Twitter meta tags for nicer link previews
 - [x] Add `og:image` / `twitter:image` tags (basic icon fallback)
@@ -198,5 +198,18 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
-## v1.9 — Keyboard ergonomics
+## v1.9 — Tiny accessibility / UX polish
+- [x] Help panel summary tooltip + `aria-keyshortcuts` reflect the full keyboard shortcut set.
+- [x] Add `aria-keyshortcuts` to core action buttons (export/import/level up/prestige/restart) in HTML.
+
+## v1.9 — Tiny run control
+- [x] UI: add a "Restart run" button (soft reset; keeps meta + seed) + keyboard shortcut (X).
+
+## v1.10 — Defensive UI
+- [x] UI: guard saveStatus updates if the element is missing (defensive/back-compat).
+
+## v1.11 — Run reset polish
+- [x] Restart run: clear sparklines/history so the new run starts visually clean.
+
+## v1.12 — Keyboard ergonomics
 - [x] Keyboard shortcut: press **A** to abandon the active contract (with confirmation).
