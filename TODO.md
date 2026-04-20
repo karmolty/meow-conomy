@@ -216,3 +216,4 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.13 — Keyboard ergonomics
 - [x] Keyboard shortcut: press **C** to jump to the Contracts panel (when unlocked).
+- [x] Keyboard shortcut: press **M** to jump to the Market panel.

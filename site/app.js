@@ -1589,6 +1589,22 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "m" || e.key === "M") {
+    // Jump to Market panel.
+    if (els.market) {
+      e.preventDefault();
+      const reduceMotion = !!window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      try { els.market.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); } catch {}
+      setTimeout(() => {
+        try {
+          const btn = els.market.querySelector("button");
+          btn?.focus?.({ preventScroll: true });
+        } catch {}
+      }, 0);
+    }
+    return;
+  }
+
   if (e.key === "s" || e.key === "S") {
     // Copy seed (when visible) — handy for sharing a deterministic save.
     if (state.seed != null && els.seedLine && els.seedLine.style.display !== "none") {
