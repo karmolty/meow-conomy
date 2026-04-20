@@ -1572,6 +1572,23 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "c" || e.key === "C") {
+    // Jump to Contracts panel (when unlocked).
+    if (state.unlocked?.contracts && els.contract) {
+      e.preventDefault();
+      const reduceMotion = !!window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      try { els.contract.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); } catch {}
+      // Focus something useful inside the panel.
+      setTimeout(() => {
+        try {
+          const btn = els.contract.querySelector("button");
+          btn?.focus?.({ preventScroll: true });
+        } catch {}
+      }, 0);
+    }
+    return;
+  }
+
   if (e.key === "s" || e.key === "S") {
     // Copy seed (when visible) — handy for sharing a deterministic save.
     if (state.seed != null && els.seedLine && els.seedLine.style.display !== "none") {

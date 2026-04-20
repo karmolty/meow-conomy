@@ -213,3 +213,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.12 — Keyboard ergonomics
 - [x] Keyboard shortcut: press **A** to abandon the active contract (with confirmation).
+
+## v1.13 — Keyboard ergonomics
+- [x] Keyboard shortcut: press **C** to jump to the Contracts panel (when unlocked).
