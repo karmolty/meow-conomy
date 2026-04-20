@@ -1605,6 +1605,22 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "n" || e.key === "N") {
+    // Jump to Inventory panel.
+    if (els.inventory) {
+      e.preventDefault();
+      const reduceMotion = !!window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      try { els.inventory.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); } catch {}
+      setTimeout(() => {
+        try {
+          const btn = els.inventory.querySelector("button");
+          btn?.focus?.({ preventScroll: true });
+        } catch {}
+      }, 0);
+    }
+    return;
+  }
+
   if (e.key === "s" || e.key === "S") {
     // Copy seed (when visible) — handy for sharing a deterministic save.
     if (state.seed != null && els.seedLine && els.seedLine.style.display !== "none") {
