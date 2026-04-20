@@ -221,3 +221,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.14 — Keyboard ergonomics
 - [x] Keyboard shortcut: press **K** to jump to the Cats panel (when unlocked).
+
+## v1.15 — Keyboard ergonomics
+- [x] Keyboard shortcut: press **T** to jump to the Traders panel (when unlocked).

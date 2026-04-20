@@ -1637,6 +1637,22 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "t" || e.key === "T") {
+    // Jump to Traders panel (when unlocked).
+    if (state.unlocked?.traders && els.traders) {
+      e.preventDefault();
+      const reduceMotion = !!window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      try { els.traders.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); } catch {}
+      setTimeout(() => {
+        try {
+          const focusable = els.traders.querySelector("button, select, input, textarea, [tabindex]:not([tabindex='-1'])");
+          focusable?.focus?.({ preventScroll: true });
+        } catch {}
+      }, 0);
+    }
+    return;
+  }
+
   if (e.key === "s" || e.key === "S") {
     // Copy seed (when visible) — handy for sharing a deterministic save.
     if (state.seed != null && els.seedLine && els.seedLine.style.display !== "none") {
