@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny dev/test ergonomics
+- [x] Tests: stop importing UI code from `site/`; move shared formatting helpers into `src/format.js`.
+
 ## v1.9 — Tiny accessibility / UX polish
 - [x] Help panel summary tooltip + `aria-keyshortcuts` reflect the full keyboard shortcut set.
 - [x] Add `aria-keyshortcuts` to core action buttons (export/import/level up/prestige/restart) in HTML.

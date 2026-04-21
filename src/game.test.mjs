@@ -18,7 +18,7 @@ import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
 import { EVENT_DEFS, maybeTriggerEvent, eventProb, applyEvent } from "./events.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
 import { endSeason, whiskersForCoins } from "./prestige.js";
-import { fmt } from "../site/format.js";
+import { fmt } from "./format.js";
 import { createRng } from "./rng.js";
 import { normalizeDistrictKey } from "./districts.js";
 
