@@ -18,7 +18,7 @@ import { STARTER_TRADERS, isValidTrader, runTraders } from "./traders.js";
 import { EVENT_DEFS, maybeTriggerEvent, eventProb, applyEvent } from "./events.js";
 import { SCHEMES, activateScheme } from "./schemes.js";
 import { endSeason, whiskersForCoins } from "./prestige.js";
-import { fmt } from "./format.js";
+import { fmt, fmtPct } from "./format.js";
 import { createRng } from "./rng.js";
 import { normalizeDistrictKey } from "./districts.js";
 
@@ -823,5 +823,13 @@ assert.equal(fmt(1000000000), "1.00B");
 assert.equal(fmt(NaN), "0");
 assert.equal(fmt(Infinity), "0");
 assert.equal(fmt(-Infinity), "0");
+
+assert.equal(fmtPct(0), "0.0%");
+assert.equal(fmtPct(12.34), "12.3%");
+assert.equal(fmtPct(12.34, 0), "12%");
+assert.equal(fmtPct(12.34, 3), "12.340%");
+assert.equal(fmtPct(-0.000001, 1), "0.0%"); // avoid "-0.0%"
+assert.equal(fmtPct(NaN), "0%");
+assert.equal(fmtPct(Infinity), "0%");
 
 console.log("ok - game.test.mjs");

@@ -200,6 +200,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9 — Tiny dev/test ergonomics
 - [x] Tests: stop importing UI code from `site/`; move shared formatting helpers into `src/format.js`.
+- [x] Tests: add basic `fmtPct()` coverage (avoid "-0.0%", digit clamping).
 
 ## v1.9 — Tiny accessibility / UX polish
 - [x] Help panel summary tooltip + `aria-keyshortcuts` reflect the full keyboard shortcut set.
