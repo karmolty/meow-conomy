@@ -275,13 +275,32 @@ if (els.helpDetails) {
   });
 }
 
+// Optional dev/debug: allow forcing the initial seed for a brand-new save via `?seed=<u32>`.
+// This only applies when there is no existing save under STORAGE_KEY.
+let _hadExistingSave = false;
+try { _hadExistingSave = !!localStorage.getItem(STORAGE_KEY); } catch { /* ignore (blocked storage) */ }
+let _urlSeed = null;
+try {
+  const params = new URLSearchParams(location.search);
+  const s = params.get("seed");
+  if (s != null && s !== "") {
+    const n = Number(s);
+    if (Number.isFinite(n)) _urlSeed = (n >>> 0);
+  }
+} catch {
+  // ignore
+}
+
 const state = load();
 // Restore last-save time if present (purely cosmetic UI).
 if (Number.isFinite(state._lastSaveMs)) _lastSavedMs = state._lastSaveMs;
 
 // Seed should be initialized once per new save so price evolution can be deterministic per-save.
 // Note: 0 is a valid uint32 seed; only treat null/undefined as missing.
-if (state.seed == null) {
+if (!_hadExistingSave && _urlSeed != null) {
+  state.seed = _urlSeed;
+  save(state);
+} else if (state.seed == null) {
   state.seed = (Math.random() * 2 ** 32) >>> 0;
   save(state);
 }

@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny determinism helper
+- [x] Dev/debug: allow forcing the initial seed for a brand-new save via URL param `?seed=<u32>` (only when no existing save is present).
+
 ## v1.9 — Tiny dev/test ergonomics
 - [x] Tests: stop importing UI code from `site/`; move shared formatting helpers into `src/format.js`.
 - [x] Tests: add basic `fmtPct()` coverage (avoid "-0.0%", digit clamping).
