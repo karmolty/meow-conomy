@@ -84,6 +84,7 @@ Accessibility notes:
 - If the save format/key ever changes, the game will try to **auto-migrate** the newest prior `meowconomy.save.*` entry forward.
 - Use **Hard reset** to clear your save (it removes the current save key and any older `meowconomy.save.*` keys).
 - If `localStorage` is blocked/unavailable (some private browsing modes or strict browser settings), the game will still run but **progress may not persist**. In that case, use **Export save** occasionally as a manual backup.
+- **Debug/determinism:** to start a brand-new run with a specific deterministic seed, open the page with `?seed=<u32>` (only works if you don’t already have a save for this version).
 
 ## Search
 If you don’t have `rg` / ripgrep installed:

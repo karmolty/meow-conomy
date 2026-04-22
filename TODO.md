@@ -200,6 +200,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9 — Tiny determinism helper
 - [x] Dev/debug: allow forcing the initial seed for a brand-new save via URL param `?seed=<u32>` (only when no existing save is present).
+- [x] Docs: mention `?seed=<u32>` in README (debug/determinism).
 
 ## v1.9 — Tiny dev/test ergonomics
 - [x] Tests: stop importing UI code from `site/`; move shared formatting helpers into `src/format.js`.
