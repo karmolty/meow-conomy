@@ -241,3 +241,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.18 — Keyboard ergonomics
 - [x] Keyboard shortcut: press **D** to focus the District selector (when visible).
+
+## v1.19 — A11y / hints
+- [x] District selector: add `aria-keyshortcuts="D"` and hint (title) for the D shortcut.
