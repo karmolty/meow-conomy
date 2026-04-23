@@ -232,3 +232,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.15 — Keyboard ergonomics
 - [x] Keyboard shortcut: press **T** to jump to the Traders panel (when unlocked).
+
+## v1.16 — Keyboard ergonomics
+- [x] Keyboard shortcut: press **G** to jump back to the Core panel.

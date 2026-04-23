@@ -1591,6 +1591,26 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "g" || e.key === "G") {
+    // Jump to the top / Core panel.
+    if (els.app) {
+      e.preventDefault();
+      const reduceMotion = !!window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      try { els.app.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" }); } catch {}
+      setTimeout(() => {
+        try {
+          // Prefer focusing a useful control if present.
+          if (els.btnLevelUp && els.btnLevelUp.style.display !== "none") {
+            els.btnLevelUp.focus?.({ preventScroll: true });
+            return;
+          }
+          els.app.focus?.({ preventScroll: true });
+        } catch {}
+      }, 0);
+    }
+    return;
+  }
+
   if (e.key === "c" || e.key === "C") {
     // Jump to Contracts panel (when unlocked).
     if (state.unlocked?.contracts && els.contract) {
