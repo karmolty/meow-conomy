@@ -1708,6 +1708,19 @@ window.addEventListener("keydown", (e) => {
     return;
   }
 
+  if (e.key === "d" || e.key === "D") {
+    // Focus the District selector (when visible).
+    if (els.districtSelect && els.districtRow && els.districtRow.style.display !== "none") {
+      e.preventDefault();
+      const reduceMotion = !!window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      try { els.districtRow.scrollIntoView({ block: "nearest", behavior: reduceMotion ? "auto" : "smooth" }); } catch {}
+      setTimeout(() => {
+        try { els.districtSelect.focus?.({ preventScroll: true }); } catch {}
+      }, 0);
+    }
+    return;
+  }
+
   if (e.key === "s" || e.key === "S") {
     // Copy seed (when visible) — handy for sharing a deterministic save.
     if (state.seed != null && els.seedLine && els.seedLine.style.display !== "none") {

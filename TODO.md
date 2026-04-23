@@ -238,3 +238,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.17 — Keyboard ergonomics
 - [x] Keyboard shortcut: press **J** to jump to the Schemes panel (when unlocked).
+
+## v1.18 — Keyboard ergonomics
+- [x] Keyboard shortcut: press **D** to focus the District selector (when visible).
