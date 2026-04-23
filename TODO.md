@@ -235,3 +235,6 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.16 — Keyboard ergonomics
 - [x] Keyboard shortcut: press **G** to jump back to the Core panel.
+
+## v1.17 — Keyboard ergonomics
+- [x] Keyboard shortcut: press **J** to jump to the Schemes panel (when unlocked).
