@@ -1305,7 +1305,11 @@ els.btnExportSave?.addEventListener("click", async () => {
     const a = document.createElement("a");
     a.href = url;
     const seed = copy.seed;
-    a.download = seed == null ? "meowconomy-save.json" : `meowconomy-save-${Number(seed) >>> 0}.json`;
+    const ver = String(getAppVersion() || "").trim();
+    const verPart = ver ? `-${ver}` : "";
+    a.download = seed == null
+      ? `meowconomy-save${verPart}.json`
+      : `meowconomy-save-${Number(seed) >>> 0}${verPart}.json`;
     document.body.appendChild(a);
     a.click();
     a.remove();

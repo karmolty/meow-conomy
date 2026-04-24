@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny save UX
+- [x] Export save download filename includes app version (helps manage multiple save files).
+
 ## v1.9 — Tiny determinism helper
 - [x] Dev/debug: allow forcing the initial seed for a brand-new save via URL param `?seed=<u32>` (only when no existing save is present).
 - [x] Docs: mention `?seed=<u32>` in README (debug/determinism).
