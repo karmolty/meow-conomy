@@ -201,6 +201,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.9 — Tiny save UX
 - [x] Export save download filename includes app version (helps manage multiple save files).
 - [x] Docs: mention versioned save download filenames in README.
+- [x] Changelog: note versioned save download filenames.
 
 ## v1.9 — Tiny determinism helper
 - [x] Dev/debug: allow forcing the initial seed for a brand-new save via URL param `?seed=<u32>` (only when no existing save is present).

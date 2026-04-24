@@ -6,6 +6,8 @@ This project ships continuously; this file is a lightweight, human-readable summ
 - Docs: add a short Roadmap section in the README pointing to `MILESTONES.md`.
 - Docs: note that if `localStorage` is blocked/unavailable, progress may not persist (suggest Export save as a manual backup).
 - UI: Help / shortcuts mentions that some browser modes block `localStorage`, and Export save can be used as a manual backup.
+- UI: Export save download filename includes the current app version (helps keep multiple backups).
+- Docs: mention versioned save download filenames in the README.
 - UI: when saving fails, saveStatus uses a slightly more specific message (blocked vs quota).
 - Dev: `npm run todo:stats` prints a short list of remaining unchecked items (when any exist).
 - Dev: `npm run todo:stats` prints an explicit "no remaining items" line when fully complete.
