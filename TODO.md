@@ -204,6 +204,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Changelog: note versioned save download filenames.
 - [x] UI: Help text mentions versioned save download filenames when clipboard is blocked.
 
+## v2.0 — Tiny discoverability
+- [x] UI: add a footer link to the CHANGELOG (GitHub) for curious players.
+
 ## v1.9 — Tiny determinism helper
 - [x] Dev/debug: allow forcing the initial seed for a brand-new save via URL param `?seed=<u32>` (only when no existing save is present).
 - [x] Docs: mention `?seed=<u32>` in README (debug/determinism).
