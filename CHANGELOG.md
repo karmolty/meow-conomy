@@ -3,6 +3,8 @@
 This project ships continuously; this file is a lightweight, human-readable summary (not an exhaustive list).
 
 ## Unreleased
+
+## 2026-04-24
 - Docs: add a short Roadmap section in the README pointing to `MILESTONES.md`.
 - Docs: note that if `localStorage` is blocked/unavailable, progress may not persist (suggest Export save as a manual backup).
 - UI: Help / shortcuts mentions that some browser modes block `localStorage`, and Export save can be used as a manual backup.
