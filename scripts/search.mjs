@@ -5,6 +5,7 @@ import path from 'node:path';
 function usage() {
   console.error('Usage: npm run search:node -- "pattern" [dir]');
   console.error('  SEARCH_RE=1 enables JS RegExp search (default: plain substring)');
+  console.error('  SEARCH_I=1 enables case-insensitive search');
   process.exit(2);
 }
 
@@ -14,12 +15,13 @@ if (args.length < 1) usage();
 const patternRaw = args[0];
 const root = args[1] ?? '.';
 const useRegex = process.env.SEARCH_RE === '1';
+const ignoreCase = process.env.SEARCH_I === '1';
 
 let matcher;
 if (useRegex) {
   let re;
   try {
-    re = new RegExp(patternRaw);
+    re = new RegExp(patternRaw, ignoreCase ? 'i' : undefined);
   } catch (e) {
     console.error(`Invalid RegExp: ${patternRaw}`);
     console.error(String(e?.message ?? e));
@@ -27,7 +29,11 @@ if (useRegex) {
   }
   matcher = (line) => re.test(line);
 } else {
-  matcher = (line) => line.includes(patternRaw);
+  const needle = ignoreCase ? patternRaw.toLowerCase() : patternRaw;
+  matcher = (line) => {
+    if (!ignoreCase) return line.includes(needle);
+    return line.toLowerCase().includes(needle);
+  };
 }
 
 const SKIP_DIRS = new Set(['node_modules', '.git', '.cache', 'dist', 'build']);
@@ -59,7 +65,14 @@ function walk(dir, out = []) {
   return out;
 }
 
-const files = walk(root);
+let files;
+try {
+  const st = fs.statSync(root);
+  files = st.isFile() ? [root] : walk(root);
+} catch {
+  files = walk(root);
+}
+
 let hits = 0;
 
 // If output is being piped (e.g. to `head`), ignore EPIPE so we exit cleanly.

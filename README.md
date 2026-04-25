@@ -100,6 +100,9 @@ npm run search:re -- "Heat|Whiskers" site
 # cross-platform Node helper
 npm run search:node -- "search term" site
 npm run search:node:re -- "Heat|Whiskers" site
+
+# case-insensitive
+SEARCH_I=1 npm run search:node -- "heat" site
 ```
 
 ## Dev helpers
