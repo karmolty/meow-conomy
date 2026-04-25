@@ -2,15 +2,18 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-function usage() {
-  console.error('Usage: npm run search:node -- "pattern" [path...]');
-  console.error('  SEARCH_RE=1 enables JS RegExp search (default: plain substring)');
-  console.error('  SEARCH_I=1 enables case-insensitive search');
-  process.exit(2);
+function usage(code = 2) {
+  const out = code === 0 ? console.log : console.error;
+  out('Usage: npm run search:node -- "pattern" [path...]');
+  out('  SEARCH_RE=1 enables JS RegExp search (default: plain substring)');
+  out('  SEARCH_I=1 enables case-insensitive search');
+  out('  If no paths are provided, defaults to: src site scripts');
+  process.exit(code);
 }
 
 const args = process.argv.slice(2);
 if (args.length < 1) usage();
+if (args[0] === '-h' || args[0] === '--help') usage(0);
 
 const patternRaw = args[0];
 const roots = args.slice(1);

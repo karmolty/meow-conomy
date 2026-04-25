@@ -202,6 +202,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Add a Node-based search helper (`npm run search:node`) so repo search works without POSIX shell scripts.
 - [x] Search helper: add case-insensitive mode (`SEARCH_I=1`).
 - [x] Search helper: accept multiple explicit paths (like the shell version) and default to `src site scripts`.
+- [x] Search helper: add `--help` / `-h` output.
 
 ## v1.9 — Tiny save UX
 - [x] Export save download filename includes app version (helps manage multiple save files).
