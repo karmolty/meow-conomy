@@ -201,6 +201,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 ## v1.9 — Tiny dev ergonomics (cross-platform)
 - [x] Add a Node-based search helper (`npm run search:node`) so repo search works without POSIX shell scripts.
 - [x] Search helper: add case-insensitive mode (`SEARCH_I=1`).
+- [x] Search helper: accept multiple explicit paths (like the shell version) and default to `src site scripts`.
 
 ## v1.9 — Tiny save UX
 - [x] Export save download filename includes app version (helps manage multiple save files).

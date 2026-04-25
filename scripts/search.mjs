@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 function usage() {
-  console.error('Usage: npm run search:node -- "pattern" [dir]');
+  console.error('Usage: npm run search:node -- "pattern" [path...]');
   console.error('  SEARCH_RE=1 enables JS RegExp search (default: plain substring)');
   console.error('  SEARCH_I=1 enables case-insensitive search');
   process.exit(2);
@@ -13,7 +13,7 @@ const args = process.argv.slice(2);
 if (args.length < 1) usage();
 
 const patternRaw = args[0];
-const root = args[1] ?? '.';
+const roots = args.slice(1);
 const useRegex = process.env.SEARCH_RE === '1';
 const ignoreCase = process.env.SEARCH_I === '1';
 
@@ -65,12 +65,16 @@ function walk(dir, out = []) {
   return out;
 }
 
-let files;
-try {
-  const st = fs.statSync(root);
-  files = st.isFile() ? [root] : walk(root);
-} catch {
-  files = walk(root);
+let searchRoots = roots.length ? roots : ['src', 'site', 'scripts'];
+
+let files = [];
+for (const r of searchRoots) {
+  try {
+    const st = fs.statSync(r);
+    files.push(...(st.isFile() ? [r] : walk(r)));
+  } catch {
+    // ignore missing roots
+  }
 }
 
 let hits = 0;
