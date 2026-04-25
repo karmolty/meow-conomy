@@ -90,11 +90,16 @@ Accessibility notes:
 If you don’t have `rg` / ripgrep installed:
 
 ```bash
+# POSIX shell helper (macOS/Linux)
 npm run search -- "search term"
 
 # extended regex
 npm run search:re -- "Heat|Whiskers" site
 # (or: SEARCH_RE=1 npm run search -- "Heat|Whiskers" site)
+
+# cross-platform Node helper
+npm run search:node -- "search term" site
+npm run search:node:re -- "Heat|Whiskers" site
 ```
 
 ## Dev helpers

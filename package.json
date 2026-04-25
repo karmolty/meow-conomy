@@ -12,6 +12,8 @@
     "stamp": "node scripts/stamp-version.mjs",
     "search": "sh scripts/search.sh",
     "search:re": "SEARCH_RE=1 sh scripts/search.sh",
+    "search:node": "node scripts/search.mjs",
+    "search:node:re": "SEARCH_RE=1 node scripts/search.mjs",
     "todo:stats": "node scripts/todo-stats.mjs",
     "serve": "sh -c 'python3 -m http.server ${PORT:-5173} --bind ${HOST:-127.0.0.1} --directory site'",
     "serve:lan": "HOST=0.0.0.0 npm run serve",

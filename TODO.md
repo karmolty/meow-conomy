@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny dev ergonomics (cross-platform)
+- [x] Add a Node-based search helper (`npm run search:node`) so repo search works without POSIX shell scripts.
+
 ## v1.9 — Tiny save UX
 - [x] Export save download filename includes app version (helps manage multiple save files).
 - [x] Docs: mention versioned save download filenames in README.
