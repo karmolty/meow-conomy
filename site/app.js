@@ -356,7 +356,8 @@ function flashStatus(text, ms = 1200) {
 if (els.btnHeatInfo) {
   els.btnHeatInfo.addEventListener("click", () => {
     maybeHaptic();
-    flashStatus("Heat increases events, can block Contracts, and slows Traders.", 2600);
+    const h = Math.max(0, Math.min(100, Math.round(Number(state.heat) || 0)));
+    flashStatus(`Heat ${h}/100: more events, can block Contracts, slows Traders.`, 2600);
   });
 }
 
