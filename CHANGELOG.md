@@ -3,6 +3,7 @@
 This project ships continuously; this file is a lightweight, human-readable summary (not an exhaustive list).
 
 ## Unreleased
+- UI: Heat (?) hint shows a status message on click (mobile-friendly), including the current Heat value.
 
 ## 2026-04-24
 - Docs: add a short Roadmap section in the README pointing to `MILESTONES.md`.
