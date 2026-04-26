@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny UX
+- [x] Heat: make the (?) help button show a short hint (status pill) on click (mobile-friendly; title tooltips are unreliable).
+
 ## v1.9 — Tiny dev ergonomics (cross-platform)
 - [x] Add a Node-based search helper (`npm run search:node`) so repo search works without POSIX shell scripts.
 - [x] Search helper: add case-insensitive mode (`SEARCH_I=1`).

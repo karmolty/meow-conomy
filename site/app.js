@@ -208,6 +208,7 @@ const els = {
   heat: document.getElementById("statHeat"),
   heatLine: document.getElementById("heatLine"),
   heatSpark: document.getElementById("heatSpark"),
+  btnHeatInfo: document.getElementById("btnHeatInfo"),
   whiskers: document.getElementById("statWhiskers"),
   seasons: document.getElementById("statSeasons"),
   seed: document.getElementById("statSeed"),
@@ -349,6 +350,14 @@ function flashStatus(text, ms = 1200) {
   if (_statusTimer) clearTimeout(_statusTimer);
   setSaveStatus(text);
   _statusTimer = setTimeout(() => setSaveStatus("saved"), ms);
+}
+
+// Tiny UX: make the Heat (?) button do something on mobile where title tooltips are unreliable.
+if (els.btnHeatInfo) {
+  els.btnHeatInfo.addEventListener("click", () => {
+    maybeHaptic();
+    flashStatus("Heat increases events, can block Contracts, and slows Traders.", 2600);
+  });
 }
 
 // Show a one-shot status message after a full page reload (e.g. after importing a save).
