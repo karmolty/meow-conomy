@@ -99,7 +99,11 @@ Accessibility notes:
 - **Debug/determinism:** to start a brand-new run with a specific deterministic seed, open the page with `?seed=<u32>` (only works if you don’t already have a save for this version).
 
 ## Search
-If you don’t have `rg` / ripgrep installed:
+If you don’t have `rg` / ripgrep installed, use the built-in search helpers below.
+
+Notes:
+- `npm run search` / `search:re` are **shell + grep** based (works well on macOS/Linux).
+- On Windows (or anywhere without `sh`/`grep`), prefer the **Node** versions: `npm run search:node` / `search:node:re`.
 
 ```bash
 # POSIX shell helper (macOS/Linux)

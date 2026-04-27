@@ -202,6 +202,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] README: include the full set of common keyboard shortcuts (restart run, abandon contract).
 - [x] README: document the panel jump + district focus shortcuts.
 
+## v1.9.3 — Tiny docs polish
+- [x] README: clarify which search scripts are shell/grep vs Node (Windows-friendly).
+
 ## v1.9 — Tiny UX
 - [x] Heat: make the (?) help button show a short hint (status pill) on click (mobile-friendly; title tooltips are unreliable).
 
