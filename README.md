@@ -72,6 +72,16 @@ Handy shortcuts:
 - **R**: redeem a completed contract (when available)
 - **A**: abandon active contract (asks to confirm)
 
+Navigation shortcuts:
+- **G**: jump to Core (top)
+- **C**: jump to Contracts (when unlocked)
+- **M**: jump to Market
+- **N**: jump to Inventory
+- **K**: jump to Cats (when unlocked)
+- **T**: jump to Traders (when unlocked)
+- **J**: jump to Schemes (when unlocked)
+- **D**: focus the District selector (when visible)
+
 Mobile notes:
 - iOS Safari: the game prevents double-tap-to-zoom inside the game surface.
 - Tap-heavy controls also guard against “ghost clicks” (a synthetic click firing after touch), to avoid accidental double-trades.
