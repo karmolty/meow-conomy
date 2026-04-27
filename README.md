@@ -67,8 +67,10 @@ Handy shortcuts:
 - **F**: open Import file picker
 - **L**: Level Up (when available)
 - **P**: End Season (when available)
+- **X**: restart run (keeps meta progression)
 - **S**: copy the current save seed (when visible)
 - **R**: redeem a completed contract (when available)
+- **A**: abandon active contract (asks to confirm)
 
 Mobile notes:
 - iOS Safari: the game prevents double-tap-to-zoom inside the game surface.

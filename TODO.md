@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9.1 — Tiny docs polish
+- [x] README: include the full set of common keyboard shortcuts (restart run, abandon contract).
+
 ## v1.9 — Tiny UX
 - [x] Heat: make the (?) help button show a short hint (status pill) on click (mobile-friendly; title tooltips are unreliable).
 
