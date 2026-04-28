@@ -219,6 +219,9 @@ const els = {
   progressFill: document.getElementById("progressFill"),
   progressLabel: document.getElementById("progressLabel"),
   goalText: document.getElementById("goalText"),
+  tutorialTips: document.getElementById("tutorialTips"),
+  chkShowTips: document.getElementById("chkShowTips"),
+  btnResetTips: document.getElementById("btnResetTips"),
   coreHint: document.getElementById("coreHint"),
   btnLevelUp: document.getElementById("btnLevelUp"),
   market: document.getElementById("market"),
@@ -289,8 +292,23 @@ function getDebugBundle(state) {
 
 const WHATS_NEW = [
   "Copy seed/version/save: improved clipboard fallback for stricter browsers.",
-  "New: Copy debug bundle button for easier bug reports (seed/version/unlocks)."
+  "New: Copy debug bundle button for easier bug reports (seed/version/unlocks).",
+  "New: optional tutorial tips toggle for fresh saves."
 ];
+
+const TIPS_KEY = "meowconomy.showTips";
+function getShowTips() {
+  try {
+    const v = localStorage.getItem(TIPS_KEY);
+    if (v == null) return true;
+    return v !== "0" && v !== "false";
+  } catch {
+    return true;
+  }
+}
+function setShowTips(on) {
+  try { localStorage.setItem(TIPS_KEY, on ? "1" : "0"); } catch {}
+}
 
 if (els.appVersion) {
   els.appVersion.textContent = getAppVersion();
@@ -410,6 +428,23 @@ if (els.btnWhatsNew) {
 if (els.btnCloseWhatsNew && els.whatsNew) {
   els.btnCloseWhatsNew.addEventListener("click", () => {
     try { els.whatsNew.close(); } catch { els.whatsNew.removeAttribute("open"); }
+  });
+}
+
+// Tutorial tips toggle
+if (els.chkShowTips) {
+  els.chkShowTips.checked = getShowTips();
+  els.chkShowTips.addEventListener("change", () => {
+    setShowTips(!!els.chkShowTips.checked);
+    render();
+  });
+}
+if (els.btnResetTips) {
+  els.btnResetTips.addEventListener("click", () => {
+    setShowTips(true);
+    if (els.chkShowTips) els.chkShowTips.checked = true;
+    flashStatus("tips on");
+    render();
   });
 }
 
@@ -1226,6 +1261,7 @@ function render() {
   if (level >= maxLevel) {
     // No further goals defined yet.
     if (els.goalText) els.goalText.innerHTML = `<strong>Goal:</strong> (more goals soon)`;
+    if (els.tutorialTips) els.tutorialTips.style.display = "none";
     if (els.progressFill) els.progressFill.style.width = `0%`;
     if (els.progressBar) {
       els.progressBar.setAttribute("aria-valuemin", "0");
@@ -1241,6 +1277,19 @@ function render() {
 
     if (els.goalText) {
       els.goalText.innerHTML = `<strong>Goal:</strong> ${cur?.label ?? `reach ${goalCoins} coins`}.`;
+    }
+
+    // Tiny tutorial tips (optional)
+    if (els.tutorialTips) {
+      const show = getShowTips() && level <= 1;
+      els.tutorialTips.style.display = show ? "" : "none";
+      if (show) {
+        els.tutorialTips.innerHTML = [
+          "Buy low / sell high — watch the sparklines for trend.",
+          "Level Up is manual — when you hit the goal, click <strong>Level Up</strong>.",
+          "Export save occasionally if you’re testing risky stuff."
+        ].map(t => `• ${t}`).join("<br />");
+      }
     }
 
     const p = Math.max(0, Math.min(1, coins / goalCoins));
