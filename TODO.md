@@ -271,7 +271,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] District selector: add `aria-keyshortcuts="D"` and hint (title) for the D shortcut.
 
 ## v1.20 — Next polish (pick 1 per heartbeat)
-- [ ] Add a compact in-game **changelog / what’s new** modal (reads from a small static array).
+- [x] Add a compact in-game **changelog / what’s new** modal (reads from a small static array).
 - [ ] Add a **Reset tutorial tips** toggle (persisted) + show 2–3 short tips for new players.
 - [x] Add a **"Copy debug bundle"** button (seed + version + district + unlocked flags) for bug reports.
 - [ ] Add a tiny **balance sandbox** dev flag (e.g., `?dev=1`) that reveals tuning knobs without changing saves.

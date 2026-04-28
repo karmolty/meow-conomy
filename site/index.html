@@ -407,6 +407,7 @@
     <footer>
       <details id="helpDetails" style="margin: 10px 0 12px;">
         <summary style="cursor:pointer; user-select:none; font-weight:800;" title="Shortcuts: ?/H (help), 1–5 (schemes), E (export), I/F (import), L (level up), P (prestige), X (restart), S (copy seed), R (redeem), A (abandon), G (core), C/M/N/K/T/J (jump), D (district), Esc (close)" aria-keyshortcuts="? H 1 2 3 4 5 E I F L P X S R A G C M N K T J D Escape">Help / shortcuts</summary>
+        <div style="margin-top:8px;"><button id="btnWhatsNew" type="button" title="Show what changed recently" aria-label="Show what's new">What's new</button></div>
         <div class="muted" style="margin-top:8px; line-height:1.5;">
           <div><strong>Keyboard:</strong> press <strong>1–5</strong> to activate Schemes (when unlocked).</div>
           <div><strong>Keyboard:</strong> press <strong>?</strong> / <strong>H</strong> to toggle this Help panel (it remembers if you left it open).</div>
@@ -442,6 +443,17 @@
   </main>
 
   <script type="module" src="./app.js"></script>
+
+  <dialog id="whatsNew" aria-label="What's new">
+    <div style="min-width:min(520px, 92vw); max-width:92vw;">
+      <div class="row" style="justify-content:space-between; align-items:center; gap:10px;">
+        <strong>What’s new</strong>
+        <button id="btnCloseWhatsNew" type="button" aria-label="Close what's new">Close</button>
+      </div>
+      <div id="whatsNewBody" style="margin-top:10px; line-height:1.5;"></div>
+    </div>
+  </dialog>
+
   <div class="floaties" id="floaties" aria-hidden="true"></div>
 </body>
 </html>

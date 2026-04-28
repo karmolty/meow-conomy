@@ -231,6 +231,10 @@ const els = {
   btnHardReset: document.getElementById("btnHardReset"),
   btnExportSave: document.getElementById("btnExportSave"),
   btnCopyDebug: document.getElementById("btnCopyDebug"),
+  btnWhatsNew: document.getElementById("btnWhatsNew"),
+  whatsNew: document.getElementById("whatsNew"),
+  whatsNewBody: document.getElementById("whatsNewBody"),
+  btnCloseWhatsNew: document.getElementById("btnCloseWhatsNew"),
   btnImportSave: document.getElementById("btnImportSave"),
   btnImportFile: document.getElementById("btnImportFile"),
   fileImport: document.getElementById("fileImport"),
@@ -282,6 +286,11 @@ function getDebugBundle(state) {
     }
   };
 }
+
+const WHATS_NEW = [
+  "Copy seed/version/save: improved clipboard fallback for stricter browsers.",
+  "New: Copy debug bundle button for easier bug reports (seed/version/unlocks)."
+];
 
 if (els.appVersion) {
   els.appVersion.textContent = getAppVersion();
@@ -381,6 +390,29 @@ function flashStatus(text, ms = 1200) {
   _statusTimer = setTimeout(() => setSaveStatus("saved"), ms);
 }
 
+function openWhatsNew() {
+  if (!els.whatsNew || !els.whatsNewBody) return;
+  const items = (WHATS_NEW || []).filter(Boolean);
+  els.whatsNewBody.innerHTML = items.length
+    ? `<ul style="margin:0; padding-left: 18px;">${items.map(t => `<li>${escapeHtml(String(t))}</li>`).join("")}</ul>`
+    : `<div class="muted">No recent changes.</div>`;
+
+  try { els.whatsNew.showModal(); } catch { els.whatsNew.setAttribute("open", ""); }
+}
+
+if (els.btnWhatsNew) {
+  els.btnWhatsNew.addEventListener("click", () => {
+    maybeHaptic();
+    openWhatsNew();
+  });
+}
+
+if (els.btnCloseWhatsNew && els.whatsNew) {
+  els.btnCloseWhatsNew.addEventListener("click", () => {
+    try { els.whatsNew.close(); } catch { els.whatsNew.removeAttribute("open"); }
+  });
+}
+
 // Tiny UX: make the Heat (?) button do something on mobile where title tooltips are unreliable.
 if (els.btnHeatInfo) {
   els.btnHeatInfo.addEventListener("click", () => {
@@ -435,6 +467,15 @@ function spawnFloater(text, { x, y, kind = "gain" } = {}) {
   setTimeout(() => el.remove(), 1100);
 }
 
+
+function escapeHtml(s) {
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
 
 function sparkline(values, width = 14) {
   const valsAll = (values || []).filter(n => Number.isFinite(n));
