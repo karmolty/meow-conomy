@@ -226,6 +226,11 @@ const els = {
   btnLevelUp: document.getElementById("btnLevelUp"),
   market: document.getElementById("market"),
   inventory: document.getElementById("inventory"),
+  devPanel: document.getElementById("devPanel"),
+  devHeat: document.getElementById("devHeat"),
+  devHeatVal: document.getElementById("devHeatVal"),
+  devGiveCoins: document.getElementById("devGiveCoins"),
+  devClearHeat: document.getElementById("devClearHeat"),
   contract: document.getElementById("contract"),
   cats: document.getElementById("cats"),
   traders: document.getElementById("traders"),
@@ -332,6 +337,9 @@ if (els.helpDetails) {
   });
 }
 
+// URL flags (debug/dev). Keep read-only: never write these into the save.
+const URL_FLAGS = { seed: null, dev: false };
+
 // Optional dev/debug: allow forcing the initial seed for a brand-new save via `?seed=<u32>`.
 // This only applies when there is no existing save under STORAGE_KEY.
 let _hadExistingSave = false;
@@ -344,6 +352,8 @@ try {
     const n = Number(s);
     if (Number.isFinite(n)) _urlSeed = (n >>> 0);
   }
+  URL_FLAGS.seed = _urlSeed;
+  URL_FLAGS.dev = params.get("dev") === "1" || params.get("dev") === "true";
 } catch {
   // ignore
 }
@@ -1925,6 +1935,49 @@ window.addEventListener("keydown", (e) => {
   save(state);
   render();
 });
+
+// Dev panel (?dev=1)
+if (els.devPanel) {
+  els.devPanel.style.display = URL_FLAGS.dev ? "" : "none";
+
+  function syncDevHeatUI() {
+    if (!els.devHeat || !els.devHeatVal) return;
+    const h = Math.round(Number(state.heat) || 0);
+    els.devHeat.value = String(Math.max(0, Math.min(100, h)));
+    els.devHeatVal.textContent = String(Math.max(0, Math.min(100, h)));
+  }
+
+  if (els.devHeat) {
+    els.devHeat.addEventListener("input", () => {
+      const v = Math.max(0, Math.min(100, Math.round(Number(els.devHeat.value) || 0)));
+      if (els.devHeatVal) els.devHeatVal.textContent = String(v);
+      state.heat = v;
+      save(state);
+      render();
+    });
+  }
+
+  if (els.devGiveCoins) {
+    els.devGiveCoins.addEventListener("click", () => {
+      state.coins = Number(state.coins || 0) + 100;
+      save(state);
+      flashStatus("+100 coins");
+      render();
+    });
+  }
+
+  if (els.devClearHeat) {
+    els.devClearHeat.addEventListener("click", () => {
+      state.heat = 0;
+      save(state);
+      flashStatus("Heat cleared");
+      render();
+    });
+  }
+
+  // initial
+  syncDevHeatUI();
+}
 
 // Help panel UX: clicking/tapping outside the <details> closes it.
 // (Nice on mobile where the summary toggle can be a small target.)

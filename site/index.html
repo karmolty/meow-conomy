@@ -384,6 +384,23 @@
         <div class="list" id="inventory"></div>
       </section>
 
+      <section class="panel" id="devPanel" style="display:none">
+        <h2>Dev</h2>
+        <div class="muted">Temporary tuning knobs (does not persist to your save).</div>
+        <div class="list" style="margin-top:8px; gap:10px;">
+          <label style="display:flex; flex-direction:column; gap:6px;">
+            <span><strong>Heat</strong> (set exact)</span>
+            <input id="devHeat" type="range" min="0" max="100" step="1" value="0" />
+            <span class="muted">Value: <span id="devHeatVal">0</span></span>
+          </label>
+
+          <div class="row" style="justify-content:flex-end; gap:8px; flex-wrap:wrap;">
+            <button id="devGiveCoins" type="button">+100 coins</button>
+            <button id="devClearHeat" type="button">Clear Heat</button>
+          </div>
+        </div>
+      </section>
+
       <section class="panel" style="display:none">
         <h2>Contract</h2>
         <div class="list" id="contract"></div>
