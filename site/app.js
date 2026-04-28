@@ -230,6 +230,7 @@ const els = {
   saveStatus: document.getElementById("saveStatus"),
   btnHardReset: document.getElementById("btnHardReset"),
   btnExportSave: document.getElementById("btnExportSave"),
+  btnCopyDebug: document.getElementById("btnCopyDebug"),
   btnImportSave: document.getElementById("btnImportSave"),
   btnImportFile: document.getElementById("btnImportFile"),
   fileImport: document.getElementById("fileImport"),
@@ -252,6 +253,34 @@ const els = {
 function getAppVersion() {
   const meta = document.querySelector('meta[name="meow-conomy-version"]');
   return (meta?.getAttribute("content") || "dev").trim() || "dev";
+}
+
+function getDebugBundle(state) {
+  const s = state || {};
+  const seed = s.seed == null ? null : (Number(s.seed) >>> 0);
+  const district = s.meta?.district || "alley";
+  const level = Number.isFinite(Number(s.level)) ? Number(s.level) : 0;
+  const goal = s.goal?.targetCoins != null ? s.goal?.targetCoins : null;
+  const unlocked = s.unlocked || {};
+
+  // Keep this compact + stable for copy/paste into bug reports.
+  return {
+    version: getAppVersion(),
+    seed,
+    district,
+    level,
+    goal,
+    whiskers: Number(s.meta?.whiskers || 0),
+    seasons: Number(s.meta?.seasons || 0),
+    unlocked: {
+      goods: unlocked.goods || [],
+      contracts: !!unlocked.contracts,
+      heat: !!unlocked.heat,
+      schemes: !!unlocked.schemes,
+      traders: !!unlocked.traders,
+      cats: !!unlocked.cats
+    }
+  };
 }
 
 if (els.appVersion) {
@@ -1319,6 +1348,23 @@ els.appVersion?.addEventListener("click", async () => {
   }
 
   fallbackCopy("Copy version:", text, "version copied");
+});
+
+els.btnCopyDebug?.addEventListener("click", async () => {
+  const raw = JSON.stringify(getDebugBundle(state));
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(raw);
+      maybeHaptic();
+      flashStatus("debug copied");
+      return;
+    }
+  } catch {
+    // fall through
+  }
+
+  // Fallback: try textarea copy.
+  fallbackCopy("Copy debug info:", raw, "debug copied");
 });
 
 els.btnExportSave?.addEventListener("click", async () => {
