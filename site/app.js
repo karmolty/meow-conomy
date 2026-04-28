@@ -1254,7 +1254,7 @@ els.btnHardReset.addEventListener("click", () => {
   location.reload();
 });
 
-function fallbackCopy(label, text) {
+function fallbackCopy(label, text, statusText = "copied") {
   // `prompt()` can truncate long text and is awkward on mobile.
   // Try a minimal in-page textarea + execCommand, then fall back to prompt.
   try {
@@ -1272,7 +1272,7 @@ function fallbackCopy(label, text) {
 
     if (ok) {
       maybeHaptic();
-      flashStatus("copied");
+      flashStatus(statusText);
       return true;
     }
   } catch {
@@ -1300,7 +1300,7 @@ els.seed?.addEventListener("click", async () => {
   }
 
   // Fallback for older browsers / blocked clipboard.
-  fallbackCopy("Copy seed:", text);
+  fallbackCopy("Copy seed:", text, "seed copied");
 });
 
 els.appVersion?.addEventListener("click", async () => {
@@ -1318,7 +1318,7 @@ els.appVersion?.addEventListener("click", async () => {
     // fall through
   }
 
-  fallbackCopy("Copy version:", text);
+  fallbackCopy("Copy version:", text, "version copied");
 });
 
 els.btnExportSave?.addEventListener("click", async () => {
@@ -1361,7 +1361,7 @@ els.btnExportSave?.addEventListener("click", async () => {
   }
 
   // Final fallback: try a manual copy flow.
-  fallbackCopy("Copy your save JSON:", raw);
+  fallbackCopy("Copy your save JSON:", raw, "save copied");
   flashStatus("save shown");
 });
 
