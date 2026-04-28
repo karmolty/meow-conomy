@@ -1254,6 +1254,35 @@ els.btnHardReset.addEventListener("click", () => {
   location.reload();
 });
 
+function fallbackCopy(label, text) {
+  // `prompt()` can truncate long text and is awkward on mobile.
+  // Try a minimal in-page textarea + execCommand, then fall back to prompt.
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = String(text);
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    ta.style.top = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+    const ok = document.execCommand?.("copy");
+    ta.remove();
+
+    if (ok) {
+      maybeHaptic();
+      flashStatus("copied");
+      return true;
+    }
+  } catch {
+    // fall through
+  }
+
+  prompt(label, String(text));
+  return false;
+}
+
 els.seed?.addEventListener("click", async () => {
   const seed = state.seed;
   if (seed == null) return;
@@ -1271,7 +1300,7 @@ els.seed?.addEventListener("click", async () => {
   }
 
   // Fallback for older browsers / blocked clipboard.
-  prompt("Copy seed:", text);
+  fallbackCopy("Copy seed:", text);
 });
 
 els.appVersion?.addEventListener("click", async () => {
@@ -1289,7 +1318,7 @@ els.appVersion?.addEventListener("click", async () => {
     // fall through
   }
 
-  prompt("Copy version:", text);
+  fallbackCopy("Copy version:", text);
 });
 
 els.btnExportSave?.addEventListener("click", async () => {
@@ -1331,8 +1360,8 @@ els.btnExportSave?.addEventListener("click", async () => {
     // final fallback
   }
 
-  // Final fallback: show the JSON in a prompt so it can be manually copied.
-  prompt("Copy your save JSON:", raw);
+  // Final fallback: try a manual copy flow.
+  fallbackCopy("Copy your save JSON:", raw);
   flashStatus("save shown");
 });
 
