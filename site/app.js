@@ -1361,8 +1361,8 @@ els.btnExportSave?.addEventListener("click", async () => {
   }
 
   // Final fallback: try a manual copy flow.
-  fallbackCopy("Copy your save JSON:", raw, "save copied");
-  flashStatus("save shown");
+  const didCopy = fallbackCopy("Copy your save JSON:", raw, "save copied");
+  if (!didCopy) flashStatus("save shown");
 });
 
 function importSaveRaw(raw) {
