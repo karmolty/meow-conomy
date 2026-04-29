@@ -200,6 +200,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9 — Tiny dev hygiene
 - [x] Add `npm run doctor` to sanity-check Node version + basic environment info.
+- [x] Add `npm run verify` (doctor + tests) for a single “sanity check everything” command.
 
 ## v1.9.2 — Tiny docs polish
 - [x] README: include the full set of common keyboard shortcuts (restart run, abandon contract).

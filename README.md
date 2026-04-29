@@ -151,10 +151,16 @@ CI/local parity:
 npm run check
 ```
 
-Environment sanity check (prints Node version, etc.):
+Environment sanity check (Node/npm/python/git):
 
 ```bash
 npm run doctor
+```
+
+One-shot sanity check (doctor + tests):
+
+```bash
+npm run verify
 ```
 
 Watch mode (Node 22+):

@@ -9,6 +9,7 @@
     "test": "node src/game.test.mjs",
     "test:watch": "node --watch src/game.test.mjs",
     "check": "npm test",
+    "verify": "npm run doctor && npm run check",
     "doctor": "node scripts/doctor.mjs",
     "stamp": "node scripts/stamp-version.mjs",
     "search": "sh scripts/search.sh",
