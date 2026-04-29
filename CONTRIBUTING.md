@@ -36,10 +36,16 @@ npm test
 npm run check
 ```
 
-Environment sanity check (Node/npm/python):
+Environment sanity check (Node/npm/python/git):
 
 ```bash
 npm run doctor
+```
+
+One-shot sanity check (doctor + tests):
+
+```bash
+npm run verify
 ```
 
 Watch mode (Node 22+):
