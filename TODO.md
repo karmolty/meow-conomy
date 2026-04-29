@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny dev hygiene
+- [x] Add `npm run doctor` to sanity-check Node version + basic environment info.
+
 ## v1.9.2 — Tiny docs polish
 - [x] README: include the full set of common keyboard shortcuts (restart run, abandon contract).
 - [x] README: document the panel jump + district focus shortcuts.
