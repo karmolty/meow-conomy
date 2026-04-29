@@ -37,6 +37,13 @@ lines.push(`- npm: ${npm ?? 'not found (install Node/npm)'}`);
 const python = has('python3', ['--version']) ?? has('python', ['--version']);
 lines.push(`- python: ${python ?? 'not found (needed for npm run serve)'}`);
 
+const git = has('git');
+lines.push(`- git: ${git ?? 'not found (needed for contributions)'}`);
+if (git) {
+  const sha = has('git', ['rev-parse', '--short', 'HEAD']);
+  if (sha) lines.push(`- repo sha: ${sha}`);
+}
+
 if (!ok) {
   lines.push('');
   lines.push('Your Node version is below the supported range for this repo.');
