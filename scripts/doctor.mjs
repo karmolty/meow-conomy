@@ -4,6 +4,7 @@
 // Intentionally dependency-free.
 
 import process from 'node:process';
+import { execFileSync } from 'node:child_process';
 
 function parseMajor(v) {
   const m = String(v).match(/^(\d+)/);
@@ -14,11 +15,27 @@ const node = process.versions.node;
 const major = parseMajor(node);
 const ok = major != null && major >= 22;
 
+function has(cmd, args = ['--version']) {
+  try {
+    const out = execFileSync(cmd, args, { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString('utf8')
+      .trim();
+    return out || true;
+  } catch {
+    return null;
+  }
+}
+
 const lines = [];
 lines.push(`meow-conomy doctor`);
 lines.push(`- node: ${node}${ok ? '' : '  (expected >= 22)'}`);
 lines.push(`- platform: ${process.platform} (${process.arch})`);
 lines.push(`- cwd: ${process.cwd()}`);
+
+const npm = has('npm');
+lines.push(`- npm: ${npm ?? 'not found (install Node/npm)'}`);
+const python = has('python3', ['--version']) ?? has('python', ['--version']);
+lines.push(`- python: ${python ?? 'not found (needed for npm run serve)'}`);
 
 if (!ok) {
   lines.push('');
