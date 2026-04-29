@@ -151,6 +151,12 @@ CI/local parity:
 npm run check
 ```
 
+Environment sanity check (prints Node version, etc.):
+
+```bash
+npm run doctor
+```
+
 Watch mode (Node 22+):
 
 ```bash
