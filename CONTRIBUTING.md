@@ -36,6 +36,12 @@ npm test
 npm run check
 ```
 
+Environment sanity check (Node/npm/python):
+
+```bash
+npm run doctor
+```
+
 Watch mode (Node 22+):
 
 ```bash
