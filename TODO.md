@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny dev ergonomics (more search knobs)
+- [x] scripts/search.sh: add SEARCH_ICASE=1 for case-insensitive grep.
+
 ## v1.9 — Tiny dev hygiene
 - [x] Add `npm run doctor` to sanity-check Node version + basic environment info.
 - [x] Add `npm run verify` (doctor + tests) for a single “sanity check everything” command.

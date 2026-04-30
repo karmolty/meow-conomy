@@ -22,12 +22,21 @@ fi
 
 # -R: recursive, -I: skip binary files, -n: line numbers
 # Use || true so 'no matches' doesn't fail the npm script.
+#
+# Env knobs:
+# - SEARCH_RE=1      treat <pattern> as an extended regex (grep -E)
+# - SEARCH_ICASE=1   case-insensitive search (grep -i)
+
+icase=""
+if [ "${SEARCH_ICASE:-}" = "1" ]; then
+  icase="-i"
+fi
 
 if [ "${SEARCH_RE:-}" = "1" ]; then
   # -E: extended regex
   # -e + -- avoids patterns that start with '-' being treated as flags.
-  grep -RInIE -e "$pattern" -- "$@" || true
+  grep -RInIE $icase -e "$pattern" -- "$@" || true
 else
   # -e + -- avoids patterns that start with '-' being treated as flags.
-  grep -RInI -e "$pattern" -- "$@" || true
+  grep -RInI $icase -e "$pattern" -- "$@" || true
 fi
