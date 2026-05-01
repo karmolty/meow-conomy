@@ -121,6 +121,28 @@ function clone(x) {
   assert.equal(a.inventory[g0], 0);
   assert.equal(a.coins, +(coinsBeforeSell + sellPrice).toFixed(2));
 
+  // Qty sanitization: fractional qty floors; <=0 qty is rejected.
+  const q = clone(DEFAULT_STATE);
+  tick(q, 1);
+  q.market.kibble.price = 10;
+  const c0 = q.coins;
+  assert.equal(canBuy(q, "kibble", 1.9), true);
+  assert.equal(buy(q, "kibble", 1.9), true);
+  assert.equal(q.inventory.kibble, 1);
+  assert.ok(q.coins < c0, "buy: coins decrease");
+  assert.equal(canBuy(q, "kibble", 0), false);
+  assert.equal(buy(q, "kibble", 0), false);
+  assert.equal(buy(q, "kibble", -2), false);
+
+  assert.equal(canSell(q, "kibble", 1.9), true);
+  const c1 = q.coins;
+  assert.equal(sell(q, "kibble", 1.9), true);
+  assert.equal(q.inventory.kibble, 0);
+  assert.ok(q.coins > c1, "sell: coins increase");
+  assert.equal(canSell(q, "kibble", 0), false);
+  assert.equal(sell(q, "kibble", 0), false);
+  assert.equal(sell(q, "kibble", -2), false);
+
   // Locked goods cannot be traded via actions (defense-in-depth vs UI bugs).
   const locked = clone(DEFAULT_STATE);
   tick(locked, 1);

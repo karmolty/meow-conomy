@@ -198,6 +198,9 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 - [x] Prevent "flash of seed line" (hide Seed row in HTML until JS decides to show it).
 - [x] Prevent "flash of Challenges block" (hide in HTML until unlocked systems make it relevant).
 
+## v1.9 — Tiny test hardening
+- [x] Tests: trading qty sanitization (fractional qty floors; <=0 qty is rejected).
+
 ## v1.9 — Tiny dev ergonomics (more search knobs)
 - [x] scripts/search.sh: add SEARCH_ICASE=1 for case-insensitive grep.
 
