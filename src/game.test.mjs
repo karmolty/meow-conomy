@@ -133,6 +133,8 @@ function clone(x) {
   assert.equal(canBuy(q, "kibble", 0), false);
   assert.equal(buy(q, "kibble", 0), false);
   assert.equal(buy(q, "kibble", -2), false);
+  assert.equal(buy(q, "kibble", NaN), false);
+  assert.equal(buy(q, "kibble", Infinity), false);
 
   assert.equal(canSell(q, "kibble", 1.9), true);
   const c1 = q.coins;
@@ -142,6 +144,8 @@ function clone(x) {
   assert.equal(canSell(q, "kibble", 0), false);
   assert.equal(sell(q, "kibble", 0), false);
   assert.equal(sell(q, "kibble", -2), false);
+  assert.equal(sell(q, "kibble", NaN), false);
+  assert.equal(sell(q, "kibble", Infinity), false);
 
   // Locked goods cannot be traded via actions (defense-in-depth vs UI bugs).
   const locked = clone(DEFAULT_STATE);

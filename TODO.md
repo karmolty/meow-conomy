@@ -200,6 +200,7 @@ This TODO is organized to map directly onto `MILESTONES.md`.
 
 ## v1.9 — Tiny test hardening
 - [x] Tests: trading qty sanitization (fractional qty floors; <=0 qty is rejected).
+- [x] Fix: trading qty sanitization should reject NaN/Infinity (prevent NaN coins/inventory).
 
 ## v1.9 — Tiny dev ergonomics (more search knobs)
 - [x] scripts/search.sh: add SEARCH_ICASE=1 for case-insensitive grep.

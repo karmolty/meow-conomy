@@ -663,15 +663,21 @@ function fifoConsumeCost(state, goodKey, qty) {
   return round2(cost);
 }
 
+function clampQty(qty) {
+  const n = Number(qty);
+  if (!Number.isFinite(n)) return 0;
+  return Math.max(0, Math.floor(n));
+}
+
 export function canBuy(state, goodKey, qty = 1) {
-  const q = Math.max(0, Math.floor(qty));
+  const q = clampQty(qty);
   const price = buyPrice(state, goodKey);
   const unlocked = state.unlocked?.[goodKey] ?? true;
   return unlocked && q > 0 && (state.coins ?? 0) >= price * q;
 }
 
 export function buy(state, goodKey, qty = 1) {
-  const q = Math.max(0, Math.floor(qty));
+  const q = clampQty(qty);
   const unlocked = state.unlocked?.[goodKey] ?? true;
   const price = buyPrice(state, goodKey);
   const cost = price * q;
@@ -706,13 +712,13 @@ export function buy(state, goodKey, qty = 1) {
 }
 
 export function canSell(state, goodKey, qty = 1) {
-  const q = Math.max(0, Math.floor(qty));
+  const q = clampQty(qty);
   const unlocked = state.unlocked?.[goodKey] ?? true;
   return unlocked && q > 0 && (state.inventory?.[goodKey] ?? 0) >= q;
 }
 
 export function sell(state, goodKey, qty = 1) {
-  const q = Math.max(0, Math.floor(qty));
+  const q = clampQty(qty);
   const unlocked = state.unlocked?.[goodKey] ?? true;
   const price = sellPrice(state, goodKey);
   if (!unlocked) return false;
