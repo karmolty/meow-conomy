@@ -610,7 +610,7 @@ function heatMult(state) {
 function heatForTrade(goodKey, qty) {
   // Heat is a risk meter (v0.3): trading creates attention.
   // Riskier goods generate more Heat.
-  const q = Math.max(0, Math.floor(qty));
+  const q = clampQty(qty);
   const base = goodKey === "kibble" ? 0.05 : goodKey === "catnip" ? 0.12 : 0.18;
   return base * q;
 }
@@ -633,7 +633,7 @@ function ensureLots(state, goodKey) {
 }
 
 function fifoAddLot(state, goodKey, qty, unitCost) {
-  const q = Math.max(0, Math.floor(qty));
+  const q = clampQty(qty);
   if (q <= 0) return;
   const u = Number.isFinite(unitCost) ? unitCost : 0;
   const lots = ensureLots(state, goodKey);
@@ -642,7 +642,7 @@ function fifoAddLot(state, goodKey, qty, unitCost) {
 
 function fifoConsumeCost(state, goodKey, qty) {
   // Consume FIFO lots and return total cost basis.
-  const q = Math.max(0, Math.floor(qty));
+  const q = clampQty(qty);
   if (q <= 0) return 0;
 
   const lots = ensureLots(state, goodKey);
